@@ -337,4 +337,25 @@ public class StatisticController {
 		
 		return monitorDao.findPageByElementType(elementType,elementId, ghId, 1, 1, null, null);
 	}
+	/**
+	 * 获取灌溉的完整信息
+	 * @param model
+	 * @param pageSize
+	 * @param pageNumber
+	 * @param ghId
+	 * @return
+	 * @throws JsonGenerationException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	@RequestMapping("/irrigation")
+	public String irrigation(Model model,
+			@RequestParam(value="ps",required=false,defaultValue="20") Integer pageSize,
+			@RequestParam(value="pn",required=false,defaultValue="1") Integer pageNumber,
+			Integer ghId) throws JsonGenerationException, JsonMappingException, IOException{
+		
+		
+		model.addAttribute("irr", irrgationDao.getIrrigationInfo());
+		return "statistic/irrigationdata";
+	}
 }
