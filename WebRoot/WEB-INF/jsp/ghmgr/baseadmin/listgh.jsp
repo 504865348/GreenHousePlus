@@ -1,0 +1,81 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+	href="<%=request.getContextPath() %>/assets/css/style.css"
+	type="text/css"></link>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath() %>/assets/css/theme.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath() %>/assets/css/font-awesome.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath() %>/assets/css/admin.css"
+	type="text/css"></link>
+<script
+	src="<%=request.getContextPath() %>/assets/js/jquery-2.1.1.min.js"></script>
+<script src="<%=request.getContextPath() %>/assets/js/bootstrap.min.js"></script>
+<title>全部温室</title>
+</head>
+<body>
+	<div class="w11 center-block">
+		<!-- 列表显示该基地的温室信息start -->
+		<c:if test="${empty pager.list}">
+			<h3 class="h3">基地中还没有温室</h3>
+			<a href="<%=request.getContextPath()%>/ghmgr/addgh">添加温室</a>
+		</c:if>
+		<c:if test="${not empty pager.list}">
+			<h3 class="tableTitle">温室管理</h3>
+			<table class="table table-bordered table-hover">
+				<tr class="fontSize">
+					<th>编号</th>
+					<th>温室代号</th>
+					<th>温室类型</th>
+					<th>管理员账号</th>
+					<th>编辑</th>
+					<th>删除</th>
+				</tr>
+
+				<c:forEach items="${pager.list}" var="greenhouse">
+					<tr>
+						<td><a
+							href="<%=request.getContextPath()%>/ghmgr/detailgh?ghId=${greenhouse.GH_id}"><c:out
+									value="${greenhouse.GH_id}"></c:out></a></td>
+						<td><c:out value="${greenhouse.GH_code}"></c:out></td>
+						<td><c:out value="${greenhouse.GH_type}"></c:out></td>
+						<td><c:out value="${greenhouse.user.username}"></c:out></td>
+						<td><a
+							href="<%=request.getContextPath()%>/ghmgr/editgh?ghId=${greenhouse.GH_id}">编辑</a></td>
+						<td><a
+							href="<%=request.getContextPath()%>/ghmgr/deletegh?ghId=${greenhouse.GH_id}">删除</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+			<!-- 列表显示该基地的温室信息end -->
+			<!-- 分页start -->
+			<div id="page"></div>
+			<script src="<%=request.getContextPath()%>/assets/laypage/laypage.js"></script>
+			<script type="text/javascript">
+	laypage({
+	    cont: 'page',
+	    pages: '${pager.pageCount}', 
+	    curr: '${pager.pageNumber}', 
+	    jump: function(e, first){ 
+	        if(!first){ 
+	            location.href = '?ps=${pager.pageSize}&pn='+e.curr;
+	        }
+	    }
+	});
+</script>
+			<div style="position: absolute; right: 20px; width: 100px;">
+				<input type="button" value="添加温室" class="btn bcm tcw"
+					onclick="location='<%=request.getContextPath()%>/ghmgr/addgh'">
+			</div>
+			<!-- 分页end -->
+		</c:if>
+	</div>
+</body>
+</html>

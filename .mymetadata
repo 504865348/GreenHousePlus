@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="GreenHouse"
+  id="myeclipse.1444395507378"
+  context-root="/GreenHouse"
+  j2ee-spec="6.0"
+  archive="GreenHouse.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
