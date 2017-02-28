@@ -33,20 +33,21 @@ $().ready(function() {
 
 		<div style="width: 60%; margin: 20px auto;">
 			<table class="table table-bordered table-condensed">
+			<!-- 袁健炜 2017-02-28  night modify start-->    
 				<tr>
 					<td class="text-center" style="width: 30%;">温室代号:</td>
-					<td><input type="text" value="${greenhouse.GH_code}"
-						id="GH_code" name="GH_code" class="required number form-control"></td>
+					<td><input type="text" value="${greenhouse.GH_code}" 
+					 readOnly	id="GH_code" name="GH_code" class="required number form-control"></td>
 				</tr>
 				<tr>
 					<td class="text-center">温室面积:</td>
 					<td><input type="text" value="${greenhouse.GH_area}"
-						id="GH_area" name="GH_area" class="required number form-control"></td>
+					 readOnly	id="GH_area" name="GH_area" class="required number form-control"></td>
 				</tr>
 				<tr>
 					<td class="text-center">建造时间:</td>
 					<td><input type="text"
-						value="<fmt:formatDate value="${greenhouse.GH_build}" pattern="yyyy-MM-dd"/>"
+					readOnly	value="<fmt:formatDate value="${greenhouse.GH_build}" pattern="yyyy-MM-dd"/>"
 						id="GH_build" name="GH_build"
 						class="required dateISO form-control"></td>
 				</tr>
@@ -54,7 +55,7 @@ $().ready(function() {
 				<tr>
 					<td class="text-center">温室类型:</td>
 					<td><select id="GH_type" name="GH_type"
-						class="required form-control">
+					disabled="disabled"	class="required form-control">
 							<option value="1">文洛型温室</option>
 							<option value="2">连栋温室</option>
 							<option value="3">单栋温室</option>
@@ -66,7 +67,7 @@ $().ready(function() {
 				<tr>
 					<td class="text-center">覆盖材料:</td>
 					<td><select id="Cover" name="Cover"
-						class="required form-control">
+					disabled="disabled"	class="required form-control">
 							<option value="1">玻璃</option>
 							<option value="2">塑料薄膜</option>
 							<option value="3">PC板</option>
@@ -77,75 +78,34 @@ $().ready(function() {
 				<tr>
 					<td class="text-center">高 度:</td>
 					<td><input type="text" value="${greenhouse.height}"
-						id="Height" name="Height" class="required number form-control"></td>
+					 readOnly	id="Height" name="Height" class="required number form-control"></td>
 				</tr>
 				<tr>
 					<td class="text-center">跨 度:</td>
 					<td><input type="text" value="${greenhouse.span}" id="Span"
-						name="Span" class="required number form-control"></td>
+					readOnly	name="Span" class="required number form-control"></td>
 				</tr>
 				<tr>
 					<td class="text-center">跨 数:</td>
 					<td><input type="text" value="${greenhouse.num_span}"
-						id="Num_span" name="Num_span" class="required digits form-control"></td>
+					readOnly	id="Num_span" name="Num_span" class="required digits form-control"></td>
 				</tr>
 				<tr>
 					<td class="text-center">开 间:</td>
 					<td><input type="text" value="${greenhouse.bay}" id="Bay"
-						name="Bay" class="required number form-control"></td>
+					readOnly	name="Bay" class="required number form-control"></td>
 				</tr>
 				<tr>
 					<td class="text-center">开间数:</td>
 					<td><input type="text" value="${greenhouse.num_bay}"
-						id="Num_bay" name="Num_bay" class="required digits form-control"></td>
+					readOnly	id="Num_bay" name="Num_bay" class="required digits form-control"></td>
 				</tr>
 				<tr>
 					<td class="text-center">备 注:</td>
 					<td><input type="text" value="${greenhouse.remark}"
-						id="Remark" name="Remark" class="form-control"></td>
+					readOnly	id="Remark" name="Remark" class="form-control"></td>
 				</tr>
-				<tr>
-					<td class="text-center">管理员账户：</td>
-					<td><input type="text" value="${user.username}" id="Username"
-						name="Username" class="required form-control"></td>
-				</tr>
-				<tr>
-					<td class="text-center">密 码:</td>
-					<td><input type="text" value="${user.password}" id="Password"
-						name="Password" class="required form-control" minlength="6"
-						maxlength="20"></td>
-				</tr>
-				<tr>
-					<td class="text-center">二级密码:</td>
-					<td><input type="text" value="${user.sec_password}"
-						id="sec_password" name="sec_password"
-						class="required form-control" minlength="6" maxlength="20"></td>
-				</tr>
-				<tr>
-					<td class="text-center">姓 名:</td>
-					<td><input type="text" value="${user.user_realname}"
-						id="User_realname" name="User_realname"
-						class="required form-control"></td>
-				</tr>
-				<tr>
-					<td class="text-center">手机号码:</td>
-					<td><input type="text" value="${user.user_mobile}"
-						id="User_mobile" name="User_mobile"
-						class="required number form-control"></td>
-				</tr>
-				<tr>
-					<td class="text-center"><input type="submit" value="编辑"
-						class="btn bcm tcw"></td>
-					<td><input type="button" value="取消"
-						onclick="javascript:history.back(-1)" class="btn bcm tcw"></td>
-				</tr>
-				<tr>
-					<td class="text-center"><input type="button" value="控制设备"
-						class="btn bcm tcw"
-						onclick="location='<%=request.getContextPath()%>/device/gh/device_list?ghId=${greenhouse.GH_id}'"></td>
-					<td><input type="button" value="检测参数" class="btn bcm tcw"
-						onclick="location='<%=request.getContextPath()%>/device/element/device_list?ghId=${greenhouse.GH_id}'"></td>
-				</tr>
+      <!-- 袁健炜 2017-02-28  night modify end-->    			 
 			</table>
 		</div>
 	</form>

@@ -39,15 +39,23 @@
 						<li><a
 							href="<%=request.getContextPath()%>/stat/historydata?ghId=${greenhouse.GH_id}"
 							target="main">历史数据</a></li>
+						<!-- 袁健炜 2017-02-28  night modify start-->
+						
+						<li>参数设置>>></li>
 						<li><a
 							href="<%=request.getContextPath()%>/ghmgr/editgh?ghId=${greenhouse.GH_id}"
-							target="main">参数设置</a>
-						  <!--   <ul class="nav nav-list collapse">
-						       <li>温室结构信息</li>
-						       <li>作物信息</li>
-						       <li>控制模式</li>
-						    </ul> -->
-						</li>
+							target="main">温室结构信息</a>
+					    </li>
+						 
+						<li>作物信息</li> 
+						<li><a
+							href="<%=request.getContextPath()%>/ghmgr/ghadmin/ctrl/change-model?ghId=${greenhouse.GH_id}"
+							target="main">控制模式</a>
+					    </li>
+						 
+						
+						<!-- 袁健炜 2017-02-28  night modify end-->    
+						
 					</ul>
 				</c:forEach>
 			</c:if>

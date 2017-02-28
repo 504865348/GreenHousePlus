@@ -24,7 +24,9 @@
 	<div style="width: 60%; margin: 20px auto;">
 
 		<h3 class="text-center">
-			当前模式：
+	<!-- 袁健炜 2017-02-28  night modify start-->	
+	                           请选择控制模式，当前模式：
+	<!-- 袁健炜 2017-02-28  night modify end-->
 			<c:if test="${gh.control_mode eq 1}">设定值控制</c:if>
 			<c:if test="${gh.control_mode eq 2}">手动控制</c:if>
 			<c:if test="${gh.control_mode eq 0}">智能控制</c:if>
