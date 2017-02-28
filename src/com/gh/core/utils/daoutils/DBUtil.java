@@ -165,6 +165,14 @@ public class DBUtil<T> {
 		return _update(fields, cnd);
 	}
 	
+	/**
+	 * 袁健炜 2017-2-28 night add
+	 */
+	public int update_devie(String ghid,String modify_device_value) {
+		 return _update_device_status(ghid, modify_device_value);
+	}
+	
+	
 	/**update私有函数
 	 * @param fields
 	 * @param cnd
@@ -203,7 +211,48 @@ public class DBUtil<T> {
 		System.out.println(ret + " colum(s) effected.");
 		return ret;
 	}
+	
+	/*
+	 * 袁健炜 2017-2-28 night add
+	 */
 
+	/**update私有函数
+	 * @param fields
+	 * @param cnd
+	 * @return
+	 */
+	private int _update_device_status(String ghid,String  modify_device_value){
+		// 传递的参数比如为：外遮阳电机:0;天窗:0;
+		Connection con = getConnection();
+		int ret = 0;
+        int para_length = modify_device_value.length()-1;
+		String[] modify_device_value_list = modify_device_value.substring(0, para_length).split(";");
+		// 外遮阳电机:0    天窗:0
+		String sql_one = "";
+		String sql_two="";
+	    for(int i=0;i<modify_device_value_list.length;i++){
+	    	String[] first_split = modify_device_value_list[i].toString().split(":");
+	    	sql_one +=  " WHEN '" +first_split[0].toString()+"' THEN " +first_split[1].toString();
+	        sql_two +="'"+ first_split[0].toString() +"',";
+	    }
+        
+		String preSql ="UPDATE setup_con SET Control = CASE Name " + sql_one +" END WHERE Name IN (" +sql_two.substring(0, sql_two.length()-1)+" ) and GH_id="+ghid;
+		PreparedStatement ps = null;
+
+		System.out.println("=========[#SQL]========::"+preSql.toUpperCase());
+		try {
+			ps = con.prepareStatement(preSql);
+		    ret = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		closeConnection(con,ps,null);
+		System.out.println(ret + " colum(s) effected."); 
+		return ret;
+	}
+	
 	/**闁哄被鍎撮…鍧楁晬瀹�拷娼岄柡鍫濐樆閸ら亶寮敓绲歯d濞戞捁娅ｉ埞鏍蓟閵夘煈鍤勯柟纰夋嫹濠�拷
 	 * @param selectCols
 	 * @param selectAll

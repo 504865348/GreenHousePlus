@@ -285,19 +285,57 @@ session.setAttribute("ghId", ghId);
 		return "ghmgr/ghadmin/ctrlmodel/value-setting";
 	}
 	
+	/* 
+	 * 袁健炜  2017-2-28  night modify 
+	 * @RequestParam(value="ghId") String ghid  //增加
+	 *  model.addAttribute("setupCons", setupConDao.findByGhId(Integer.parseInt(ghid)));//增加 
+	 * */
 	@RequestMapping("/ghadmin/ctrl/change-model")
-	public String change_model_page(Model model,Integer ghId){
+	public String change_model_page(Model model,Integer ghId,
+			@RequestParam(value="ghId") String ghid){
+		System.out.println("模式控制》设定值设定》ghid = " +ghid);
 		User u = userDao.getCurrentUser(request);
 		Greenhouse gh = null;
 		if(null == ghId){
-			gh = greenhouseDao.findByUserId(u.getUser_id(),request); //
+			gh = greenhouseDao.findByUserId(u.getUser_id(),request);  
 			ghId = gh.getGH_id();
 		}
 		else{
 			gh = greenhouseDao.findByghid(ghId);
 		}
 		model.addAttribute("gh", gh);
-		return "ghmgr/ghadmin/ctrlmodel/change-model";
+		model.addAttribute("setupCons", setupConDao.findByGhId(Integer.parseInt(ghid)));//新增
+		return "ghmgr/ghadmin/ctrlmodel/change-model";  //增加一个ghid 参数
+	}
+	
+	/*
+	 *  袁健炜  2017-2-28  night modify 
+	 */
+	@RequestMapping("/ghadmin/ctrl/change_mode_device")
+	@ResponseBody
+	public Object changeMode_device(
+			@RequestParam String  gh_id,
+			@RequestParam String all_status,
+			@RequestParam String device_name){
+		 
+		
+		System.out.println("用户id"+gh_id);
+		System.out.println(all_status);
+		System.out.println(device_name);
+		
+		String[] all_status_list = all_status.split(";");
+		String[] device_name_list = device_name.split(";");
+		
+		String update_device = "";
+		for(int i=0;i<all_status_list.length;i++){
+			if(!all_status_list[i].toString().equals("*")){
+				update_device += device_name_list[i].toString()+":" + all_status_list[i].toString() +";";
+			}
+		}
+		
+		System.out.println("更新的设备为:"+update_device);
+		return greenhouseDao.getUtil().update_devie(gh_id, update_device);
+		
 	}
 	
 	@ExceptionHandler
