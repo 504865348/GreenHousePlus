@@ -26,7 +26,7 @@
 	<div class="w11 center-block">
 		 
  
-	<h3 class="h3">温室基本信息</h3>
+	<%-- <h3 class="h3">温室基本信息</h3>
 	<table class="table table-bordered table-condensed">
 	<tr>
 		<td>序号</td>
@@ -49,9 +49,9 @@
 			<c:if test="${gh.GH_type==0 }">其他</c:if>
 		</td>
 		<td>${pager.list[0].crop_name}</td>
-		<%-- <c:forEach items="${i.setupCon }" var="dev">
+		<c:forEach items="${i.setupCon }" var="dev">
 			<td>${dev.element.datas.list[0].monitor_num }&nbsp;${dev.element.element_unit }</td>
-		</c:forEach> --%>
+		</c:forEach>
 		<c:if test="${me.user_type!='0'}">
 		<td><a href="<%=request.getContextPath()%>/ghmgr/ghadmin/gh/detail?ghid=${gh.GH_id }">查看详情</a></td>
 		</c:if>
@@ -59,7 +59,7 @@
 			<td>没有操作权限</td>
 		</c:if>
 	</tr>
-	</table>
+	</table> --%>
  
 
 		<div class="detail">
@@ -152,11 +152,7 @@
 			</div>
 			<!-- end class="types" -->
 
-			<div>
-				数值:<span id="data"></span>
-			</div>
-
-			<!-- 设备状态 -->
+			
 
 
 		</div>

@@ -47,9 +47,11 @@
 					<td>${gh_1.typeAndElements[0].elements[1].current_value } ${gh.typeAndElements[0].elements[1].element_unit }</td>
 					<td>${gh_1.typeAndElements[0].elements[5].current_value } ${gh.typeAndElements[0].elements[5].element_unit }</td>
 					<td>${gh_1.typeAndElements[0].elements[4].current_value } ${gh.typeAndElements[0].elements[4].element_unit }</td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${pager_1.list[0].crop_name}</td>
+					<td>${pager_1.list[0].crop_date}</td>
+					<td>
+					<c:if test="${irr.gh_one_irrigation_status == 0 }">关</c:if>
+					<c:if test="${irr.gh_one_irrigation_status == 1 }">开</c:if></td>
 					<td>设定值控制</td>
 			    </tr>
 			    
@@ -59,9 +61,11 @@
 					<td>${gh_2.typeAndElements[0].elements[1].current_value } ${gh.typeAndElements[0].elements[1].element_unit }</td>
 					<td>${gh_2.typeAndElements[0].elements[5].current_value } ${gh.typeAndElements[0].elements[5].element_unit }</td>
 					<td>${gh_2.typeAndElements[0].elements[4].current_value } ${gh.typeAndElements[0].elements[4].element_unit }</td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${pager_2.list[0].crop_name}</td>
+					<td>${pager_2.list[0].crop_date}</td>
+					<td>
+					<c:if test="${irr.gh_two_irrigation_status == 0 }">关</c:if>
+					<c:if test="${irr.gh_two_irrigation_status == 1 }">开</c:if></td>
 					<td>设定值控制</td>
 			    </tr>
 			    
@@ -71,9 +75,11 @@
 					<td>${gh_3.typeAndElements[0].elements[1].current_value } ${gh.typeAndElements[0].elements[1].element_unit }</td>
 					<td>${gh_3.typeAndElements[0].elements[5].current_value } ${gh.typeAndElements[0].elements[5].element_unit }</td>
 					<td>${gh_3.typeAndElements[0].elements[4].current_value } ${gh.typeAndElements[0].elements[4].element_unit }</td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${pager_3.list[0].crop_name}</td>
+					<td>${pager_3.list[0].crop_date}</td>
+					<td>
+					<c:if test="${irr.gh_three_irrigation_status == 0 }">关</c:if>
+					<c:if test="${irr.gh_three_irrigation_status == 1 }">开</c:if></td>
 					<td>设定值控制</td>
 			    </tr>
 			    
@@ -83,9 +89,11 @@
 					<td>${gh_4.typeAndElements[0].elements[1].current_value } ${gh.typeAndElements[0].elements[1].element_unit }</td>
 					<td>${gh_4.typeAndElements[0].elements[5].current_value } ${gh.typeAndElements[0].elements[5].element_unit }</td>
 					<td>${gh_4.typeAndElements[0].elements[4].current_value } ${gh.typeAndElements[0].elements[4].element_unit }</td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${pager_4.list[0].crop_name}</td>
+					<td>${pager_4.list[0].crop_date}</td>
+					<td>
+					<c:if test="${irr.gh_four_irrigation_status == 0 }">关</c:if>
+					<c:if test="${irr.gh_four_irrigation_status == 1 }">开</c:if></td>
 					<td>设定值控制</td>
 			    </tr>
 			    
@@ -95,9 +103,11 @@
 					<td>${gh_5.typeAndElements[0].elements[1].current_value } ${gh.typeAndElements[0].elements[1].element_unit }</td>
 					<td>${gh_5.typeAndElements[0].elements[5].current_value } ${gh.typeAndElements[0].elements[5].element_unit }</td>
 					<td>${gh_5.typeAndElements[0].elements[4].current_value } ${gh.typeAndElements[0].elements[4].element_unit }</td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${pager_5.list[0].crop_name}</td>
+					<td>${pager_5.list[0].crop_date}</td>
+					<td>
+					<c:if test="${irr.gh_five_irrigation_status == 0 }">关</c:if>
+					<c:if test="${irr.gh_five_irrigation_status == 1 }">开</c:if></td>
 					<td>智能控制</td>
 			    </tr>
 			    
@@ -107,9 +117,11 @@
 					<td>${gh_6.typeAndElements[0].elements[1].current_value } ${gh.typeAndElements[0].elements[1].element_unit }</td>
 					<td>${gh_6.typeAndElements[0].elements[5].current_value } ${gh.typeAndElements[0].elements[5].element_unit }</td>
 					<td>${gh_6.typeAndElements[0].elements[4].current_value } ${gh.typeAndElements[0].elements[4].element_unit }</td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${pager_6.list[0].crop_name}</td>
+					<td>${pager_6.list[0].crop_date}</td>
+					<td>
+					<c:if test="${irr.gh_six_irrigation_status == 0 }">关</c:if>
+					<c:if test="${irr.gh_six_irrigation_status == 1 }">开</c:if></td>
 					<td>智能控制</td>
 			    </tr>
 			  </table>
@@ -163,60 +175,15 @@
 					    </tr>
 					    <tr>
 						<td>雨量</td>
-						<td>${mete.rainfall}</td>
+						<td>
+						<c:if test="${mete.rainfall==1}">有</c:if>
+						<c:if test="${mete.rainfall==0}">无</c:if></td>
 						<td></td>
 					    </tr>
 					  </table>
 					</div>
 				</div>
-				<div class="col-md-6">
-				<div class="panel panel-success my-panel my-panel-height-360">
-				  <!-- Default panel contents -->
-				  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;灌溉控制</div>
-				  <!-- Table -->
-				  <table class="table table-bordered table-striped table-condensed">
-				    <tr>
-						<th>温室</th>
-						<th>状态</th>
-				    </tr>
-				     <tr>
-					 <td>温室NO.1</td>
-					 <td>
-					 <c:if test="${irr.gh_one_irrigation_status == 0 }">关</c:if>
-					 <c:if test="${irr.gh_one_irrigation_status == 1 }">开</c:if>
-					 </td>
-				    </tr>
-				    <tr>
-					<td>温室NO.2</td>
-					<td>
-					 <c:if test="${irr.gh_two_irrigation_status == 0 }">关</c:if>
-					 <c:if test="${irr.gh_two_irrigation_status == 1 }">开</c:if>
-					</td>
-				    </tr>
-				    <tr>
-					<td>温室NO.3</td>
-					<td><c:if test="${irr.gh_three_irrigation_status == 0 }">关</c:if>
-						<c:if test="${irr.gh_three_irrigation_status == 1 }">开</c:if></td>
-				    </tr>
-				    <tr>
-					<td>温室NO.4</td>
-					<td><c:if test="${irr.gh_four_irrigation_status == 0 }">关</c:if>
-						<c:if test="${irr.gh_four_irrigation_status == 1 }">开</c:if></td>
-				    </tr>
-				    <tr>
-					<td>温室NO.5</td>
-					<td><c:if test="${irr.gh_five_irrigation_status == 0 }">关</c:if>
-						<c:if test="${irr.gh_five_irrigation_status == 1 }">开</c:if></td>
-				    </tr>
-				    <tr>
-					<td>温室NO.6</td>
-					<td><c:if test="${irr.gh_six_irrigation_status == 0 }">关</c:if>
-						<c:if test="${irr.gh_six_irrigation_status == 1 }">开</c:if></td>
-				    </tr>
-				  </table>
-				</div>
-				</div>
-			</div>
+				
 	   </div><!-- end class="col-md-10" -->
 	  </div><!-- end class="row" -->
 	  

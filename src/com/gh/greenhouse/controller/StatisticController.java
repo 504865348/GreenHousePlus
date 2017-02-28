@@ -185,6 +185,19 @@ public class StatisticController {
 		model.addAttribute("gh_4",gh_4 );
 		model.addAttribute("gh_5",gh_5);
 		model.addAttribute("gh_6",gh_6);
+		//作物信息
+		model.addAttribute("pager_1", cropDao.listByPage
+				(Cnd.where("deleted", "=", "N").and("ghid", "=", GreenHouseInfo.GH_ONE_ID), pageSize, pageNumber));
+		model.addAttribute("pager_2", cropDao.listByPage
+				(Cnd.where("deleted", "=", "N").and("ghid", "=", GreenHouseInfo.GH_TWO_ID), pageSize, pageNumber));
+		model.addAttribute("pager_3", cropDao.listByPage
+				(Cnd.where("deleted", "=", "N").and("ghid", "=", GreenHouseInfo.GH_THREE_ID), pageSize, pageNumber));
+		model.addAttribute("pager_4", cropDao.listByPage
+				(Cnd.where("deleted", "=", "N").and("ghid", "=", GreenHouseInfo.GH_FOUR_ID), pageSize, pageNumber));
+		model.addAttribute("pager_5", cropDao.listByPage
+				(Cnd.where("deleted", "=", "N").and("ghid", "=", GreenHouseInfo.GH_FIVE_ID), pageSize, pageNumber));
+		model.addAttribute("pager_6", cropDao.listByPage
+				(Cnd.where("deleted", "=", "N").and("ghid", "=", GreenHouseInfo.GH_SIX_ID), pageSize, pageNumber));
 		return "statistic/plivedata";
 	}
 	
