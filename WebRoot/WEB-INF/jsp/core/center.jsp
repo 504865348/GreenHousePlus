@@ -21,6 +21,7 @@
 <title>温室智慧管理系统 - 个人中心</title>
 </head>
 <body>
+<input type="hidden" id="user_id" value='${user.user_id}' />
 	<jsp:include page="/WEB-INF/jsp/include/header.jsp"></jsp:include>
 	<div style="width: 60%; margin: 20px auto;">
 		<table class="table table-bordered table-condensed">
@@ -48,8 +49,50 @@
 						test="${me.user_type=='0'}">访客</c:if></td>
 			</tr>
 		</table>
+		<input type="button" value="点击更改密码" class="btn bcm tcw"
+			 id="cli"	onclick="change()">
+		<span id="ide" style="display:none;">请在下列提示中修改密码</span>
+		<table class="table table-bordered table-condensed" style="display:none;" id="modify_table">
+		        <tr>
+				<td class="text-center" style="width: 30%;">原始密码：</td>
+				<td class="text-center"><input id="old_pass" type="text" /></td>
+			</tr>
+			
+			<tr>
+				<td class="text-center" style="width: 30%;">新密码：</td>
+				<td class="text-center"><input  id="new_pass" type="text" /></td>
+			</tr>
+			
+		</table>
+		<input type="button" value="确认更改" class="btn bcm tcw"
+			id="modify_button"	style="display:none;" onclick="changePass()">
 	</div>
 
-
+	<script type="text/javascript">
+	function change(){
+		document.getElementById("modify_table").style.display='';
+		document.getElementById("modify_button").style.display='';
+		document.getElementById("ide").style.display='';
+		document.getElementById("cli").style.display='none';
+		
+	}
+	function changePass(){
+		var oldPass = $("#old_pass").val();
+		var newPass = $("#new_pass").val();
+		$.post('change',{
+			oldPass:oldPass,
+			newPass:newPass
+		},'json')
+		.done(function(data){
+			if(data){
+				alert('修改成功');
+			}
+			else{
+				alert('修改失败');
+			}
+		}); 
+		 
+	}
+	</script>
 </body>
 </html>

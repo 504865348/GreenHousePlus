@@ -40,12 +40,23 @@ public class BasicDao<T> {
 	public int update(T obj,Cnd cnd){
 		return util.update(obj, cnd);
 	}
-	
+	//new
+	public int updatePass(int userid,String newpass){
+		return util.updatePass(userid, newpass);
+	}
 	/**
 	 * @param cnd cnd
 	 * @return
 	 */
 	public List<T> list(Cnd cnd){
+		return util.list(cnd);
+	}
+	
+	/**
+	 * @param cnd setting_cnd
+	 * @return
+	 */
+	public List<T> setting_list(Cnd cnd){
 		return util.list(cnd);
 	}
 	

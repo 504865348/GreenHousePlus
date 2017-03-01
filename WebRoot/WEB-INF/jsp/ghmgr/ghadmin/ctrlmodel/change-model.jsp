@@ -25,22 +25,19 @@
     <input type="hidden" id="gh_id" value='${gh.GH_id}' />
 	<div style="width: 60%; margin: 20px auto;">
 
-		<h3 class="text-center">
-	<!-- 袁健炜 2017-02-28  night modify start-->	
+<!-- 		<h3 class="text-center">
+	袁健炜 2017-02-28  night modify start	
 	                           请点击选择控制模式
-	<!-- 袁健炜 2017-02-28  night modify end-->
-			
-		<%-- 	<c:if test="${gh.control_mode eq 1}">设定值控制</c:if>
-			<c:if test="${gh.control_mode eq 2}">手动控制</c:if>
-			<c:if test="${gh.control_mode eq 0}">智能控制</c:if> --%>
-		</h3>
+	袁健炜 2017-02-28  night modify end
+	 
+		</h3> -->
 		<table class="table table-bordered table-condensed">
 		 	  
 			<!-- 袁健炜 2017-02-28  night modify start-->	
 			<tr>
 			    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_setting()">设定值控制</a></span></td>
 			    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_manual()">手动控制</a></span></td>
-			    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode()">智能控制</a></span></td>
+			    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_intellgence()">智能控制</a></span></td>
 			</tr>
 			<!-- 袁健炜 2017-02-28  night modify end-->	
 		</table>
@@ -73,122 +70,122 @@
 		</table>
 		
 		<table style="display:none;" class="table table-bordered table-condensed" id="table_setting">
-		     <c:forEach items="${ghSetting }" var="ghSettingId">
+		      
 			     <tr>
 		     <td style="width:50%">时段1开始时间 </td>
-		     <td> <input type="text" name="one_startTime"
-						onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_one_start}"/></td>
+		     <td> <input type="text" name="one_startTime" id="one_startTime"
+						onclick="laydate()" class="laydate-icon"  value="${ghSetting[0].period_one_start}"/></td>
 		  </tr>
 		   <tr>
 		     <td>时段1结束时间 </td>
 		     <td> <input type="text" name="one_endTime" id="one_endTime"
-					onkeyup="fill_two_startTime()"	onclick="laydate()" class="laydate-icon" value="${ghSettingId.period_one_end}" /></td>
+					onkeyup="fill_two_startTime()"	onclick="laydate()" class="laydate-icon" value="${ghSetting[0].period_one_end}" /></td>
 		  </tr>
 		   <tr>
 		     <td>时段2开始时间 </td>
 		     <td><input type="text" name="two_startTime" readOnly
-				id="two_startTime"  class="laydate-icon"  value="${ghSettingId.period_two_start}"  /></td>
+				id="two_startTime"  class="laydate-icon"  value="${ghSetting[0].period_two_start}"  /></td>
 		  </tr>
 		   <tr>
 		     <td>时段2结束时间 </td>
 		     <td><input type="text" name="two_endTime"  
-					 	onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_two_end}"  /></td>
+				id="two_endTime"	 	onclick="laydate()" class="laydate-icon"  value="${ghSetting[0].period_two_end}"  /></td>
 		  </tr>
 		    <tr>
 		     <td>时段3开始时间 </td>
 		     <td><input type="text" name="three_startTime"
-						  class="laydate-icon"  value="${ghSettingId.period_three_start}"  /></td>
+					id="three_startTime"	  class="laydate-icon"  value="${ghSetting[0].period_three_start}"  /></td>
 		  </tr>
 		   <tr>
 		     <td>时段3结束时间 </td>
 		     <td><input type="text" name="three_endTime"
-						onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_three_end}"  /></td>
+				id="three_endTime"		onclick="laydate()" class="laydate-icon"  value="${ghSetting[0].period_three_end}"  /></td>
 		  </tr>
 		    <tr>
 		     <td>时段4开始时间 </td>
 		     <td><input type="text" name="four_startTime"
-						  class="laydate-icon"  value="${ghSettingId.period_four_end}"  /></td>
+					id="four_startTime"	  class="laydate-icon"  value="${ghSetting[0].period_four_end}"  /></td>
 		  </tr>
 		   <tr>
 		     <td>时段4结束时间 </td>
 		     <td><input type="text" name="four_endTime"
-						onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_four_end}"  /></td>
+					id="four_endTime"	onclick="laydate()" class="laydate-icon"  value="${ghSetting[0].period_four_end}"  /></td>
 		  </tr>
 		  
 		   <tr>
 		     <td>时段1 温度 </td>
-		     <td> ${ghSettingId.period_one_wd }</td>
+		     <td><input  id="one_period_wd" value="${ghSetting[0].period_one_wd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段1 湿度 </td>
-		     <td>${ghSettingId.period_one_sd }</td>
+		     <td><input id="one_period_sd" value="${ghSetting[0].period_one_sd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段1 光照度</td>
-		     <td>${ghSettingId.period_one_gzd }</td>
+		     <td><input id="one_period_gzd" value="${ghSetting[0].period_one_gzd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段1 CO2浓度</td>
-		     <td>${ghSettingId.period_one_nd }</td>
+		     <td><input id="one_period_nd" value="${ghSetting[0].period_one_nd }"/></td>
 		  </tr>
 		  
 		  <tr>
 		     <td>时段2 温度 </td>
-		     <td>${ghSettingId.period_two_wd }</td>
+		     <td><input id="two_period_wd" value="${ghSetting[0].period_two_wd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段2 湿度 </td>
-		     <td>${ghSettingId.period_two_sd }</td>
+		     <td><input id="two_period_sd" value="${ghSetting[0].period_two_sd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段2 光照度</td>
-		     <td>${ghSettingId.period_two_gzd }</td>
+		     <td><input id="two_period_gzd" value="${ghSetting[0].period_two_gzd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段2 CO2浓度</td>
-		     <td>${ghSettingId.period_two_nd }</td>
+		     <td><input id="two_period_nd" value="${ghSetting[0].period_two_nd }"/></td>
 		  </tr>
 		   
 		   
 		    <tr>
 		     <td>时段3 温度 </td>
-		     <td>${ghSettingId.period_three_wd }</td>
+		     <td><input id="three_period_wd" value="${ghSetting[0].period_three_wd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段3 湿度 </td>
-		     <td>${ghSettingId.period_three_sd }</td>
+		     <td><input  id="three_period_sd"  value="${ghSetting[0].period_three_sd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段3光照度</td>
-		     <td>${ghSettingId.period_three_gzd }</td>
+		     <td><input  id="three_period_gzd" value="${ghSetting[0].period_three_gzd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段3 CO2浓度</td>
-		     <td>${ghSettingId.period_three_nd }</td>
+		     <td><input  id="three_period_nd" value="${ghSetting[0].period_three_nd }"/></td>
 		  </tr>
 		    
 		     <tr>
 		     <td>时段4 温度 </td>
-		     <td>${ghSettingId.period_four_wd }</td>
+		     <td><input  id="four_period_wd" value="${ghSetting[0].period_four_wd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段4 湿度 </td>
-		     <td>${ghSettingId.period_four_sd }</td>
+		     <td><input id="four_period_sd" value="${ghSetting[0].period_four_sd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段4 光照度</td>
-		     <td>${ghSettingId.period_four_gzd }</td>
+		     <td><input id="four_period_gzd" value="${ghSetting[0].period_four_gzd }"/></td>
 		  </tr>
 		  <tr>
 		     <td>时段4 CO2浓度</td>
-		     <td>${ghSettingId.period_four_nd }</td>
+		     <td><input id="four_period_nd" value="${ghSetting[0].period_four_nd }"/></td>
 		  </tr>
-		     </c:forEach>
+		      
 		 
 		   <tr>
 			<td class="text-center"></td>
 		    <td><input type="button" value="更改设置" class="btn bcm tcw"
-				onclick="chageModeDevice_seeting()"></td>
+				onclick="chageModesetting()"></td>
 		 </tr>  
 		</table>
 	</div>
@@ -216,7 +213,30 @@ function changeMode_manual(){
 	 
 	
 }
-/* 袁健炜 2017-2-28 night add start*/
+
+function changeMode_intellgence(){
+	var pass; 
+	var ghid = $("#gh_id").val();
+	if(pass = prompt('请输入密码：')){
+		$.post('change_mode_intellgece',{
+			ghid:ghid,
+			password:pass
+		},'json')
+		.done(function(data){
+			if(data){
+				document.getElementById("table_setting").style.display='none';
+				document.getElementById("table_device").style.display='none';z
+			}
+			else{
+				alert('密码错误');
+				
+			}
+		});
+	}
+	 
+	
+}
+/* 袁健炜 2017-2-28 night add start  */
 function chageModeDevice(){
 	var gh_id = $("#gh_id").val();
 	var table =document.getElementById("table_device");
@@ -266,7 +286,6 @@ function chageModeDevice(){
 			if(data){
 				document.getElementById("table_device").style.display='none';
 				document.getElementById("table_setting").style.display='';
-				
 			}
 			else{
 				alert('密码错误，修改失败');
@@ -276,19 +295,69 @@ function chageModeDevice(){
 	 
 	
 }
+
+function chageModesetting(){
+	  var gh_id = $("#gh_id").val();
+      var update_value = "";
+      var one_startTime = $("#one_startTime").val();
+      var one_endTime = $("#one_endTime").val();
+      var one_period_wd = $("#one_period_wd ").val();
+      var one_period_sd = $("#one_period_sd ").val();
+      var one_period_gzd = $("#one_period_gzd ").val();
+      var one_period_nd = $("#one_period_nd ").val();
+      update_value += one_startTime+";"+one_endTime+";"+one_period_wd+";"+one_period_sd+";"+one_period_gzd+";"+one_period_nd+"&&&";
+    //  alert(update_value);
+     
+     var two_startTime = $("#two_startTime").val();
+      var two_endTime = $("#two_endTime").val();
+      var two_period_wd = $("#two_period_wd ").val();
+      var two_period_sd = $("#two_period_sd ").val();
+      var two_period_gzd = $("#two_period_gzd ").val();
+      var two_period_nd = $("#two_period_nd ").val();
+      update_value += two_startTime+";"+two_endTime+";"+two_period_wd+";"+two_period_sd+";"+two_period_gzd+";"+two_period_nd+"&&&";
+      //alert(two_startTime+";"+two_endTime+";"+two_period_wd+";"+two_period_sd+";"+two_period_gzd+";"+two_period_nd);
+      var three_startTime = $("#three_startTime").val();
+      var three_endTime = $("#three_endTime").val();
+      var three_period_wd = $("#three_period_wd ").val();
+      var three_period_sd = $("#three_period_sd ").val();
+      var three_period_gzd = $("#three_period_gzd ").val();
+      var three_period_nd = $("#three_period_nd ").val();
+      update_value += three_startTime+";"+three_endTime+";"+three_period_wd+";"+three_period_sd+";"+three_period_gzd+";"+three_period_nd+"&&&";
+      //alert(three_startTime+";"+three_endTime+";"+three_period_wd+";"+three_period_sd+";"+three_period_gzd+";"+three_period_nd);
+     
+      var four_startTime = $("#four_startTime").val();
+      var four_endTime = $("#four_endTime").val();
+      var four_period_wd = $("#four_period_wd ").val();
+      var four_period_sd = $("#four_period_sd ").val();
+      var four_period_gzd = $("#four_period_gzd ").val();
+      var four_period_nd = $("#four_period_nd ").val();
+      update_value += four_startTime+";"+four_endTime+";"+four_period_wd+";"+four_period_sd+";"+four_period_gzd+";"+four_period_nd;
+  	 // alert(four_startTime+";"+four_endTime+";"+four_period_wd+";"+four_period_sd+";"+four_period_gzd+";"+four_period_nd);
+     
+  	  $.post('change_mode_setting',{
+  		gh_id:gh_id,
+  		update_value:update_value
+	},'json')
+	.done(function(data){
+		if(data){
+			alert('更改成功！');
+			window.location.reload(); 
+		}
+		 
+	}); 
+  
+ }
 /* 袁健炜 2017-3-1 day add end*/
  
-  function fill_two_startTime(){
+  
+/*  
+   function fill_two_startTime(){
 	alert($("input[name='one_endTime']").val());
             var one_endTime=document.getElementById("one_endTime").value;
             document.getElementById("two_startTime").value=one_endTime;
         }
-  function chageModeDevice_seeting(){
-	  var one_endTime=document.getElementById("one_endTime").value;
-      document.getElementById("two_startTime").value=one_endTime;
-  }
-/*  $("input[name='one_endTime']").onBlur(function(){
-	 $("input[name='two_startTime']").val($("input[name='one_endTime']").val())  ;
+ $("input[name='one_endTime']").onBlur(function(){
+ $("input[name='two_startTime']").val($("input[name='one_endTime']").val())  ;
  });
  $("input[name='two_endTime']").onBlur(function(){
 		// alert($("input[name='one_endTime']").val());
@@ -299,5 +368,6 @@ function chageModeDevice(){
 		 $("input[name='four_startTime']").val($("input[name='three_endTime']").val())  ;
 	 }); */
 </script>
+
 </body>
 </html>
