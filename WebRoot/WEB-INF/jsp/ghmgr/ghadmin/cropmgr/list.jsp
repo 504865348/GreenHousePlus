@@ -28,8 +28,9 @@
 				<th>作物名称</th>
 				<th>作物编码</th>
 				<th>作物品种</th>
-				<th>作物栽培要求</th>
-				<th>操作</th>
+				<th>定植日期</th>
+				<!-- <th>作物栽培要求</th> -->
+				<!-- <th>操作</th> -->
 			</tr>
 
 			<c:forEach items="${pager.list}" var="i">
@@ -38,17 +39,26 @@
 					<td class="text-center">${i.crop_name }</td>
 					<td class="text-center">${i.crop_code }</td>
 					<td class="text-center">${i.crop_type }</td>
-					<td class="text-center">${i.crop_period }</td>
-					<td class="text-center"><a href="javascript:;"
-						onclick="del(${i.crop_id })">删除</a></td>
+					<td class="text-center">${i.crop_date }</td>
+				<%-- 	<td class="text-center">${i.crop_period }</td> --%>
+					<%-- <td class="text-center"><a href="javascript:;"
+						onclick="del(${i.crop_id })">删除</a></td> --%>
 				</tr>
 			</c:forEach>
 		</table>
 		<div id="page"></div>
-		<div style="position: absolute; right: 20px; width: 100px;">
+		<c:if test="${pager.list.size()==0}">
+		<div style="position: absolute; right: 20px; width: 100px; ">
 			<input type="button" class="btn bcm tcw" value="添加作物"
-				onclick="location='<%=request.getContextPath()%>/ghmgr/ghadmin/crop/add'">
+				onclick="location='<%=request.getContextPath()%>/ghmgr/ghadmin/crop/add?ghid=${ghid }'">
 		</div>
+		</c:if>
+		<c:if test="${pager.list.size()!=0}">
+		<div style="position: absolute; right: 20px; width: 100px; display:none">
+			<input type="button" class="btn bcm tcw" value="添加作物"
+				onclick="location='<%=request.getContextPath()%>/ghmgr/ghadmin/crop/add?ghid=${ghid }'">
+		</div>
+		</c:if>
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/js/jquery.min.js"></script>
 		<script type="text/javascript"
