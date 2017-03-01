@@ -27,6 +27,8 @@
 		<div class="sidebar-nav">
 		<a href="<%=request.getContextPath()%>/stat/livedata" class="nav-header"
 						data-toggle="modal">主页</a>
+		<a href="<%=request.getContextPath()%>/stat/irrigation" class="nav-header"
+						data-toggle="modal">灌溉系统</a>
 			<c:if test="${not empty list}">
 				<c:forEach items="${list}" var="greenhouse">
 
