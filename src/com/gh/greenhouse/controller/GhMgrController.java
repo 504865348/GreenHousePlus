@@ -348,18 +348,18 @@ session.setAttribute("ghId", ghId);
 	 * @param passord
 	 * @return
 	 */
-	@RequestMapping("/ghadmin/ctrl/change_mode")
+	@RequestMapping(value="/ghadmin/ctrl/change_mode", method = RequestMethod.POST)
 	@ResponseBody
 	public Object changeMode(
-			@RequestParam Integer modeType,
 			@RequestParam String password){
+		System.out.println("用户的password为"+password);
 		User u = userDao.getCurrentUser(request);
-		
+		System.out.println("用户的id为"+u.getUser_id());
 		String secPassword = userDao.getSecondPassword(u.getUser_id());
 		if(password.equals(secPassword)){
 			//更改控制模式
-			Object ghId = WebUtils.getSessionAttribute(request, GreenhouseDao.CURRENT_GREENHOUSE);
-			return greenhouseDao.getUtil().update(Mapper.make("control_mode", modeType).getMap(), Cnd.where("GH_id", "=", ghId));
+			 
+			return  true;
 		}
 		//二级密码错误
 		return false;

@@ -35,21 +35,7 @@
 			<c:if test="${gh.control_mode eq 0}">智能控制</c:if> --%>
 		</h3>
 		<table class="table table-bordered table-condensed">
-		 	<tr>
-				<td class="text-center"><span style="line-height: 40px;">切换控制模式:</span></td>
-				<td><select class="form-control" onchange="changeMode();"
-					id="mode">
-						<option
-							<c:if test="${ gh.control_mode eq 1}">selected="selected"</c:if>
-							value="1">设定值控制</option>
-						<option
-							<c:if test="${ gh.control_mode eq 2}">selected="selected"</c:if>
-							value="2">手动控制</option>
-						<option
-							<c:if test="${ gh.control_mode eq 0}">selected="selected"</c:if>
-							value="0">智能控制</option>
-				</select></td>
-			</tr>  
+		 	  
 			<!-- 袁健炜 2017-02-28  night modify start-->	
 			<tr>
 			    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode()">设定值控制</a></span></td>
@@ -89,27 +75,21 @@
 	<script type="text/javascript">
 var current_model = '${gh.control_mode}';
 function changeMode(){
-	
-	var pass,mode=$('#mode').val(); 
+	var pass; 
 	if(pass = prompt('请输入密码：')){
 		$.post('change_mode',{
-			password:pass,
-			modeType:mode
+			password:pass
 		},'json')
 		.done(function(data){
 			if(data){
 				document.getElementById("table_device").style.display='';
-				//top.window.location.reload();
 			}
 			else{
 				alert('密码错误，修改失败');
-				$('#mode').val(current_model);
 			}
 		});
 	}
-	else{
-		$('#mode').val(current_model)
-	}
+	 
 	
 }
 /* 袁健炜 2017-2-28 night add start*/
