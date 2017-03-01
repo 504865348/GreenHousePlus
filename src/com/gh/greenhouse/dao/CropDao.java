@@ -14,4 +14,5 @@ public class CropDao extends BasicDao<Crop> {
 	public Crop findById(Integer id){
 		return load(Cnd.where("Crop_id", "=", id));
 	}
+	
 }

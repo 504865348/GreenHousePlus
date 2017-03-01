@@ -18,14 +18,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.gh.core.dao.UserDao;
-import com.gh.core.domain.Gh_Setting_Control;
+import com.gh.core.domain.Crop_Grouth_Info;
 import com.gh.core.domain.User;
+import com.gh.core.entity.GreenHouseInfo;
 import com.gh.core.utils.daoutils.Cnd;
 import com.gh.core.utils.daoutils.Mapper;
 import com.gh.greenhouse.dao.BaseDao;
 import com.gh.greenhouse.dao.ControlmodeDao;
 import com.gh.greenhouse.dao.CropDao;
 import com.gh.greenhouse.dao.CropGHDao;
+import com.gh.greenhouse.dao.CropGrouthDao;
 import com.gh.greenhouse.dao.Crop_FertDao;
 import com.gh.greenhouse.dao.Crop_PestDao;
 import com.gh.greenhouse.dao.FertilizerDao;
@@ -46,7 +48,7 @@ import com.gh.greenhouse.domain.Pesticides;
 import com.gh.greenhouse.domain.Record;
 import com.gh.greenhouse.domain.ShedCrop;
 import com.gh.greenhouse.domain.Soil;
-
+import com.gh.core.domain.Gh_Setting_Control;
 @RequestMapping("/ghmgr")
 @Controller
 public class GhMgrController {
@@ -84,7 +86,11 @@ public class GhMgrController {
 	@Autowired
 	private CropGHDao CropGHDao;
 	@Autowired
+	private CropGrouthDao cropGrouthDao;
+	@Autowired
 	private Gh_Setting_ControlDao gh_Setting_ControlDao;
+	
+
 	/**
 	 * 跳转到添加温室界面
 	 * 
@@ -684,21 +690,40 @@ session.setAttribute("ghId", ghId);
 		return "ghmgr/ghadmin/cropmgr/add";
 	}
 
+	/**
+	 * 作物添加
+	 * 温室1-4 普通作物
+	 * 温室5-6 需要在两张表中添加
+	 * @param model
+	 * @param ghid
+	 * @param crop
+	 * @param cropGH
+	 * @return
+	 */
 	@RequestMapping(value="/ghadmin/crop/add",method=RequestMethod.POST)
 	@ResponseBody
 	public Object ghadmin_crop_add(Model model,
 			@RequestParam(value="ghid") String ghid,
 			Crop crop,CropGH cropGH){
-		System.out.println("新增id为"+ghid);
-		crop.setDeleted("N");
-		
-		System.out.println("crop.getCrop_code()"+crop.getCrop_code());
-		cropGH.setCrop_id(crop.getCrop_code());
-		System.out.println("cropGH.getCrop_i()"+cropGH.getCrop_id());
-		cropGH.setGH_id(ghid);
-		System.out.println(CropGHDao.insert(cropGH));
-	    //return CropGHDao.insert(cropGH); 
-	    return cropDao.insert(crop);
+		    //温室1-4
+			System.out.println("新增id为"+ghid);
+			crop.setDeleted("N");
+			System.out.println("crop.getCrop_code()"+crop.getCrop_code());
+			cropGH.setCrop_id(crop.getCrop_code());
+			System.out.println("cropGH.getCrop_i()"+cropGH.getCrop_id());
+			cropGH.setGH_id(ghid);
+			System.out.println(CropGHDao.insert(cropGH));
+		    //return CropGHDao.insert(cropGH); 
+			//温室5-6
+		    if(ghid.equals(GreenHouseInfo.GH_FIVE_ID+"")||ghid.equals(GreenHouseInfo.GH_SIX_ID+"")){
+		    	Crop_Grouth_Info crop_grouth_info=new Crop_Grouth_Info();
+		    	crop_grouth_info.setGh_id(Integer.parseInt(ghid));
+		    	crop_grouth_info.setCrop_name(crop.getCrop_name());
+		    	crop_grouth_info.setCrop_date(crop.getCrop_date());
+		    	System.out.println("crop_grouth_info"+crop.getCrop_name());
+		    	cropGrouthDao.insert(crop_grouth_info);
+		    }
+		    return cropDao.insert(crop);
 	}
 	@RequestMapping("/ghadmin/crop/list")
 	public String ghadmin_crop_list(Model model,
@@ -706,6 +731,7 @@ session.setAttribute("ghId", ghId);
 			@RequestParam(value = "ps", required = false, defaultValue = "20") Integer pageSize,
 			@RequestParam(value = "pn", required = false, defaultValue = "1") Integer pageNumber){
 		model.addAttribute("pager", cropDao.listByPage(Cnd.where("deleted", "=", "N").and("ghid", "=", ghid), pageSize, pageNumber));
+		model.addAttribute("ghid", ghid);
 		return "ghmgr/ghadmin/cropmgr/list";
 	}
 }

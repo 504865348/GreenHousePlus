@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import com.gh.core.dao.UserDao;
+import com.gh.core.domain.Crop_Grouth_Info;
 import com.gh.core.domain.User;
 import com.gh.core.entity.GreenHouseInfo;
 import com.gh.core.utils.Pager;
@@ -25,6 +27,7 @@ import com.gh.core.utils.daoutils.Cnd;
 import com.gh.core.utils.daoutils.Mapper;
 import com.gh.greenhouse.dao.BaseDao;
 import com.gh.greenhouse.dao.CropDao;
+import com.gh.greenhouse.dao.CropGrouthDao;
 import com.gh.greenhouse.dao.ElementDao;
 import com.gh.greenhouse.dao.Element_typeDao;
 import com.gh.greenhouse.dao.GreenhouseDao;
@@ -65,6 +68,8 @@ public class StatisticController {
 	private IrrgationDao irrgationDao;
 	@Resource
 	private OuterMeteorologicalDao meteorologicalDao;
+	@Autowired
+	private CropGrouthDao cropGrouthDao;
 	/**实时数据页面
 	 * @return
 	 * @throws IOException 
@@ -229,6 +234,13 @@ public class StatisticController {
 		model.addAttribute("gh", gh); 
 		model.addAttribute("ghjson", new ObjectMapper().writeValueAsString(gh)); 
 		model.addAttribute("pager", cropDao.listByPage(Cnd.where("deleted", "=", "N").and("ghid", "=", ghid), pageSize, pageNumber));//新增
+		//判断是否是温室5-6
+		model.addAttribute("isGHmore", ghid.equals(GreenHouseInfo.GH_FIVE_ID+"")||ghid.equals(GreenHouseInfo.GH_SIX_ID+"")?1:0);
+		//添加
+		Crop_Grouth_Info crop_grouth_info=cropGrouthDao.findById(gh.getGH_id());
+		if(crop_grouth_info!=null){
+			model.addAttribute("crop", crop_grouth_info);
+		}
 		return "statistic/singlelivedata";
 	}
 	

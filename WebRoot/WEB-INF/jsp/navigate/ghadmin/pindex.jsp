@@ -50,7 +50,10 @@
 							target="main">温室结构信息</a>
 					    </li>
 						 
-						<li>作物信息</li> 
+						<li><a
+							href="<%=request.getContextPath()%>/ghmgr/ghadmin/crop/list?ghid=${greenhouse.GH_id}"
+							target="main">作物管理</a>
+					    </li>
 						<li><a
 							href="<%=request.getContextPath()%>/ghmgr/ghadmin/ctrl/change-model?ghId=${greenhouse.GH_id}"
 							target="main">控制模式</a>

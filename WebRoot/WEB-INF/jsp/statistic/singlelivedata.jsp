@@ -142,7 +142,32 @@
 			<td class="text-center">${i.crop_date }</td>
 		  </tr>
 		</c:forEach>
-									 
+		<c:if test="${isGHmore==1}">
+		<tr>
+		<td>冠幅(面积)</td>
+		<td>株高</td>
+		<td>株高生长速率</td>
+		<td>果实（直径）</td>
+		<td>果实生长速率</td>
+		<td>茎粗</td>
+		<td>冠气温差</td>
+		<td>氮</td>
+		<td>磷</td>
+		<td>钾</td>
+		</tr>
+		<tr>
+		<td>${crop.crop_area}</td>
+		<td>${crop.crop_height}</td>
+		<td>${crop.crop_height_rate}</td>
+		<td>${crop.crop_diameter}</td>
+		<td>${crop.crop_fruit_rate}</td>
+		<td>${crop.crop_stem_weight}</td>
+		<td>${crop.crop_range_temperature}</td>
+		<td>${crop.crop_nitrogen}</td>
+		<td>${crop.crop_phosphorus}</td>
+		<td>${crop.crop_kalium}</td>
+		</tr>
+		</c:if>
 	</table>
   </div>
 </div>

@@ -38,18 +38,18 @@ System.out.print("ghidghidghid"+ghid);
 					<td class="text-center">作物编码：</td>
 					<td><input type="text" name="Crop_code"
 						class="required number form-control" /></td>
-				</tr>
+				</tr> 
 				<tr>
 					<td class="text-center">作物品种：</td>
 					<td><input type="text" name="Crop_type"
 						class="required form-control" /></td>
 				</tr>
-				<tr>
+				<!--  <tr>
 					<td class="text-center">作物栽培要求：</td>
 					<td><input type="text" name="Crop_period" class="form-control" /></td>
-				</tr>
+				</tr>  -->
 				<tr>
-					<td class="text-center">作物栽培时间：</td>
+					<td class="text-center">作物定植日期：</td>
 					<td><input type="text" name="Crop_date" class="form-control" /></td>
 				</tr>
 				<tr>
