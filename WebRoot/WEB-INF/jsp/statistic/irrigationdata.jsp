@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="refresh" content="5" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath() %>/assets/css/style.css"
 	type="text/css"></link>
@@ -96,7 +95,7 @@
 			<td class="text-center"></td>
 			<td></td>
 		    <td><input type="button" value="更改设备" class="btn bcm tcw"
-				onclick="location='<%=request.getContextPath()%>/stat'"></td>
+				onclick=""></td>
 		 </tr>
 					  </table>
 			  <!-- Table 2-->
@@ -138,56 +137,28 @@
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/laypage/laypage.js"></script>
 		<script>
-$(function(){
-		laypage({
-	    cont: 'page',
-	    pages: '${pager.pageCount}', 
-	    curr: '${pager.pageNumber}', 
-	    jump: function(e, first){ 
-	        if(!first){ 
-	            location.href = '?ps=${pager.pageSize}&pn='+e.curr;
-	        }
-	    }
-	});
+
+function changeMode(){
 	
-})
-function switchStatus(devId){
+	var pass; 
+	if(pass = prompt('请输入密码：')){
+		$.post('validate_pass',{
+			password:pass
+		},'json')
+		.done(function(data){
+			if(data.equals("true")){
+				alert('密码正确');
+			}
+			else{
+				alert('密码错误，修改失败');
+			}
+		});
+	}
+	
 	
 }
-function loadElements(){
-	var type=$('select[name=elementType]').val();
-	$.get('livedataAjax',{
-		elementType:type
-	},'json')
-	.done(function(data){
-		/* $('select[name=elementId]>option:gt(0)').remove();
-		for(var i in data){
-			$('select[name=elementId]').append(
-				$('<option>').val(data[i]['element_id'])
-				.html(data[i]['element_nam'])
-			);
-		} */
-		for(var i in data){
-			var $li = $('<li>');
-			$li.append(data[i]['element_nam']+"-");
-			loadData()
-			$('#eles').append($li);
-		}	
-	});
-}
-function loadData(type,eleid,dom){
-	//var type=$('select[name=elementType]').val();
-	//var eleid=$('select[name=elementId]').val();
-	$.get('livedataAjax',{
-		elementType:type,
-		elementId:eleid
-	},'json')
-	.done(function(data){
-		var d = (data.list[0].map['eleid_'+eleid]);
-		//$('#data').html(d);
-		dom.append(d);
-	});
-}
+
+
 </script>
 	</div>
 

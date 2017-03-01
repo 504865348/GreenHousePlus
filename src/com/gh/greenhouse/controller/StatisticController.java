@@ -12,8 +12,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import com.gh.core.dao.UserDao;
 import com.gh.core.domain.User;
@@ -336,4 +338,5 @@ public class StatisticController {
 		model.addAttribute("irr", irrgationDao.getIrrigationInfo());
 		return "statistic/irrigationdata";
 	}
+
 }
