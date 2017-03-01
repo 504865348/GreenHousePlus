@@ -4,7 +4,7 @@ public class Irrigation_Fertilization_Information {
 /**
  * 温室id
  */
-	private int base_id;
+private int base_id;
 	/**
 	 * 控制模式
 	 * 0，停止；1，手动；2，单机 自动；3，联机手动；4，联机自动
@@ -24,14 +24,17 @@ private String gh_one_irrigation_status;
  * 温室2灌溉阀状态
  */
 private String gh_two_irrigation_status;
+
 /**
  * 温室3灌溉阀状态
  */
 private String gh_three_irrigation_status;
+
 /**
  * 温室4灌溉阀状态
  */
 private String gh_four_irrigation_status;
+
 /**
  * 温室5灌溉阀状态
  */

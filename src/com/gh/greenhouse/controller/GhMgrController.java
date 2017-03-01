@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.gh.core.dao.UserDao;
+import com.gh.core.domain.Gh_Setting_Control;
 import com.gh.core.domain.User;
 import com.gh.core.utils.daoutils.Cnd;
 import com.gh.core.utils.daoutils.Mapper;
@@ -28,6 +29,7 @@ import com.gh.greenhouse.dao.CropGHDao;
 import com.gh.greenhouse.dao.Crop_FertDao;
 import com.gh.greenhouse.dao.Crop_PestDao;
 import com.gh.greenhouse.dao.FertilizerDao;
+import com.gh.greenhouse.dao.Gh_Setting_ControlDao;
 import com.gh.greenhouse.dao.GreenhouseDao;
 import com.gh.greenhouse.dao.PesticidesDao;
 import com.gh.greenhouse.dao.RecordDao;
@@ -81,7 +83,8 @@ public class GhMgrController {
 	private HttpSession session;
 	@Autowired
 	private CropGHDao CropGHDao;
-
+	@Autowired
+	private Gh_Setting_ControlDao gh_Setting_ControlDao;
 	/**
 	 * 跳转到添加温室界面
 	 * 
@@ -305,6 +308,7 @@ session.setAttribute("ghId", ghId);
 		}
 		model.addAttribute("gh", gh);
 		model.addAttribute("setupCons", setupConDao.findByGhId(Integer.parseInt(ghid)));//新增
+		model.addAttribute("ghSetting", gh_Setting_ControlDao.findSettingByGhId(Integer.parseInt(ghid)));//新增
 		return "ghmgr/ghadmin/ctrlmodel/change-model";  //增加一个ghid 参数
 	}
 	

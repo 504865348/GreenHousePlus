@@ -172,6 +172,12 @@ public class DBUtil<T> {
 		 return _update_device_status(ghid, modify_device_value);
 	}
 	
+	/**
+	 * 袁健炜 2017-2-28 night add
+	 */
+	public int update_irr(String base_id,String modify_device_value) {
+		 return _update_irr(base_id, modify_device_value);
+	}
 	
 	/**update私有函数
 	 * @param fields
@@ -237,6 +243,37 @@ public class DBUtil<T> {
 	    }
         
 		String preSql ="UPDATE setup_con SET Control = CASE Name " + sql_one +" END WHERE Name IN (" +sql_two.substring(0, sql_two.length()-1)+" ) and GH_id="+ghid;
+		PreparedStatement ps = null;
+
+		System.out.println("=========[#SQL]========::"+preSql.toUpperCase());
+		try {
+			ps = con.prepareStatement(preSql);
+		    ret = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		closeConnection(con,ps,null);
+		System.out.println(ret + " colum(s) effected."); 
+		return ret;
+	}
+	
+	/*
+	 * 袁健炜 2017-3-1 day add
+	 */
+
+	/**update私有函数
+	 * @param fields
+	 * @param cnd
+	 * @return
+	 */
+	private int _update_irr(String base_id,String  modify_device_value){
+		// 传递的参数比如为：外遮阳电机:0;天窗:0;
+		Connection con = getConnection();
+		int ret = 0;
+		
+		String preSql ="update irrigation_fertilization_information set "+ modify_device_value +"  where base_id="+base_id;
 		PreparedStatement ps = null;
 
 		System.out.println("=========[#SQL]========::"+preSql.toUpperCase());

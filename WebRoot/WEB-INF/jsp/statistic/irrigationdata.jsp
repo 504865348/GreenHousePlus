@@ -22,11 +22,13 @@
 <title>施肥灌溉系统</title>
 </head>
 <body>
+<!-- 袁健炜 -->
+ <input type="hidden" id="base_id" value='${irr.base_id}' />
 	<div class="w11 center-block">
 		 
 		<div class="detail">
 			  <!-- Table 1-->
-					  <table class="table table-bordered table-striped table-condensed">
+					  <table class="table table-bordered table-striped table-condensed" id="table_irr">
 					    <tr>
 						<th>温室</th>
 						<th>灌溉阀状态</th>
@@ -38,8 +40,8 @@
 						<c:if test="${irr.gh_one_irrigation_status == 0 }">关</c:if>
 					    <c:if test="${irr.gh_one_irrigation_status == 1 }">开</c:if></td>
 						<td>
-						<c:if test="${irr.gh_one_irrigation_status == 0 }"><input type="checkbox"   name='打开' />打开</c:if>
-				        <c:if test="${irr.gh_one_irrigation_status == 1 }"><input type="checkbox"   name='关闭' />关闭</c:if>
+						<c:if test="${irr.gh_one_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+				        <c:if test="${irr.gh_one_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
 						</td>
 					    </tr>
 					    <tr>
@@ -48,8 +50,8 @@
 						<c:if test="${irr.gh_two_irrigation_status == 0 }">关</c:if>
 					    <c:if test="${irr.gh_two_irrigation_status == 1 }">开</c:if></td>
 						<td>
-						<c:if test="${irr.gh_two_irrigation_status == 0 }"><input type="checkbox"   name='打开' />打开</c:if>
-				        <c:if test="${irr.gh_two_irrigation_status == 1 }"><input type="checkbox"   name='关闭' />关闭</c:if>
+						<c:if test="${irr.gh_two_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+				        <c:if test="${irr.gh_two_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
 						</td>
 					    </tr>
 					    <tr>
@@ -58,8 +60,8 @@
 						<c:if test="${irr.gh_three_irrigation_status == 0 }">关</c:if>
 					    <c:if test="${irr.gh_three_irrigation_status == 1 }">开</c:if></td>
 						<td>
-						<c:if test="${irr.gh_three_irrigation_status == 0 }"><input type="checkbox"   name='打开' />打开</c:if>
-				        <c:if test="${irr.gh_three_irrigation_status == 1 }"><input type="checkbox"   name='关闭' />关闭</c:if>
+						<c:if test="${irr.gh_three_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+				        <c:if test="${irr.gh_three_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
 						</td>
 					    </tr>
 					    <tr>
@@ -68,8 +70,8 @@
 						<c:if test="${irr.gh_four_irrigation_status == 0 }">关</c:if>
 					    <c:if test="${irr.gh_four_irrigation_status == 1 }">开</c:if></td>
 						<td>
-						<c:if test="${irr.gh_four_irrigation_status == 0 }"><input type="checkbox"   name='打开' />打开</c:if>
-				        <c:if test="${irr.gh_four_irrigation_status == 1 }"><input type="checkbox"   name='关闭' />关闭</c:if>
+						<c:if test="${irr.gh_four_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+				        <c:if test="${irr.gh_four_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
 						</td>
 					    <tr>
 						<td>温室 NO.5</td>
@@ -77,8 +79,8 @@
 						<c:if test="${irr.gh_five_irrigation_status == 0 }">关</c:if>
 					    <c:if test="${irr.gh_five_irrigation_status == 1 }">开</c:if></td>
 						<td>
-						<c:if test="${irr.gh_five_irrigation_status == 0 }"><input type="checkbox"   name='打开' />打开</c:if>
-				        <c:if test="${irr.gh_five_irrigation_status == 1 }"><input type="checkbox"   name='关闭' />关闭</c:if>
+						<c:if test="${irr.gh_five_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+				        <c:if test="${irr.gh_five_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
 						</td>
 					    </tr>
 					    <tr>
@@ -87,15 +89,15 @@
 						<c:if test="${irr.gh_six_irrigation_status == 0 }">关</c:if>
 					    <c:if test="${irr.gh_six_irrigation_status == 1 }">开</c:if></td>	
 					    <td>
-						<c:if test="${irr.gh_six_irrigation_status == 0 }"><input type="checkbox"   name='打开' />打开</c:if>
-				        <c:if test="${irr.gh_six_irrigation_status == 1 }"><input type="checkbox"   name='关闭' />关闭</c:if>
+						<c:if test="${irr.gh_six_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+				        <c:if test="${irr.gh_six_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
 						</td>		
 					    </tr>
 					     <tr>
 			<td class="text-center"></td>
 			<td></td>
 		    <td><input type="button" value="更改设备" class="btn bcm tcw"
-				onclick=""></td>
+				onclick="changeMode()"></td>
 		 </tr>
 					  </table>
 			  <!-- Table 2-->
@@ -132,22 +134,49 @@
 	</div>
 
 		<div id="page"></div>
-		<script type="text/javascript"
+		
+ <script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/js/jquery.min.js"></script>
-		<script type="text/javascript"
+<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/laypage/laypage.js"></script>
-		<script>
+<script  type="text/javascript">
 
 function changeMode(){
 	
 	var pass; 
+	var base_id = $("#base_id").val();
+	 
+	var table =document.getElementById("table_irr");
+	var rows = table.rows.length;
+    
+	var status = document.getElementsByName("status"); 
+	//alert(status.length);
+	all_status = "";
+	var device_name = "";
+	for (var i = 0; i < status.length; i++) {
+		device_name +=  table.rows[i+1].cells[0].innerHTML  +";"; //设备名字
+		 
+        if (status[i].checked) {
+         if(table.rows[i+1].cells[1].innerHTML.trim()=="开")	{
+        	 all_status += "0;";   // 设备对应状态
+         }else{
+        	 all_status += "1;";   // 设备对应状态
+         }
+         }else{
+       	 all_status += "*;";
+        }
+     }
+ 
 	if(pass = prompt('请输入密码：')){
 		$.post('validate_pass',{
-			password:pass
+			base_id:base_id,
+			password:pass,
+			all_status:all_status
 		},'json')
 		.done(function(data){
-			if(data.equals("true")){
-				alert('密码正确');
+			if(data){
+				alert('更改成功！');
+				window.location.reload(); 
 			}
 			else{
 				alert('密码错误，修改失败');
@@ -156,11 +185,8 @@ function changeMode(){
 	}
 	
 	
-}
+ }
+ </script>
 
-
-</script>
-	</div>
-
-</body>
+ </body>
 </html>

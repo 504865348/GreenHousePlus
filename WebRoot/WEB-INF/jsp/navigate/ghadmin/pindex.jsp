@@ -26,9 +26,10 @@
 	<div class="article">
 		<div class="sidebar-nav">
 		<a href="<%=request.getContextPath()%>/stat/livedata" class="nav-header"
-						data-toggle="modal">主页</a>
+						data-toggle="collapse">主页</a>
 		<a href="<%=request.getContextPath()%>/stat/irrigation" class="nav-header"
-						data-toggle="modal">灌溉系统</a>
+						target="main" >灌溉系统</a>
+						<!-- 袁健炜 2017-3-1 day modify  ghid -->
 			<c:if test="${not empty list}">
 				<c:forEach items="${list}" var="greenhouse">
 

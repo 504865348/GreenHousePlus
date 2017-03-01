@@ -333,10 +333,58 @@ public class StatisticController {
 			@RequestParam(value="ps",required=false,defaultValue="20") Integer pageSize,
 			@RequestParam(value="pn",required=false,defaultValue="1") Integer pageNumber,
 			Integer ghId) throws JsonGenerationException, JsonMappingException, IOException{
-		
-		
+		 
 		model.addAttribute("irr", irrgationDao.getIrrigationInfo());
 		return "statistic/irrigationdata";
+	}
+	
+	/**更换控制 模式
+	 * @param modeType
+	 * @param passord
+	 * @return
+	 */
+	@RequestMapping(value="/validate_pass", method = RequestMethod.POST)
+	@ResponseBody
+	public Object changeMode(
+			@RequestParam String base_id,
+			@RequestParam String password,
+			@RequestParam String all_status){
+	 
+		User u = userDao.getCurrentUser(request);
+		System.out.println("用户的id为"+u.getUser_id());
+		String secPassword = userDao.getSecondPassword(u.getUser_id());
+		System.out.println("密码"+secPassword);
+		if(password.equals(secPassword)){
+			System.out.println("密码正确");
+			String update_sql ="";
+			String[] all_status_list = all_status.split(";");
+			for(int i=0;i<all_status_list.length;i++){
+				if(!all_status_list[i].equals("*")){
+					if(i==0){
+						update_sql += " gh_one_irrigation_status = "+ all_status_list[i] +",";
+					}
+					if(i==1){
+						update_sql += " gh_two_irrigation_status = "+ all_status_list[i]+",";
+					}
+					if(i==2){
+						update_sql += " gh_three_irrigation_status = "+ all_status_list[i]+",";
+					}
+					if(i==3){
+						update_sql += " gh_four_irrigation_status = "+  all_status_list[i]+",";
+					}
+					if(i==4){
+						update_sql += " gh_five_irrigation_status = "+ all_status_list[i]+",";
+					}
+					if(i==5){
+						update_sql += " gh_six_irrigation_status = "+  all_status_list[i]+",";
+					}
+				}
+			}
+			System.out.println("update_sql"+update_sql);
+			return irrgationDao.getUtil().update_irr(base_id, update_sql.substring(0, update_sql.length()-1));
+		}
+		//二级密码错误
+		return false;
 	}
 
 }
