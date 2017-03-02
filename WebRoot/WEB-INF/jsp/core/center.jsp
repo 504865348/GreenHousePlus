@@ -86,6 +86,7 @@
 		.done(function(data){
 			if(data){
 				alert('修改成功');
+				window.location.reload(); 
 			}
 			else{
 				alert('修改失败');
