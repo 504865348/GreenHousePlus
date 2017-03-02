@@ -72,4 +72,14 @@ public class UserDao extends BasicDao<User> {
 		if(null == u) return null;
 		return u.getSec_password();
 	}
+	
+	/**获取用户的一级密码，如果未找到返回null
+	 * @param userId
+	 * @return
+	 */
+	public String getFirstPassword(Integer userId){
+		User u = super.load(new String[]{"Password"}, Cnd.where("User_id","=",userId));
+		if(null == u) return null;
+		return u.getPassword();
+	}
 }

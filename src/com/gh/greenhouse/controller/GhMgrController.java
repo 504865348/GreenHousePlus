@@ -1,11 +1,16 @@
 package com.gh.greenhouse.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
 import com.gh.core.dao.UserDao;
 import com.gh.core.domain.Crop_Grouth_Info;
 import com.gh.core.domain.User;
 import com.gh.core.entity.GreenHouseInfo;
 import com.gh.core.utils.daoutils.Cnd;
-import com.gh.core.utils.daoutils.Mapper;
 import com.gh.greenhouse.dao.BaseDao;
 import com.gh.greenhouse.dao.ControlmodeDao;
 import com.gh.greenhouse.dao.CropDao;
@@ -42,13 +45,14 @@ import com.gh.greenhouse.domain.Crop;
 import com.gh.greenhouse.domain.CropGH;
 import com.gh.greenhouse.domain.Crop_Fert;
 import com.gh.greenhouse.domain.Crop_Pest;
+import com.gh.greenhouse.domain.Element_type;
 import com.gh.greenhouse.domain.Fertilizer;
 import com.gh.greenhouse.domain.Greenhouse;
 import com.gh.greenhouse.domain.Pesticides;
 import com.gh.greenhouse.domain.Record;
 import com.gh.greenhouse.domain.ShedCrop;
 import com.gh.greenhouse.domain.Soil;
-import com.gh.core.domain.Gh_Setting_Control;
+
 @RequestMapping("/ghmgr")
 @Controller
 public class GhMgrController {
@@ -89,7 +93,6 @@ public class GhMgrController {
 	private CropGrouthDao cropGrouthDao;
 	@Autowired
 	private Gh_Setting_ControlDao gh_Setting_ControlDao;
-	
 
 	/**
 	 * 跳转到添加温室界面
@@ -321,7 +324,7 @@ session.setAttribute("ghId", ghId);
 	/*
 	 *  袁健炜  2017-2-28  night modify 
 	 */
-	@RequestMapping("/ghadmin/ctrl/change_mode_device")
+	@RequestMapping(value="/ghadmin/ctrl/change_mode_device", method = RequestMethod.POST)
 	@ResponseBody
 	public Object changeMode_device(
 			@RequestParam String  gh_id,
@@ -348,6 +351,25 @@ session.setAttribute("ghId", ghId);
 		
 	}
 	
+	/*
+	 *  袁健炜  2017-3-1  night modify 
+	 */
+	@RequestMapping(value="/ghadmin/ctrl/change_mode_setting", method = RequestMethod.POST)
+	@ResponseBody
+	public Object changeMode_device_setting(
+			@RequestParam String  gh_id,
+			@RequestParam String update_value
+		 ){
+		String[] all_updateValue_list = update_value.split("&&&");
+		for(int i=0;i<all_updateValue_list.length;i++){
+			System.out.println("对应的值为"+all_updateValue_list[i]);
+		}
+		
+		//System.out.println("更新的设备为:"+update_device);
+		return greenhouseDao.getUtil().update_setting(gh_id, update_value);
+	}
+	
+	 
 	@ExceptionHandler
 	public String exceptionHandler(Exception e){
 		return "redirect:../../login";
@@ -374,8 +396,26 @@ session.setAttribute("ghId", ghId);
 		//二级密码错误
 		return false;
 	}
+	
+	@RequestMapping(value="/ghadmin/ctrl/change_mode_intellgece", method = RequestMethod.POST)
+	@ResponseBody
+	public Object changeModeIntellgence(
+			@RequestParam String password,
+			@RequestParam String ghid){
+		System.out.println("用户的password为"+password +ghid);
+		User u = userDao.getCurrentUser(request);
+		System.out.println("用户的id为"+u.getUser_id());
+		String secPassword = userDao.getSecondPassword(u.getUser_id());
+		if(password.equals(secPassword)){
+			//更改控制模式
+			return  true;
+		}
+		//二级密码错误
+		return false;
+	}
+	
 
-	/**
+	/**  
 	 * 温室管理-肥料-添加
 	 * 
 	 * @return

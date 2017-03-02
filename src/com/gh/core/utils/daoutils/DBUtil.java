@@ -160,6 +160,10 @@ public class DBUtil<T> {
 		return _update(fields, cnd);
 	}
 	
+	public int updatePass(int userid,String newpass) {
+		return _updatePass(userid, newpass);
+	}
+	
 	public int update(Map<String,?> param, Cnd cnd) {
 		BeanField[] fields = findFieldsOfMap(param);
 		return _update(fields, cnd);
@@ -170,6 +174,13 @@ public class DBUtil<T> {
 	 */
 	public int update_devie(String ghid,String modify_device_value) {
 		 return _update_device_status(ghid, modify_device_value);
+	}
+	
+	/**
+	 * 袁健炜 2017-2-28 night add
+	 */
+	public int update_setting(String ghid,String modify_device_value) {
+		 return _update_device_setting(ghid, modify_device_value);
 	}
 	
 	/**
@@ -221,7 +232,30 @@ public class DBUtil<T> {
 	/*
 	 * 袁健炜 2017-2-28 night add
 	 */
+	/**update私有函数
+	 * @param fields
+	 * @param cnd
+	 * @return
+	 */
+	private int _updatePass(int userid,String newpass){
+		Connection con = getConnection();
+		int ret = 0;
 
+		String preSql = "update user set Password='"+newpass +"' where User_id='"+userid+"'";
+		PreparedStatement ps = null;
+
+		System.out.println("=========[#SQL]========::"+preSql.toUpperCase());
+		try {
+			ps = con.prepareStatement(preSql);
+			ret = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeConnection(con,ps,null);
+		System.out.println(ret + " colum(s) effected.");
+		return ret;
+	}
+	
 	/**update私有函数
 	 * @param fields
 	 * @param cnd
@@ -259,6 +293,52 @@ public class DBUtil<T> {
 		return ret;
 	}
 	
+	/*
+	 * 袁健炜 2017-3-1 night add
+	 */
+
+	/**update私有函数
+	 * @param fields
+	 * @param cnd
+	 * @return
+	 */
+	private int _update_device_setting(String ghid,String  modify_device_value){
+		// 传递的参数比如为：外遮阳电机:0;天窗:0;
+		Connection con = getConnection();
+		int ret = 0;
+		String updateSQL = "";
+		String[] all_updateValue_list = modify_device_value.split("&&&");
+		for(int i=0;i<all_updateValue_list.length;i++){
+			System.out.println("对应的值为"+all_updateValue_list[i]);
+		}
+		String[] one_split = all_updateValue_list[0].split(";");
+		updateSQL += "period_one_start = " + one_split[0] + ",period_one_end=" + one_split[1] + ",period_one_wd="+one_split[2] +",period_one_sd="+ one_split[3] +",period_one_gzd="+ one_split[4] +",period_one_nd=" +one_split[5];
+		
+		String[] two_split = all_updateValue_list[0].split(";");
+		updateSQL += ",period_two_start = " + two_split[0] + ",period_two_end=" + two_split[1] + ",period_two_wd="+two_split[2] +",period_two_sd="+ two_split[3] +",period_two_gzd="+ two_split[4] +",period_two_nd=" +two_split[5];
+		
+		String[] three_split = all_updateValue_list[0].split(";");
+		updateSQL += ",period_three_start = " + three_split[0] + ",period_three_end=" + three_split[1] + ",period_three_wd="+three_split[2] +",period_three_sd="+ three_split[3] +",period_three_gzd="+ three_split[4] +",period_three_nd=" +three_split[5];
+		
+		String[] four_split = all_updateValue_list[0].split(";");
+		updateSQL += ",period_four_start = " + four_split[0] + ",period_four_end=" + four_split[1] + ",period_two_wd="+four_split[2] +",period_four_sd="+ four_split[3] +",period_four_gzd="+ four_split[4] +",period_four_nd=" +four_split[5];
+        
+		String preSql ="UPDATE gh_setting_control SET " + updateSQL +" where gh_id="+ghid;
+		PreparedStatement ps = null;
+
+		System.out.println("=========[#SQL]========::"+preSql.toUpperCase());
+		try {
+			ps = con.prepareStatement(preSql);
+		    ret = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		closeConnection(con,ps,null);
+		System.out.println(ret + " colum(s) effected."); 
+		return ret;
+	}
 	/*
 	 * 袁健炜 2017-3-1 day add
 	 */
@@ -318,7 +398,6 @@ public class DBUtil<T> {
 			if(null!=cnd) cnd.setAllStatementsVal(ps, 1);
 			rs = ps.executeQuery();
 			while(rs.next()){
-				
 				result.add(getBeanFromResultSet(rs));
 			}
 			

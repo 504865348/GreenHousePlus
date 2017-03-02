@@ -17,6 +17,7 @@
 <title>温室智慧管控系统</title>
 </head>
 <body>
+ 
 	<div class="container-fluid">
 	  <div class="row">
 	   	<jsp:include page="/WEB-INF/jsp/include/pheader.jsp"></jsp:include>
@@ -28,6 +29,7 @@
 		   </div>
 		   <div class="col-md-10 my-article">
 		   		<iframe name="main" class="mainIframe" scrolling="no"
+ 
 				onload="iw=this.contentWindow;$(this).height(iw.$(iw.document).height())"
 				src="<%=request.getContextPath()%>/stat/livedata"></iframe>
 		   </div><!-- end class="col-md-10" -->

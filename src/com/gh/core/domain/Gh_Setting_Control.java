@@ -47,7 +47,6 @@ private String period_four_wd;
 private String period_four_sd;
 private String period_four_gzd;
 private String period_four_nd;
-
 public int getGh_id() {
 	return gh_id;
 }
@@ -72,7 +71,18 @@ public String getSetting_time() {
 public void setSetting_time(String setting_time) {
 	this.setting_time = setting_time;
 }
- 
+public String getPeriod_one_start() {
+	return period_one_start;
+}
+public void setPeriod_one_start(String period_one_start) {
+	this.period_one_start = period_one_start;
+}
+public String getPeriod_one_end() {
+	return period_one_end;
+}
+public void setPeriod_one_end(String period_one_end) {
+	this.period_one_end = period_one_end;
+}
 public String getPeriod_one_wd() {
 	return period_one_wd;
 }
@@ -97,7 +107,18 @@ public String getPeriod_one_nd() {
 public void setPeriod_one_nd(String period_one_nd) {
 	this.period_one_nd = period_one_nd;
 }
- 
+public String getPeriod_two_start() {
+	return period_two_start;
+}
+public void setPeriod_two_start(String period_two_start) {
+	this.period_two_start = period_two_start;
+}
+public String getPeriod_two_end() {
+	return period_two_end;
+}
+public void setPeriod_two_end(String period_two_end) {
+	this.period_two_end = period_two_end;
+}
 public String getPeriod_two_wd() {
 	return period_two_wd;
 }
@@ -122,7 +143,18 @@ public String getPeriod_two_nd() {
 public void setPeriod_two_nd(String period_two_nd) {
 	this.period_two_nd = period_two_nd;
 }
- 
+public String getPeriod_three_start() {
+	return period_three_start;
+}
+public void setPeriod_three_start(String period_three_start) {
+	this.period_three_start = period_three_start;
+}
+public String getPeriod_three_end() {
+	return period_three_end;
+}
+public void setPeriod_three_end(String period_three_end) {
+	this.period_three_end = period_three_end;
+}
 public String getPeriod_three_wd() {
 	return period_three_wd;
 }
@@ -147,7 +179,18 @@ public String getPeriod_three_nd() {
 public void setPeriod_three_nd(String period_three_nd) {
 	this.period_three_nd = period_three_nd;
 }
-
+public String getPeriod_four_start() {
+	return period_four_start;
+}
+public void setPeriod_four_start(String period_four_start) {
+	this.period_four_start = period_four_start;
+}
+public String getPeriod_four_end() {
+	return period_four_end;
+}
+public void setPeriod_four_end(String period_four_end) {
+	this.period_four_end = period_four_end;
+}
 public String getPeriod_four_wd() {
 	return period_four_wd;
 }
@@ -172,54 +215,6 @@ public String getPeriod_four_nd() {
 public void setPeriod_four_nd(String period_four_nd) {
 	this.period_four_nd = period_four_nd;
 }
-public String getPeriod_one_start() {
-	return period_one_start;
-}
-public void setPeriod_one_start(String period_one_start) {
-	this.period_one_start = period_one_start;
-}
-public String getPeriod_one_end() {
-	return period_one_end;
-}
-public void setPeriod_one_end(String period_one_end) {
-	this.period_one_end = period_one_end;
-}
-public String getPeriod_two_start() {
-	return period_two_start;
-}
-public void setPeriod_two_start(String period_two_start) {
-	this.period_two_start = period_two_start;
-}
-public String getPeriod_two_end() {
-	return period_two_end;
-}
-public void setPeriod_two_end(String period_two_end) {
-	this.period_two_end = period_two_end;
-}
-public String getPeriod_three_start() {
-	return period_three_start;
-}
-public void setPeriod_three_start(String period_three_start) {
-	this.period_three_start = period_three_start;
-}
-public String getPeriod_three_end() {
-	return period_three_end;
-}
-public void setPeriod_three_end(String period_three_end) {
-	this.period_three_end = period_three_end;
-}
-public String getPeriod_four_start() {
-	return period_four_start;
-}
-public void setPeriod_four_start(String period_four_start) {
-	this.period_four_start = period_four_start;
-}
-public String getPeriod_four_end() {
-	return period_four_end;
-}
-public void setPeriod_four_end(String period_four_end) {
-	this.period_four_end = period_four_end;
-}
- 
 
+ 
 }
