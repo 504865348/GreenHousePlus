@@ -4,26 +4,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet"
-	href="<%=request.getContextPath() %>/assets/css/style.css"
-	type="text/css"></link>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/assets/css/theme.css">
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/assets/css/font-awesome.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath() %>/assets/css/admin.css"
-	type="text/css"></link>
-<script
-	src="<%=request.getContextPath() %>/assets/js/jquery-2.1.1.min.js"></script>
-<script src="<%=request.getContextPath() %>/assets/js/bootstrap.min.js"></script>
-
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/bootstrap-switch.css" />
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/font-awesome.css" />
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/admin.css"></link>
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/plus.css" />
+	<script src="<%=request.getContextPath() %>/assets/js/jquery-2.1.1.min.js"></script>
+	<script src="<%=request.getContextPath() %>/assets/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/assets/js/bootstrap-switch.min.js"></script>
 <title>控制模式</title>
 </head>
 <body>
     <input type="hidden" id="gh_id" value='${gh.GH_id}' />
-	<div style="width: 60%; margin: 20px auto;">
+ 
+<%-- 	<div style="width: 60%; margin: 20px auto;">
 
 <!-- 		<h3 class="text-center">
 	袁健炜 2017-02-28  night modify start	
@@ -188,7 +185,184 @@
 				onclick="chageModesetting()"></td>
 		 </tr>  
 		</table>
-	</div>
+	</div> --%>
+ 
+    <h3 class="h3" style="width:100%;background-color:#fff;padding:10px 5px;margin-bottom:-10px;">
+	<!-- 袁健炜 2017-02-28  night modify start-->	
+	                           请点击选择控制模式
+	<!-- 袁健炜 2017-02-28  night modify end-->
+	</h3>
+    <div class="container-fluid">
+	  <div class="row">
+		<div class="panel panel-success my-panel">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;温室控制</div>
+		  <div class="panel-body">
+				<div style="width: 60%; margin: 20px auto;">
+						
+						<table class="table table-bordered table-condensed">
+						 	  
+							<!-- 袁健炜 2017-02-28  night modify start-->	
+							<tr>
+							    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_setting()">设定值控制</a></span></td>
+							    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_manual()">手动控制</a></span></td>
+							    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode()">智能控制</a></span></td>
+							</tr>
+							<!-- 袁健炜 2017-02-28  night modify end-->	
+						</table>
+						
+						<table style="display:none;" class="table table-bordered table-condensed" id="table_device">
+						    <tr>
+						       <th>CO2发生器</th>
+						       <th>状态</th>
+						       <th>操作</th>
+						    </tr>
+						    <c:forEach items="${setupCons }" var="setupConId">
+								<tr>
+								<td>${setupConId.name }</td>
+								 <td>
+								     <c:if test="${setupConId.control == 0 }">关</c:if>
+								     <c:if test="${setupConId.control == 1 }">开</c:if>
+							    </td>
+							    <td>
+							        <c:if test="${setupConId.control == 0 }"><input type="checkbox" name="status" value="1" />打开</c:if>
+								    <c:if test="${setupConId.control == 1 }"><input type="checkbox" name="status" value="0"/>关闭</c:if>
+							    </td>
+							</tr>
+						  </c:forEach>
+						  <tr>
+							<td class="text-center"></td>
+							<td></td>
+						    <td><input type="button" value="更改设备" class="btn bcm tcw"
+								onclick="chageModeDevice()"></td>
+						 </tr>
+						</table>
+						
+						<table style="display:none;" class="table table-bordered table-condensed" id="table_setting">
+						     <c:forEach items="${ghSetting }" var="ghSettingId">
+							     <tr>
+						     <td style="width:50%">时段1开始时间 </td>
+						     <td> <input type="text" name="one_startTime"
+										onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_one_start}"/></td>
+						  </tr>
+						   <tr>
+						     <td>时段1结束时间 </td>
+						     <td> <input type="text" name="one_endTime" id="one_endTime"
+									onkeyup="fill_two_startTime()"	onclick="laydate()" class="laydate-icon" value="${ghSettingId.period_one_end}" /></td>
+						  </tr>
+						   <tr>
+						     <td>时段2开始时间 </td>
+						     <td><input type="text" name="two_startTime" readOnly
+								id="two_startTime"  class="laydate-icon"  value="${ghSettingId.period_two_start}"  /></td>
+						  </tr>
+						   <tr>
+						     <td>时段2结束时间 </td>
+						     <td><input type="text" name="two_endTime"  
+									 	onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_two_end}"  /></td>
+						  </tr>
+						    <tr>
+						     <td>时段3开始时间 </td>
+						     <td><input type="text" name="three_startTime"
+										  class="laydate-icon"  value="${ghSettingId.period_three_start}"  /></td>
+						  </tr>
+						   <tr>
+						     <td>时段3结束时间 </td>
+						     <td><input type="text" name="three_endTime"
+										onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_three_end}"  /></td>
+						  </tr>
+						    <tr>
+						     <td>时段4开始时间 </td>
+						     <td><input type="text" name="four_startTime"
+										  class="laydate-icon"  value="${ghSettingId.period_four_end}"  /></td>
+						  </tr>
+						   <tr>
+						     <td>时段4结束时间 </td>
+						     <td><input type="text" name="four_endTime"
+										onclick="laydate()" class="laydate-icon"  value="${ghSettingId.period_four_end}"  /></td>
+						  </tr>
+						  
+						   <tr>
+						     <td>时段1 温度 </td>
+						     <td> ${ghSettingId.period_one_wd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段1 湿度 </td>
+						     <td>${ghSettingId.period_one_sd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段1 光照度</td>
+						     <td>${ghSettingId.period_one_gzd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段1 CO2浓度</td>
+						     <td>${ghSettingId.period_one_nd }</td>
+						  </tr>
+						  
+						  <tr>
+						     <td>时段2 温度 </td>
+						     <td>${ghSettingId.period_two_wd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段2 湿度 </td>
+						     <td>${ghSettingId.period_two_sd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段2 光照度</td>
+						     <td>${ghSettingId.period_two_gzd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段2 CO2浓度</td>
+						     <td>${ghSettingId.period_two_nd }</td>
+						  </tr>
+						   
+						   
+						    <tr>
+						     <td>时段3 温度 </td>
+						     <td>${ghSettingId.period_three_wd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段3 湿度 </td>
+						     <td>${ghSettingId.period_three_sd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段3光照度</td>
+						     <td>${ghSettingId.period_three_gzd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段3 CO2浓度</td>
+						     <td>${ghSettingId.period_three_nd }</td>
+						  </tr>
+						    
+						     <tr>
+						     <td>时段4 温度 </td>
+						     <td>${ghSettingId.period_four_wd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段4 湿度 </td>
+						     <td>${ghSettingId.period_four_sd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段4 光照度</td>
+						     <td>${ghSettingId.period_four_gzd }</td>
+						  </tr>
+						  <tr>
+						     <td>时段4 CO2浓度</td>
+						     <td>${ghSettingId.period_four_nd }</td>
+						  </tr>
+						     </c:forEach>
+						 
+						   <tr>
+							<td class="text-center"></td>
+						    <td><input type="button" value="更改设置" class="btn bcm tcw"
+								onclick="chageModeDevice_seeting()"></td>
+						 </tr>  
+						</table>
+					</div>		    
+		  </div><!--end panel-body-->
+		</div><!--end panel-->
+	  </div><!--end row-->
+	</div><!-- container-fluid-->
+>>>>>>> 43fb71d9a41adcff7621a05544528c589ab81e7a
 	<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/laydate/laydate.js"></script>
 	<script type="text/javascript">

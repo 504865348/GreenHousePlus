@@ -393,13 +393,13 @@ a.block-heading:hover, .block-heading a:hover {
 
 .sidebar-nav .nav-list>.active>a, .sidebar-nav .nav-list>.active>a:hover
 	{
-	background: #d2d2dd;
-	color: #555;
+	background: #121A2C;
+	color: #ccc;
 	text-shadow: none;
 }
 
 .sidebar-nav .nav-list>.active>a:hover {
-	background: #c3c3d2;
+	background: #121A2C;
 }
 
 .sidebar-nav .nav-list>li>a {
@@ -862,7 +862,7 @@ table.table.list tr:first-child td {
 }
 /*************************article*********************/
 .my-article{
-	min-height:880px;
+	min-height:1480px;
 }
 .my-panel{
 	margin-top:20px;
