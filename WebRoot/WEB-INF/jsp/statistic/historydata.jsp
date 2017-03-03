@@ -57,7 +57,7 @@
 										onclick="laydate()" class="laydate-icon" value="${endTime }" />
 									</td>
 									<td>
-										<button class="btn bcm tcw" style="background:#121A2C;padding:2px 5px;color:#fff;font-size:8px;">开始查找</button>
+										<button class="btn bg-success btn-xs">开始查找</button>
 									</td>
 								</tr>
 							</table>

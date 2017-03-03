@@ -16,7 +16,7 @@
 <title>温室智慧管控系统</title>
 </head>
 <body class="container-fluid">
-<div class="row">
+<div><!-- 取消row -->
   	<div class="panel panel-success my-panel">
 	  <!-- Default panel contents -->
 	  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;温室控制</div>
@@ -123,7 +123,7 @@
 	  </table>
 	</div>
 	<!-- 温度和气象控制 -->
-	<div class="row">
+	<div><!-- 取消row -->
 		<div class="col-md-6">
 			<div class="panel panel-success my-panel my-panel-height-360">
 			  <!-- Default panel contents -->

@@ -92,11 +92,10 @@
 			</td>		
 		    </tr>
 		     <tr>
-		<td class="text-center"></td>
-		<td></td>
-	    <td><input type="button" value="更改设备" class="btn bcm tcw"
-			onclick="changeMode()"></td>
-	 </tr>
+		
+			    <td colspan="3"><input type="button" value="更改状态" class="btn tcw bg-success" style="width:200px;"
+					onclick="changeMode()"></td>
+			 </tr>
 		 
 	 </table>
 </div>
