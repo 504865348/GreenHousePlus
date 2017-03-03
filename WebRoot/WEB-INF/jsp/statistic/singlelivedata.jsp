@@ -24,7 +24,7 @@
 			<!-- 实时数据详情区域 -->
 			<h3 class="h3" style="width:100%;background-color:#fff;padding:10px 5px;margin-bottom:-10px;">实时环境数据</h3>
 			<div id="types">
-				<div class="row">
+				<div><!-- 取消row -->
 					<c:forEach items="${gh.typeAndElements }" var="t">
 						<div class="col-md-4">
 							<div class="panel panel-success my-panel" style="height: 400px;">
