@@ -16,8 +16,9 @@
 						<!-- 袁健炜 2017-3-1 day modify  ghid -->
 			<c:if test="${not empty list}">
 				<c:forEach items="${list}" var="greenhouse">
-
-					<a href="#${greenhouse.GH_code}" class="my-nav-header" data-toggle="collapse"><span class="icon-th iconSpan"></span>&nbsp;&nbsp;温室&nbsp;&nbsp;${greenhouse.GH_code}</a>
+				<!-- 27为灌溉系统的温室id -->
+ <c:if test="${greenhouse.GH_id != 27 }">
+<a href="#${greenhouse.GH_code}" class="my-nav-header" data-toggle="collapse"><span class="icon-th iconSpan"></span>&nbsp;&nbsp;温室&nbsp;&nbsp;${greenhouse.GH_code}</a>
 					<ul id="${greenhouse.GH_code}" class="nav nav-list collapse in">
 						<li><a href="<%=request.getContextPath()%>/stat/singlelivedata?ghId=${greenhouse.GH_id}" target="main"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;实时数据&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 						<li><a href="<%=request.getContextPath()%>/stat/historydata?ghId=${greenhouse.GH_id}" target="main"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;历史数据&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
@@ -31,11 +32,17 @@
 					    </li>
 						<li><a href="<%=request.getContextPath()%>/ghmgr/ghadmin/ctrl/change-model?ghId=${greenhouse.GH_id}" target="main"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;控制模式&nbsp;&nbsp;&nbsp;&nbsp;</a>
 					    </li>
-						 
-						
-						<!-- 袁健炜 2017-02-28  night modify end-->    
+					</ul>
+</c:if>
+ <c:if test="${greenhouse.GH_id == 27 }">
+<a href="#${greenhouse.GH_code}" class="my-nav-header" data-toggle="collapse"><span class="glyphicon glyphicon-tint"></span>&nbsp;&nbsp;灌溉系统&nbsp;&nbsp;</a>
+					<ul id="${greenhouse.GH_code}" class="nav nav-list collapse in">
+						<li><a href="<%=request.getContextPath()%>/stat/singlelivedata?ghId=${greenhouse.GH_id}" target="main"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;实时数据&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+						<li><a href="<%=request.getContextPath()%>/stat/historydata?ghId=${greenhouse.GH_id}" target="main"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;历史数据&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+						<!-- 袁健炜 2017-02-28  night modify start-->
 						
 					</ul>
+</c:if>
 				</c:forEach>
 			</c:if>
 					
