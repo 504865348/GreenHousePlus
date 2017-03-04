@@ -18,10 +18,48 @@
 <title>控制模式</title>
 </head>
 <body>
+   <div style="width:200px;display:none" id="one_modify_control">
+       <div>
+          <p style="float:center">请输入密码：</p>
+          <p><input type="password" id="one_pwd" /></p>
+       </div>
+       <span style="line-height: 40px;"><a onclick="changeMode_setting()" class="btn bg-success text-muted">确定</a></span>
+       <span style="line-height: 40px;"><a onclick="one_close_dialog()" class="btn bg-success text-muted">取消</a></span>
+       <div> 
+           
+       </div>
+   </div>
+   
+   <div style="width:200px;display:none" id="two_modify_control">
+       <div>
+          <p style="float:center">请输入密码：</p>
+          <p><input type="password" id="two_pwd" /></p>
+       </div>
+       <span style="line-height: 40px;"><a onclick="changeMode_manual()" class="btn bg-success text-muted">确定</a></span>
+       <span style="line-height: 40px;"><a onclick="two_close_dialog()" class="btn bg-success text-muted">取消</a></span>
+       <div> 
+           
+       </div>
+   </div>
+   
+      <div style="width:200px;display:none" id="three_modify_control">
+       <div>
+          <p style="float:center">请输入密码：</p>
+          <p><input type="password" id="three_pwd" /></p>
+       </div>
+       <span style="line-height: 40px;"><a onclick="changeMode_intellgence()" class="btn bg-success text-muted">确定</a></span>
+       <span style="line-height: 40px;"><a onclick="three_close_dialog()" class="btn bg-success text-muted">取消</a></span>
+       <div> 
+           
+       </div>
+   </div>
+   
     <input type="hidden" id="gh_id" value='${gh.GH_id}' />
     <h3 class="h3" style="width:100%;background-color:#fff;padding:10px 5px;margin-bottom:-10px;">
 	<!-- 袁健炜 2017-02-28  night modify start-->	
-	                           请点击选择控制模式
+	                           当前控制模式：<c:if test="${gh.control_mode == 0 }">智能控制</c:if>  
+	                     <c:if test="${gh.control_mode == 1 }">设定值控制</c:if>
+	                     <c:if test="${gh.control_mode == 2 }">手动控制</c:if>    
 	<!-- 袁健炜 2017-02-28  night modify end-->
 	</h3>
 	
@@ -35,11 +73,11 @@
 						
 						<table class="table">
 						 	  
-							<!-- 袁健炜 2017-02-28  night modify start-->	
+							<!-- 袁健炜 2017-02-28  night modify start   href=""-->	
 							<tr>
-							    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_setting()" class="btn bg-success text-muted">设定值控制</a></span></td>
-							    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_manual()" class="btn bg-success text-muted">手动控制</a></span></td>
-							    <td class="text-center"><span style="line-height: 40px;"><a href="<%=request.getContextPath()%>/stat/livedata" class="btn bg-success text-muted">智能控制</a></span></td>
+							    <td class="text-center"><span style="line-height: 40px;"><a onclick="one_show_dialog()" class="btn bg-success text-muted">设定值控制</a></span></td>
+							    <td class="text-center"><span style="line-height: 40px;"><a onclick="two_show_dialog()" class="btn bg-success text-muted">手动控制</a></span></td>
+							    <td class="text-center"><span style="line-height: 40px;"><a onclick="three_show_dialog()" class="btn bg-success text-muted">智能控制</a></span></td>
 							</tr>
 							<!-- 袁健炜 2017-02-28  night modify end-->	
 						</table>
@@ -318,45 +356,72 @@
 	<script type="text/javascript">
  
 var current_model = '${gh.control_mode}';
+function one_show_dialog(){
+	$("#one_modify_control").show();
+}
+function two_show_dialog(){
+	$("#two_modify_control").show();
+}
+function three_show_dialog(){
+	$("#three_modify_control").show();
+}
+
+function one_close_dialog(){
+	document.getElementById("one_modify_control").style.display='none';
+	 
+}
+function two_close_dialog(){
+	document.getElementById("two_modify_control").style.display='none';
+	 
+}
+function three_close_dialog(){
+	document.getElementById("three_modify_control").style.display='none';
+	 
+}
 function changeMode_manual(){
-	var pass; 
-	if(pass = prompt('请输入密码：')){
-		$.post('change_mode',{
-			password:pass
-		},'json')
-		.done(function(data){
-			if(data){
-				document.getElementById("table_setting").style.display='none';
-				document.getElementById("table_device").style.display='';
-			}
-			else{
-				alert('密码错误，修改失败');
-			}
-		});
-	}
+	document.getElementById("two_modify_control").style.display='none';
+	var pass = document.getElementById("two_pwd").value;
+	var ghid = $("#gh_id").val();
+	var controlMode = "2";
+	$.post('change_mode',{
+		password:pass,
+		ghid:ghid,
+		controlMode:controlMode
+	},'json')
+	.done(function(data){
+		if(data){
+			document.getElementById("table_setting").style.display='none';
+			document.getElementById("table_device").style.display='';
+		}
+		else{
+			alert('密码错误，修改失败');
+		}
+	});
 	 
 	
 }
 
 function changeMode_intellgence(){
-	var pass; 
+	document.getElementById("three_modify_control").style.display='none';
+	var pass = document.getElementById("three_pwd").value;
 	var ghid = $("#gh_id").val();
-	if(pass = prompt('请输入密码：')){
-		$.post('change_mode_intellgece',{
-			ghid:ghid,
-			password:pass
-		},'json')
-		.done(function(data){
-			if(data){
-				document.getElementById("table_setting").style.display='none';
-				document.getElementById("table_device").style.display='none';z
-			}
-			else{
-				alert('密码错误');
-				
-			}
-		});
-	}
+	var controlMode = "0";
+	$.post('change_mode',{
+		ghid:ghid,
+		controlMode:controlMode,
+		password:pass
+	},'json')
+	.done(function(data){
+		if(data){
+			window.location.href="<%=request.getContextPath()%>/stat/livedata";
+			document.getElementById("table_setting").style.display='none';
+			document.getElementById("table_device").style.display='none';
+		}
+		else{
+			alert('密码错误');
+			
+		}
+	});
 	 
 	
 }
@@ -401,23 +466,26 @@ function chageModeDevice(){
 
 /* 袁健炜 2017-3-1 day add start*/
  function changeMode_setting(){
-	var pass; 
-	if(pass = prompt('请输入密码：')){
-		$.post('change_mode',{
-			password:pass
-		},'json')
-		.done(function(data){
-			if(data){
-				document.getElementById("table_device").style.display='none';
-				document.getElementById("table_setting").style.display='';
-			}
-			else{
-				alert('密码错误，修改失败');
-			}
-		});
-	}
+	 document.getElementById("one_modify_control").style.display='none';
+	var pass = document.getElementById("one_pwd").value;
+	var ghid = $("#gh_id").val();
+	var controlMode = "1";
+	$.post('change_mode',{
+		password:pass,
+		ghid:ghid,
+		controlMode:controlMode
+	},'json')
+	.done(function(data){
+		if(data){
+			document.getElementById("table_device").style.display='none';
+			document.getElementById("table_setting").style.display='';
+		}
+		else{
+			alert('密码错误，修改失败');
+		}
+	});  
 	 
-	
+	 $("#alertOpera").show();
 }
 
 function chageModesetting(){
