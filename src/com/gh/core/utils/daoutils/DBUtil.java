@@ -164,6 +164,10 @@ public class DBUtil<T> {
 		return _updatePass(userid, newpass);
 	}
 	
+	public int updateMode(int userid,String control_mode) {
+		return _updateMode(userid, control_mode);
+	}
+	
 	public int update(Map<String,?> param, Cnd cnd) {
 		BeanField[] fields = findFieldsOfMap(param);
 		return _update(fields, cnd);
@@ -256,6 +260,32 @@ public class DBUtil<T> {
 		return ret;
 	}
 	
+	/*
+	 * 袁健炜 2017 -3-4  night add
+	 */
+	/**update私有函数
+	 * @param fields
+	 * @param cnd
+	 * @return
+	 */
+	private int _updateMode(int ghid,String control_mode){
+		Connection con = getConnection();
+		int ret = 0;
+
+		String preSql = "update greenhouse set control_mode='"+control_mode +"' where GH_id='"+ghid+"'";
+		PreparedStatement ps = null;
+
+		System.out.println("=========[#SQL]========::"+preSql.toUpperCase());
+		try {
+			ps = con.prepareStatement(preSql);
+			ret = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeConnection(con,ps,null);
+		System.out.println(ret + " colum(s) effected.");
+		return ret;
+	}
 	/**update私有函数
 	 * @param fields
 	 * @param cnd
@@ -910,5 +940,6 @@ private List<T> _Plist(String[] selectCols,Cnd cnd,boolean pager,int pageSize,in
 		System.out.println(result.size() + " record(s) listed.");
 		return result;
 	}
+ 
 
 }

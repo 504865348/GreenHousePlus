@@ -44,6 +44,10 @@ public class BasicDao<T> {
 	public int updatePass(int userid,String newpass){
 		return util.updatePass(userid, newpass);
 	}
+	//new modify status
+		public int updateGH_controlMode(int userid,String control_mode){
+			return util.updateMode(userid, control_mode);
+		}
 	/**
 	 * @param cnd cnd
 	 * @return

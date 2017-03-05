@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gh.core.dao.UserDao;
 import com.gh.core.domain.Crop_Grouth_Info;
+import com.gh.core.domain.Gh_Setting_Control;
 import com.gh.core.domain.User;
 import com.gh.core.entity.GreenHouseInfo;
 import com.gh.core.utils.daoutils.Cnd;
@@ -305,7 +306,7 @@ session.setAttribute("ghId", ghId);
 	@RequestMapping("/ghadmin/ctrl/change-model")
 	public String change_model_page(Model model,Integer ghId,
 			@RequestParam(value="ghId") String ghid){
-		System.out.println("模式控制》设定值设定》ghid = " +ghid);
+		 
 		User u = userDao.getCurrentUser(request);
 		Greenhouse gh = null;
 		if(null == ghId){
@@ -315,6 +316,7 @@ session.setAttribute("ghId", ghId);
 		else{
 			gh = greenhouseDao.findByghid(ghId);
 		}
+		 
 		model.addAttribute("gh", gh);
 		model.addAttribute("setupCons", setupConDao.findByGhId(Integer.parseInt(ghid)));//新增
 		model.addAttribute("ghSetting", gh_Setting_ControlDao.findSettingByGhId(Integer.parseInt(ghid)));//新增
@@ -330,11 +332,6 @@ session.setAttribute("ghId", ghId);
 			@RequestParam String  gh_id,
 			@RequestParam String all_status,
 			@RequestParam String device_name){
-		 
-		
-		System.out.println("用户id"+gh_id);
-		System.out.println(all_status);
-		System.out.println(device_name);
 		
 		String[] all_status_list = all_status.split(";");
 		String[] device_name_list = device_name.split(";");
@@ -364,7 +361,24 @@ session.setAttribute("ghId", ghId);
 		for(int i=0;i<all_updateValue_list.length;i++){
 			System.out.println("对应的值为"+all_updateValue_list[i]);
 		}
-		
+		System.out.println("记录为："+gh_Setting_ControlDao.findSettingByGhId(Integer.parseInt(gh_id)).size()); 
+	    if(gh_Setting_ControlDao.findSettingByGhId(Integer.parseInt(gh_id)).size() == 0){
+	    	Gh_Setting_Control gh_Setting_Control = new Gh_Setting_Control();
+	    	gh_Setting_Control.setGh_id(Integer.parseInt(gh_id));
+	    	gh_Setting_Control.setPeriod_one_start(all_updateValue_list[0].split(";")[0]);
+	    	gh_Setting_Control.setPeriod_one_end(all_updateValue_list[0].split(";")[1]);
+	    	
+	    	gh_Setting_Control.setPeriod_two_start(all_updateValue_list[1].split(";")[0]);
+	    	gh_Setting_Control.setPeriod_two_end(all_updateValue_list[1].split(";")[1]);
+	    	
+	    	gh_Setting_Control.setPeriod_three_start(all_updateValue_list[2].split(";")[0]);
+	    	gh_Setting_Control.setPeriod_three_end(all_updateValue_list[2].split(";")[1]);
+	    	
+	    	gh_Setting_Control.setPeriod_four_start(all_updateValue_list[3].split(";")[0]);
+	    	gh_Setting_Control.setPeriod_four_end(all_updateValue_list[3].split(";")[1]);
+	    	
+	    	return gh_Setting_ControlDao.insert(gh_Setting_Control);
+	    }
 		//System.out.println("更新的设备为:"+update_device);
 		return greenhouseDao.getUtil().update_setting(gh_id, update_value);
 	}
@@ -383,15 +397,17 @@ session.setAttribute("ghId", ghId);
 	@RequestMapping(value="/ghadmin/ctrl/change_mode", method = RequestMethod.POST)
 	@ResponseBody
 	public Object changeMode(
-			@RequestParam String password){
+			@RequestParam String password,
+			@RequestParam String ghid,
+			@RequestParam String controlMode){
 		System.out.println("用户的password为"+password);
 		User u = userDao.getCurrentUser(request);
 		System.out.println("用户的id为"+u.getUser_id());
 		String secPassword = userDao.getSecondPassword(u.getUser_id());
 		if(password.equals(secPassword)){
 			//更改控制模式
-			 
-			return  true;
+			greenhouseDao.updateGH_controlMode(Integer.parseInt(ghid), controlMode);
+			 return  true;
 		}
 		//二级密码错误
 		return false;
@@ -408,6 +424,7 @@ session.setAttribute("ghId", ghId);
 		String secPassword = userDao.getSecondPassword(u.getUser_id());
 		if(password.equals(secPassword)){
 			//更改控制模式
+			
 			return  true;
 		}
 		//二级密码错误
