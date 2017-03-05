@@ -21,7 +21,11 @@
     <input type="hidden" id="gh_id" value='${gh.GH_id}' />
     <h3 class="h3" style="width:100%;background-color:#fff;padding:10px 5px;margin-bottom:-10px;">
 	<!-- 袁健炜 2017-02-28  night modify start-->	
-	                           请点击选择控制模式：<span style="font-size:18px;color:red;">替换文字--当前控制模式</span>
+	                当前控制模式：    <span style="font-size:18px;color:red;">
+		                     <c:if test="${gh.control_mode == 0 }">智能控制</c:if>  
+		                     <c:if test="${gh.control_mode == 1 }">设定值控制</c:if>
+		                     <c:if test="${gh.control_mode == 2 }">手动控制</c:if>   
+	               </span>
 	<!-- 袁健炜 2017-02-28  night modify end-->
 	</h3>
 	
@@ -39,7 +43,6 @@
 						<tr>
 						    <td class="text-center">
 						    	<span style="line-height: 40px;">
-							    <!-- <a onclick="changeMode_setting()" class="btn bg-success text-muted">设定值控制</a> -->
 							    <!-- Button trigger modal -->
 									<button type="button" class="btn bg-success bg-sm" data-toggle="modal" data-target="#settingModal">
 										  设定值控制
@@ -47,13 +50,16 @@
 							    </span>
 						    </td>
 						    <td class="text-center"><span style="line-height: 40px;">
-						    <!-- <a onclick="changeMode_manual()" class="btn bg-success text-muted">手动控制</a> -->
 							    <button type="button" class="btn bg-success bg-sm" data-toggle="modal" data-target="#handModal">
 										  手动控制
 								</button>
 						    </span>
 						    </td>
-						    <td class="text-center"><span style="line-height: 40px;"><a href="<%=request.getContextPath()%>/stat/livedata" class="btn bg-success text-muted">智能控制</a></span></td>
+						    <td class="text-center">
+						     <button type="button" class="btn bg-success bg-sm" data-toggle="modal" data-target="#IntellgenceModal">
+										  智能控制
+							 </button>
+						    </td>
 						</tr>
 						<!-- 袁健炜 2017-02-28  night modify end-->	
 					</table>					
@@ -66,7 +72,7 @@
 		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;手动控制</div>
 		  <div class="panel-body">
 		     <!-- Table -->	
-			<table class="table table-bordered table-condensed">
+			<table class="table table-bordered table-condensed" id="hand_table">
 			    <tr>
 			       <th>设备</th>
 			       <th>状态</th>
@@ -192,16 +198,16 @@
 					     </select> 
 					</td>
 					<td>
-						<input id="two_period_wd" value="${ghSetting[0].period_two_wd }"/>
+						<input id="two_period_wd" value="${ghSetting[1].period_two_wd }"/>
 					</td>
 					<td>
-						<input id="two_period_sd" value="${ghSetting[0].period_two_sd }"/>
+						<input id="two_period_sd" value="${ghSetting[1].period_two_sd }"/>
 					</td>
 					<td>
-						<input id="two_period_gzd" value="${ghSetting[0].period_two_gzd }"/>
+						<input id="two_period_gzd" value="${ghSetting[1].period_two_gzd }"/>
 					</td>
 					<td>
-						<input id="two_period_nd" value="${ghSetting[0].period_two_nd }"/>
+						<input id="two_period_nd" value="${ghSetting[1].period_two_nd }"/>
 					</td>
 			    </tr>
 			    <tr>
@@ -241,16 +247,16 @@
 					     </select> 
 					</td>
 					<td>
-						<input  id="three_period_wd" value="${ghSetting[0].period_three_wd }"/>
+						<input  id="three_period_wd" value="${ghSetting[2].period_three_wd }"/>
 					</td>
 					<td>
-						<input id="three_period_sd" value="${ghSetting[0].period_three_sd }"/>
+						<input id="three_period_sd" value="${ghSetting[2].period_three_sd }"/>
 					</td>
 					<td>
-						<input id="three_period_gzd" value="${ghSetting[0].period_three_gzd }"/>
+						<input id="three_period_gzd" value="${ghSetting[2].period_three_gzd }"/>
 					</td>
 					<td>
-						<input id="three_period_nd" value="${ghSetting[0].period_three_nd }"/>
+						<input id="three_period_nd" value="${ghSetting[2].period_three_nd }"/>
 					</td>
 			    </tr>
 			    <tr>
@@ -288,16 +294,16 @@
 					     </select> 
 					</td>
 					<td>
-						<input  id="four_period_wd" value="${ghSetting[0].period_four_wd }"/>
+						<input  id="four_period_wd" value="${ghSetting[3].period_four_wd }"/>
 					</td>
 					<td>
-						<input id="four_period_sd" value="${ghSetting[0].period_four_sd }"/>
+						<input id="four_period_sd" value="${ghSetting[3].period_four_sd }"/>
 					</td>
 					<td>
-						<input id="four_period_gzd" value="${ghSetting[0].period_four_gzd }"/>
+						<input id="four_period_gzd" value="${ghSetting[3].period_four_gzd }"/>
 					</td>
 					<td>
-						<input id="four_period_nd" value="${ghSetting[0].period_four_nd }"/>
+						<input id="four_period_nd" value="${ghSetting[3].period_four_nd }"/>
 					</td>
 			    </tr>
 			    <tr>
@@ -323,13 +329,13 @@
       <div class="modal-body">
         <div class="input-group" style="width:100%">
         	<form action="">
-        	 	<input type="password" class="form-control" placeholder="设定值控制密码" aria-describedby="sizing-addon2">
+        	 	<input type="password" id="one_pwd" class="form-control" placeholder="设定值控制密码" aria-describedby="sizing-addon2">
         	</form>
 		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn bg-sussess">提交</button>
+        <button type="button" onclick="changeMode_setting()" class="btn bg-sussess">提交</button>
       </div>
     </div>
   </div>
@@ -347,73 +353,102 @@
       <div class="modal-body">
         <div class="input-group" style="width:100%">
         	<form action="">
-        	 	<input type="password" class="form-control" placeholder="手动控制密码" aria-describedby="sizing-addon2">
+        	 	<input type="password"  id="two_pwd"  class="form-control" placeholder="手动控制密码" aria-describedby="sizing-addon2">
         	</form>
 		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn bg-sussess">提交</button>
+        <button type="button" onclick="changeMode_manual()" class="btn bg-sussess">提交</button>
       </div>
     </div>
   </div>
 </div>
  
+<!-- 智能模式 -->
+ <!-- Modal -->
+<div class="modal fade" id="IntellgenceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="myModalLabel">请输入<span class="text-danger">智能控制</span>密码</h3>
+      </div>
+      <div class="modal-body">
+        <div class="input-group" style="width:100%">
+        	<form action="">
+        	 	<input type="password"  id="three_pwd"  class="form-control" placeholder="手动控制密码" aria-describedby="sizing-addon2">
+        	</form>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" onclick="changeMode_intellgence()" class="btn bg-sussess">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 	<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/laydate/laydate.js"></script>
 	<script type="text/javascript">
  
 var current_model = '${gh.control_mode}';
+
 function changeMode_manual(){
-	var pass; 
-	if(pass = prompt('请输入密码：')){
-		$.post('change_mode',{
-			password:pass
-		},'json')
-		.done(function(data){
-			if(data){
-				document.getElementById("table_setting").style.display='none';
-				document.getElementById("table_device").style.display='';
-			}
-			else{
-				alert('密码错误，修改失败');
-			}
-		});
-	}
+	document.getElementById("handModal").style.display='none';
+	var pass = document.getElementById("two_pwd").value;
+	var ghid = $("#gh_id").val();
+	var controlMode = "2";
+	$.post('change_mode',{
+		password:pass,
+		ghid:ghid,
+		controlMode:controlMode
+	},'json')
+	.done(function(data){
+		if(data){
+			document.getElementById("table_setting").style.display='none';
+			document.getElementById("table_device").style.display='';
+		}
+		else{
+			alert('密码错误，修改失败');
+		}
+	});
 	 
 	
 }
 
 function changeMode_intellgence(){
-	var pass; 
+	document.getElementById("IntellgenceModal").style.display='none';
+	var pass = document.getElementById("three_pwd").value;
 	var ghid = $("#gh_id").val();
-	if(pass = prompt('请输入密码：')){
-		$.post('change_mode_intellgece',{
-			ghid:ghid,
-			password:pass
-		},'json')
-		.done(function(data){
-			if(data){
-				document.getElementById("table_setting").style.display='none';
-				document.getElementById("table_device").style.display='none';
-			}
-			else{
-				alert('密码错误');
-				
-			}
-		});
-	}
-	 
+	var controlMode = "0";
+	$.post('change_mode',{
+		ghid:ghid,
+		controlMode:controlMode,
+		password:pass
+	},'json')
+	.done(function(data){
+		if(data){
+			window.location.href="<%=request.getContextPath()%>/stat/livedata";
+			document.getElementById("table_setting").style.display='none';
+			document.getElementById("table_device").style.display='none';
+		}
+		else{
+			alert('密码错误');
+			
+		}
+	});
 	
 }
 /* 袁健炜 2017-2-28 night add start  */
 function chageModeDevice(){
 	var gh_id = $("#gh_id").val();
-	var table =document.getElementById("table_device");
+	 
+	var table =document.getElementById("hand_table");
 	var rows = table.rows.length;
- 
 	var status = document.getElementsByName("status"); 
-	//alert(status.length);
+	 
 	all_status = "";
 	var device_name = "";
 	for (var i = 0; i < status.length; i++) {
@@ -447,23 +482,24 @@ function chageModeDevice(){
 
 /* 袁健炜 2017-3-1 day add start*/
  function changeMode_setting(){
-	var pass; 
-	if(pass = prompt('请输入密码：')){
-		$.post('change_mode',{
-			password:pass
-		},'json')
-		.done(function(data){
-			if(data){
-				document.getElementById("table_device").style.display='none';
-				document.getElementById("table_setting").style.display='';
-			}
-			else{
-				alert('密码错误，修改失败');
-			}
-		});
-	}
-	 
-	
+	document.getElementById("settingModal").style.display='none';
+	var pass = document.getElementById("one_pwd").value;
+	var ghid = $("#gh_id").val();
+	var controlMode = "1";
+	$.post('change_mode',{
+		password:pass,
+		ghid:ghid,
+		controlMode:controlMode
+	},'json')
+	.done(function(data){
+		if(data){
+			document.getElementById("table_device").style.display='none';
+			document.getElementById("table_setting").style.display='';
+		}
+		else{
+			alert('密码错误，修改失败');
+		}
+	});  
 }
 
 function chageModesetting(){
@@ -475,6 +511,18 @@ function chageModesetting(){
       var one_period_sd = $("#one_period_sd ").val();
       var one_period_gzd = $("#one_period_gzd ").val();
       var one_period_nd = $("#one_period_nd ").val();
+      if(one_period_wd == null || one_period_wd == ""){
+    	  one_period_wd = "null";
+      } 
+      if(one_period_sd == null || one_period_sd == ""){
+    	  one_period_sd = "null";
+      } 
+      if(one_period_gzd== null || one_period_gzd == ""){
+    	  one_period_gzd = "null";
+      } 
+      if(one_period_nd == null || one_period_nd == ""){
+    	  one_period_nd = "null";
+      } 
       update_value += one_startTime+";"+one_endTime+";"+one_period_wd+";"+one_period_sd+";"+one_period_gzd+";"+one_period_nd+"&&&";
       
       var two_startTime = $("#two_startTime option:selected").val(); 
@@ -483,6 +531,18 @@ function chageModesetting(){
       var two_period_sd = $("#two_period_sd ").val();
       var two_period_gzd = $("#two_period_gzd ").val();
       var two_period_nd = $("#two_period_nd ").val();
+      if(two_period_wd == null || two_period_wd == ""){
+    	  two_period_wd = "null";
+      } 
+      if(two_period_sd == null || two_period_sd == ""){
+    	  two_period_sd = "null";
+      } 
+      if(two_period_gzd== null || two_period_gzd == ""){
+    	  two_period_gzd = "null";
+      } 
+      if(two_period_nd == null || two_period_nd == ""){
+    	  two_period_nd = "null";
+      } 
       update_value += two_startTime+";"+two_endTime+";"+two_period_wd+";"+two_period_sd+";"+two_period_gzd+";"+two_period_nd+"&&&";
      
       var three_startTime = $("#three_startTime option:selected").val(); 
@@ -491,6 +551,18 @@ function chageModesetting(){
       var three_period_sd = $("#three_period_sd ").val();
       var three_period_gzd = $("#three_period_gzd ").val();
       var three_period_nd = $("#three_period_nd ").val();
+      if(three_period_wd == null || three_period_wd == ""){
+    	  three_period_wd = "null";
+      } 
+      if(three_period_sd == null || three_period_sd == ""){
+    	  three_period_sd = "null";
+      } 
+      if(three_period_gzd== null || three_period_gzd == ""){
+    	  three_period_gzd = "null";
+      } 
+      if(three_period_nd == null || three_period_nd == ""){
+    	  three_period_nd = "null";
+      } 
       update_value += three_startTime+";"+three_endTime+";"+three_period_wd+";"+three_period_sd+";"+three_period_gzd+";"+three_period_nd+"&&&";
     
       var four_startTime = $("#four_startTime option:selected").val(); 
@@ -499,6 +571,18 @@ function chageModesetting(){
       var four_period_sd = $("#four_period_sd ").val();
       var four_period_gzd = $("#four_period_gzd ").val();
       var four_period_nd = $("#four_period_nd ").val();
+      if(four_period_wd == null || four_period_wd == ""){
+    	  four_period_wd = "null";
+      } 
+      if(four_period_sd == null || four_period_sd == ""){
+    	  four_period_sd = "null";
+      } 
+      if(four_period_gzd== null ||  four_period_gzd == ""){
+    	  four_period_gzd = "null";
+      } 
+      if( four_period_nd == null || four_period_nd == ""){
+    	  four_period_nd = "null";
+      } 
       update_value += four_startTime+";"+four_endTime+";"+four_period_wd+";"+four_period_sd+";"+four_period_gzd+";"+four_period_nd;
      
   	  $.post('change_mode_setting',{
