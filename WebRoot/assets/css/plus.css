@@ -391,6 +391,10 @@ a.block-heading:hover, .block-heading a:hover {
 	background: #121A2C;
 }
 
+.sidebar-nav .nav-list>li>a:visited {
+	background: #121A2C;
+}
+
 .sidebar-nav .nav-list>.active>a, .sidebar-nav .nav-list>.active>a:hover
 	{
 	background: #121A2C;
