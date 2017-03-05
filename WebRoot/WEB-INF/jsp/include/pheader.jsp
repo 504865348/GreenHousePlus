@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- 顶部页面 -->
 <div class="navBar">
-	<div class="navInner">
+	<div class="navInner" style="background: transparent -moz-linear-gradient(center bottom, #121A2C 0%, #121A2C 100%) repeat scroll 0% 0% padding-box;">
 		<div class="container">
 			<div class="row" style="position: relative">
 				<div class="col-md-3">
