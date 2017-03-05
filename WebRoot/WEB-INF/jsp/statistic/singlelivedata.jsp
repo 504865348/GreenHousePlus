@@ -48,7 +48,7 @@
 							  <div class="panel-body">
 								   <table class="table table-bordered table-condensed">
 										<tr>
-											<th>CO2发生器</th>
+											<th>设备</th>
 											<th class="text-center">状态</th>
 											
 										</tr>

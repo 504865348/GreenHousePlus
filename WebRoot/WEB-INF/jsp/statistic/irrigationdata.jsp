@@ -20,124 +20,125 @@
 <body>
 <!-- 袁健炜 -->
  <input type="hidden" id="base_id" value='${irr.base_id}' />
-<div class="panel panel-success my-panel">
-	  <!-- Default panel contents -->
-	  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;温室阀控制</div>
-	  <div class="panel-body">
-	    <p>温室阀信息</p>
-	  </div>
- <table class="table table-bordered table-striped table-condensed" id="table_irr">
-		    <tr>
-			<th>温室</th>
-			<th>灌溉阀状态</th>
-			<th>操作</th>
-		    </tr>
-		     <tr>
-			<td>温室001</td>
-			<td>
-			<c:if test="${irr.gh_one_irrigation_status == 0 }">关</c:if>
-		    <c:if test="${irr.gh_one_irrigation_status == 1 }">开</c:if></td>
-			<td>
-			<c:if test="${irr.gh_one_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
-	        <c:if test="${irr.gh_one_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
-			</td>
-		    </tr>
-		    <tr>
-			<td>温室002</td>
-			<td>
-			<c:if test="${irr.gh_two_irrigation_status == 0 }">关</c:if>
-		    <c:if test="${irr.gh_two_irrigation_status == 1 }">开</c:if></td>
-			<td>
-			<c:if test="${irr.gh_two_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
-	        <c:if test="${irr.gh_two_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
-			</td>
-		    </tr>
-		    <tr>
-			<td>温室 003</td>
-			<td>
-			<c:if test="${irr.gh_three_irrigation_status == 0 }">关</c:if>
-		    <c:if test="${irr.gh_three_irrigation_status == 1 }">开</c:if></td>
-			<td>
-			<c:if test="${irr.gh_three_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
-	        <c:if test="${irr.gh_three_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
-			</td>
-		    </tr>
-		    <tr>
-			<td>温室004</td>
-			<td>
-			<c:if test="${irr.gh_four_irrigation_status == 0 }">关</c:if>
-		    <c:if test="${irr.gh_four_irrigation_status == 1 }">开</c:if></td>
-			<td>
-			<c:if test="${irr.gh_four_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
-	        <c:if test="${irr.gh_four_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
-			</td>
-		    <tr>
-			<td>温室 005</td>
-			<td>
-			<c:if test="${irr.gh_five_irrigation_status == 0 }">关</c:if>
-		    <c:if test="${irr.gh_five_irrigation_status == 1 }">开</c:if></td>
-			<td>
-			<c:if test="${irr.gh_five_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
-	        <c:if test="${irr.gh_five_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
-			</td>
-		    </tr>
-		    <tr>
-			<td>温室 006</td>
-			<td>
-			<c:if test="${irr.gh_six_irrigation_status == 0 }">关</c:if>
-		    <c:if test="${irr.gh_six_irrigation_status == 1 }">开</c:if></td>	
-		    <td>
-			<c:if test="${irr.gh_six_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
-	        <c:if test="${irr.gh_six_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
-			</td>		
-		    </tr>
-		     <tr>
-		
-			    <td colspan="3"><input type="button" value="更改状态" class="btn tcw bg-success" style="width:200px;"
-					onclick="changeMode()"></td>
-			 </tr>
-		 
-	 </table>
-</div>
-<div class="panel panel-success my-panel">
-	  <!-- Default panel contents -->
-	  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;灌溉控制</div>
-	  <div class="panel-body">
-	    <p>灌溉信息</p>
-	  </div>
-
-<!-- Table 2-->
-  <table class="table table-bordered table-striped table-condensed">
-    <tr>
-	<th>参数</th>
-	<th>数值</th>
-	<th>单位</th>
-    </tr>
-     <tr>
-	<td>EC</td>
-	<td>${irr.EC}</td>
-	<td>mS/cm</td>
-    </tr>
-     <tr>
-	<td>PH</td>
-	<td>${irr.PH}</td>
-	<td></td>
-    </tr>
-     <tr>
-	<td>流量</td>
-	<td>${irr.flow}</td>
-	<td>L/min</td>
-    </tr>
-     <tr>
-	<td>灌溉量</td>
-	<td>${irr.irrigation_amount}</td>
-	<td>升</td>
-    </tr>
-    
-   
-  </table>
-</div>		 
-
+ <div class="container-fluid">
+ 	<div class="row">
+ 		<div class="col-md-6 col-sm-6">
+			<div class="panel panel-success my-panel">
+			  <!-- Default panel contents -->
+			  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;温室阀信息</div>
+			  <div class="panel-body">
+				<table class="table table-bordered table-striped table-condensed" id="table_irr">
+				    <tr>
+					<th>温室</th>
+					<th>灌溉阀状态</th>
+					<th>操作</th>
+				    </tr>
+				     <tr>
+					<td>温室001</td>
+					<td>
+					<c:if test="${irr.gh_one_irrigation_status == 0 }">关</c:if>
+				    <c:if test="${irr.gh_one_irrigation_status == 1 }">开</c:if></td>
+					<td>
+					<c:if test="${irr.gh_one_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+			        <c:if test="${irr.gh_one_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
+					</td>
+				    </tr>
+				    <tr>
+					<td>温室002</td>
+					<td>
+					<c:if test="${irr.gh_two_irrigation_status == 0 }">关</c:if>
+				    <c:if test="${irr.gh_two_irrigation_status == 1 }">开</c:if></td>
+					<td>
+					<c:if test="${irr.gh_two_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+			        <c:if test="${irr.gh_two_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
+					</td>
+				    </tr>
+				    <tr>
+					<td>温室 003</td>
+					<td>
+					<c:if test="${irr.gh_three_irrigation_status == 0 }">关</c:if>
+				    <c:if test="${irr.gh_three_irrigation_status == 1 }">开</c:if></td>
+					<td>
+					<c:if test="${irr.gh_three_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+			        <c:if test="${irr.gh_three_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
+					</td>
+				    </tr>
+				    <tr>
+					<td>温室004</td>
+					<td>
+					<c:if test="${irr.gh_four_irrigation_status == 0 }">关</c:if>
+				    <c:if test="${irr.gh_four_irrigation_status == 1 }">开</c:if></td>
+					<td>
+					<c:if test="${irr.gh_four_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+			        <c:if test="${irr.gh_four_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
+					</td>
+				    <tr>
+					<td>温室 005</td>
+					<td>
+					<c:if test="${irr.gh_five_irrigation_status == 0 }">关</c:if>
+				    <c:if test="${irr.gh_five_irrigation_status == 1 }">开</c:if></td>
+					<td>
+					<c:if test="${irr.gh_five_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+			        <c:if test="${irr.gh_five_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
+					</td>
+				    </tr>
+				    <tr>
+					<td>温室 006</td>
+					<td>
+					<c:if test="${irr.gh_six_irrigation_status == 0 }">关</c:if>
+				    <c:if test="${irr.gh_six_irrigation_status == 1 }">开</c:if></td>	
+				    <td>
+					<c:if test="${irr.gh_six_irrigation_status == 0 }"><input type="checkbox"   name='status' />打开</c:if>
+			        <c:if test="${irr.gh_six_irrigation_status == 1 }"><input type="checkbox"   name='status' />关闭</c:if>
+					</td>		
+				    </tr>
+				     <tr>
+				
+					    <td colspan="3"><input type="button" value="更改状态" class="btn tcw bg-success" style="width:200px;"
+							onclick="changeMode()"></td>
+					 </tr>
+				 </table>
+			  </div><!-- end panel-body -->
+			</div><!-- end panel -->		
+ 		</div><!-- end col-md-6 -->
+ 		<div class="col-md-6 col-sm-6">
+			 <div class="panel panel-success my-panel">
+				  <!-- Default panel contents -->
+				  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;灌溉信息</div>
+				  <div class="panel-body">	
+				<!-- Table 2-->
+				  <table class="table table-bordered table-striped table-condensed">
+				    <tr>
+					<th>参数</th>
+					<th>数值</th>
+					<th>单位</th>
+				    </tr>
+				     <tr>
+					<td>EC</td>
+					<td>${irr.EC}</td>
+					<td>mS/cm</td>
+				    </tr>
+				     <tr>
+					<td>PH</td>
+					<td>${irr.PH}</td>
+					<td></td>
+				    </tr>
+				     <tr>
+					<td>流量</td>
+					<td>${irr.flow}</td>
+					<td>L/min</td>
+				    </tr>
+				     <tr>
+					<td>灌溉量</td>
+					<td>${irr.irrigation_amount}</td>
+					<td>升</td>
+				    </tr>
+				  </table>
+				 </div><!-- end panel-body -->
+			</div><!-- end panel -->		
+ 		</div><!-- end col-md-6 -->
+ 	</div><!-- end row -->
+ </div><!-- end container-fluid -->
 		<div id="page"></div>
 		
  <script type="text/javascript"

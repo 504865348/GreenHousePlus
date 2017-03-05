@@ -862,7 +862,7 @@ table.table.list tr:first-child td {
 }
 /*************************article*********************/
 .my-article{
-	min-height:1480px;
+	min-height:1580px;
 }
 .my-panel{
 	margin-top:20px;
@@ -875,6 +875,9 @@ table.table.list tr:first-child td {
 }
 .my-panel-height-360{
 	min-height:360px;
+}
+.bgn{
+	background-color:none;
 }
 /*****************************footer*****************/
 .my-footer{

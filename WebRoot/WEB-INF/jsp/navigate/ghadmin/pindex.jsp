@@ -28,7 +28,7 @@
 			   	<jsp:include page="/WEB-INF/jsp/include/pNavSide.jsp"></jsp:include>
 		   </div>
 		   <div class="col-md-10 my-article">
-		   		<iframe name="main" class="mainIframe" scrolling="no" style="height:1200px"
+		   		<iframe name="main" class="mainIframe" scrolling="no" style="height:1400px"
  
 				onload="iw=this.contentWindow;$(this).height(iw.$(iw.document).height())"
 				src="<%=request.getContextPath()%>/stat/livedata"></iframe>

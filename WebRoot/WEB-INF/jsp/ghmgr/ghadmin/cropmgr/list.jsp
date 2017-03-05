@@ -32,6 +32,7 @@
 					<th>作物编码</th>
 					<th>作物品种</th>
 					<th>定植日期</th>
+					<th>修改</th>
 					<!-- <th>作物栽培要求</th> -->
 					<!-- <th>操作</th> -->
 				</tr>
@@ -43,6 +44,7 @@
 						<td class="text-center">${i.crop_code }</td>
 						<td class="text-center">${i.crop_type }</td>
 						<td class="text-center">${i.crop_date }</td>
+						<td><a href="#" class=" btn bg-success btn-xs btn-block text-muted">修改</a></td>
 					<%-- 	<td class="text-center">${i.crop_period }</td> --%>
 						<%-- <td class="text-center"><a href="javascript:;"
 							onclick="del(${i.crop_id })">删除</a></td> --%>

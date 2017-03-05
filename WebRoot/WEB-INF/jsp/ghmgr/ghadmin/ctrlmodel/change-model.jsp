@@ -21,7 +21,7 @@
     <input type="hidden" id="gh_id" value='${gh.GH_id}' />
     <h3 class="h3" style="width:100%;background-color:#fff;padding:10px 5px;margin-bottom:-10px;">
 	<!-- 袁健炜 2017-02-28  night modify start-->	
-	                           请点击选择控制模式
+	                           请点击选择控制模式：<span style="font-size:18px;color:red;">替换文字--当前控制模式</span>
 	<!-- 袁健炜 2017-02-28  night modify end-->
 	</h3>
 	
@@ -33,285 +33,331 @@
 		  <div class="panel-body">
 				<div style="width: 60%; margin: 20px auto;">
 						
-						<table class="table">
-						 	  
-							<!-- 袁健炜 2017-02-28  night modify start-->	
-							<tr>
-							    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_setting()" class="btn bg-success text-muted">设定值控制</a></span></td>
-							    <td class="text-center"><span style="line-height: 40px;"><a onclick="changeMode_manual()" class="btn bg-success text-muted">手动控制</a></span></td>
-							    <td class="text-center"><span style="line-height: 40px;"><a href="<%=request.getContextPath()%>/stat/livedata" class="btn bg-success text-muted">智能控制</a></span></td>
-							</tr>
-							<!-- 袁健炜 2017-02-28  night modify end-->	
-						</table>
-						
-						<table style="display:none;" class="table table-bordered table-condensed" id="table_device">
-						    <tr>
-						       <th>CO2发生器</th>
-						       <th>状态</th>
-						       <th>操作</th>
-						    </tr>
-						    <c:forEach items="${setupCons }" var="setupConId">
-								<tr>
-								<td>${setupConId.name }</td>
-								 <td>
-								     <c:if test="${setupConId.control == 0 }">关</c:if>
-								     <c:if test="${setupConId.control == 1 }">开</c:if>
-							    </td>
-							    <td>
-							        <c:if test="${setupConId.control == 0 }"><input type="checkbox" name="status" value="1" />打开</c:if>
-								    <c:if test="${setupConId.control == 1 }"><input type="checkbox" name="status" value="0"/>关闭</c:if>
-							    </td>
-							</tr>
-						  </c:forEach>
-						  <tr>
-							
-						    <td colspan="3"><input type="button" value="更改控制" class="btn bg-success text-muted" style="width:200px;"
-								onclick="chageModeDevice()"></td>
-						 </tr>
-						</table>
-						
-						<table style="display:none;" class="table table-bordered table-condensed" id="table_setting">
-		                   <tr>
-						     <td style="width:50%">时段1开始时间 </td>  
-						     <td>
-						     <select name="one_startTime" id="one_startTime"  style="width:165px">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_one_start == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_one_start != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_one_start == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_one_start != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
-						     </td>
-						  </tr>
-						   <tr>
-						     <td>时段1结束时间 </td>
-						     <td> 
-						    <select name="one_endTime" id="one_endTime"  style="width:165px" onchange="fill_two_startTime()">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_one_end == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_one_end != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_one_end == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_one_end != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
+					<table class="table">
+					 	  
+						<!-- 袁健炜 2017-02-28  night modify start-->	
+						<tr>
+						    <td class="text-center">
+						    	<span style="line-height: 40px;">
+							    <!-- <a onclick="changeMode_setting()" class="btn bg-success text-muted">设定值控制</a> -->
+							    <!-- Button trigger modal -->
+									<button type="button" class="btn bg-success bg-sm" data-toggle="modal" data-target="#settingModal">
+										  设定值控制
+									</button>
+							    </span>
 						    </td>
-						  </tr>
-						   <tr>
-						     <td>时段2开始时间 </td>
-						     <td> <select name="two_startTime" id="two_startTime"  style="width:165px;" disabled="disabled">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_two_start == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_two_start != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_two_start == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_two_start != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
-						     <%-- <input type="text" name="two_startTime" readOnly
-								id="two_startTime"  class="laydate-icon"  value="${ghSetting[0].period_two_start}"  /> --%></td>
-						  </tr>
-						   <tr>
-						     <td>时段2结束时间 </td>
-						     <td>
-						      <select name="two_endTime" id="two_endTime"  style="width:165px"  onchange="fill_three_startTime()">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_two_end == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_two_end != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_two_end == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_two_end != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
+						    <td class="text-center"><span style="line-height: 40px;">
+						    <!-- <a onclick="changeMode_manual()" class="btn bg-success text-muted">手动控制</a> -->
+							    <button type="button" class="btn bg-success bg-sm" data-toggle="modal" data-target="#handModal">
+										  手动控制
+								</button>
+						    </span>
 						    </td>
-						  </tr>
-						    <tr>
-						     <td>时段3开始时间 </td>
-						     <td>
-						     <select name="three_startTime" id="three_startTime"  style="width:165px"  disabled="disabled">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_three_start == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_three_start != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_three_start == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_three_start != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
-						   </td>
-						  </tr>
-						   <tr>
-						     <td>时段3结束时间 </td>
-						     <td>
-						      <select name="three_endTime" id="three_endTime"  style="width:165px"  onchange="fill_four_startTime()">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_three_end == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_three_end != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_three_end == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_three_end != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
-						    </td>
-						  </tr>
-						    <tr>
-						     <td>时段4开始时间 </td>
-						     <td>
-						       <select name="four_startTime" id="four_startTime"  style="width:165px"  disabled="disabled">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_four_end != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_four_end != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
-						     </td>
-						  </tr>
-						   <tr>
-						     <td>时段4结束时间 </td>
-						     <td>
-						      <select name="four_endTime" id="four_endTime"  style="width:165px">
-						     <c:forEach var="i" begin="0" end="23" varStatus="status"
-						     >
-						        <c:if test="${status.index<10}">
-						           <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>0${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_four_end != status.index}"><option >0${status.index}</option></c:if> 
-						        </c:if>
-						         <c:if test="${status.index >= 10}">
-						          <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>${status.index}</option></c:if> 
-						           <c:if test="${ghSetting[0].period_four_end != status.index}"><option >${status.index}</option></c:if> 
-						        </c:if>
-						       
-						     
-						     </c:forEach>
-						     </select> 
-						    </td>
-						  </tr>
-						  
-						   <tr>
-						     <td>时段1 温度 </td>
-						     <td><input  id="one_period_wd" value="${ghSetting[0].period_one_wd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段1 湿度 </td>
-						     <td><input id="one_period_sd" value="${ghSetting[0].period_one_sd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段1 光照度</td>
-						     <td><input id="one_period_gzd" value="${ghSetting[0].period_one_gzd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段1 CO2浓度</td>
-						     <td><input id="one_period_nd" value="${ghSetting[0].period_one_nd }"/></td>
-						  </tr>
-						  
-						  <tr>
-						     <td>时段2 温度 </td>
-						     <td><input id="two_period_wd" value="${ghSetting[0].period_two_wd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段2 湿度 </td>
-						     <td><input id="two_period_sd" value="${ghSetting[0].period_two_sd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段2 光照度</td>
-						     <td><input id="two_period_gzd" value="${ghSetting[0].period_two_gzd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段2 CO2浓度</td>
-						     <td><input id="two_period_nd" value="${ghSetting[0].period_two_nd }"/></td>
-						  </tr>
-						   
-						   
-						    <tr>
-						     <td>时段3 温度 </td>
-						     <td><input id="three_period_wd" value="${ghSetting[0].period_three_wd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段3 湿度 </td>
-						     <td><input  id="three_period_sd"  value="${ghSetting[0].period_three_sd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段3光照度</td>
-						     <td><input  id="three_period_gzd" value="${ghSetting[0].period_three_gzd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段3 CO2浓度</td>
-						     <td><input  id="three_period_nd" value="${ghSetting[0].period_three_nd }"/></td>
-						  </tr>
-						    
-						     <tr>
-						     <td>时段4 温度 </td>
-						     <td><input  id="four_period_wd" value="${ghSetting[0].period_four_wd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段4 湿度 </td>
-						     <td><input id="four_period_sd" value="${ghSetting[0].period_four_sd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段4 光照度</td>
-						     <td><input id="four_period_gzd" value="${ghSetting[0].period_four_gzd }"/></td>
-						  </tr>
-						  <tr>
-						     <td>时段4 CO2浓度</td>
-						     <td><input id="four_period_nd" value="${ghSetting[0].period_four_nd }"/></td>
-						  </tr>
-						      
-						 
-						   <tr>
-						    <td colspan="2"><input type="button" value="更改设置" class="btn bg-success" style="width:100px;"
-								onclick="chageModesetting()"></td>
-						 </tr>  
-						</table>
-					</div>		    
+						    <td class="text-center"><span style="line-height: 40px;"><a href="<%=request.getContextPath()%>/stat/livedata" class="btn bg-success text-muted">智能控制</a></span></td>
+						</tr>
+						<!-- 袁健炜 2017-02-28  night modify end-->	
+					</table>					
+				</div>		    
+		  </div><!--end panel-body-->
+		</div><!--end panel-->
+		
+		<div class="panel panel-success my-panel" style="display:none;" id="table_device" >
+		  <!-- Default panel contents -->
+		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;手动控制</div>
+		  <div class="panel-body">
+		     <!-- Table -->	
+			<table class="table table-bordered table-condensed">
+			    <tr>
+			       <th>设备</th>
+			       <th>状态</th>
+			       <th>操作</th>
+			    </tr>
+			    <c:forEach items="${setupCons }" var="setupConId">
+					<tr>
+					<td>${setupConId.name }</td>
+					 <td>
+					     <c:if test="${setupConId.control == 0 }">关</c:if>
+					     <c:if test="${setupConId.control == 1 }">开</c:if>
+				    </td>
+				    <td>
+					<c:if test="${setupConId.control == 0 }"><input type="checkbox" name="status" value="1" />打开</c:if>
+					    <c:if test="${setupConId.control == 1 }"><input type="checkbox" name="status" value="0"/>关闭</c:if>
+				    </td>
+				</tr>
+			  </c:forEach>
+			  <tr>
+			    <td colspan="3"><input type="button" value="更改控制" class="btn bg-success text-muted" style="width:200px;"
+					onclick="chageModeDevice()"></td>
+			 </tr>
+			</table>
+		  </div><!--end panel-body-->
+		</div><!--end panel-->
+		
+		<div class="panel panel-success my-panel" style="display:none;" id="table_setting">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;设定值测控</div>
+		  <div class="panel-body">
+		     <!-- Table -->
+			  <table class="table table-bordered table-striped table-condensed">
+			    <tr>
+			    	<th>时间区间</th>
+					<th>开始时间</th>
+					<th>结束时间</th>
+					<th>温度</th>
+					<th>湿度</th>
+					<th>光照度</th>
+					<th>CO2浓度</th>
+			    </tr>
+			     <tr>
+			     	<td>时段1</td>
+					<td>
+					 <select name="one_startTime" id="one_startTime"  style="width:120px">
+					     <c:forEach var="i" begin="0" end="23" varStatus="status"
+					     >
+					        <c:if test="${status.index<10}">
+					           <c:if test="${ghSetting[0].period_one_start == status.index}"><option selected>0${status.index}</option></c:if> 
+					           <c:if test="${ghSetting[0].period_one_start != status.index}"><option >0${status.index}</option></c:if> 
+					        </c:if>
+					         <c:if test="${status.index >= 10}">
+					          <c:if test="${ghSetting[0].period_one_start == status.index}"><option selected>${status.index}</option></c:if> 
+					           <c:if test="${ghSetting[0].period_one_start != status.index}"><option >${status.index}</option></c:if> 
+					        </c:if>
+					     </c:forEach>
+					    </select>
+					</td>
+					<td>
+					  <select name="one_endTime" id="one_endTime"  style="width:120px" onchange="fill_two_startTime()">
+					     <c:forEach var="i" begin="0" end="23" varStatus="status"
+					     >
+					        <c:if test="${status.index<10}">
+					           <c:if test="${ghSetting[0].period_one_end == status.index}"><option selected>0${status.index}</option></c:if> 
+					           <c:if test="${ghSetting[0].period_one_end != status.index}"><option >0${status.index}</option></c:if> 
+					        </c:if>
+					         <c:if test="${status.index >= 10}">
+					          <c:if test="${ghSetting[0].period_one_end == status.index}"><option selected>${status.index}</option></c:if> 
+					           <c:if test="${ghSetting[0].period_one_end != status.index}"><option >${status.index}</option></c:if> 
+					        </c:if>
+					       
+					     
+					     </c:forEach>
+					     </select> 
+					</td>
+					<td>
+						<input  id="one_period_wd" value="${ghSetting[0].period_one_wd }"/>
+					</td>
+					<td>
+						<input id="one_period_sd" value="${ghSetting[0].period_one_sd }"/>
+					</td>
+					<td>
+						<input id="one_period_gzd" value="${ghSetting[0].period_one_gzd }"/>
+					</td>
+					<td>
+						<input id="one_period_nd" value="${ghSetting[0].period_one_nd }"/>
+					</td>
+			    </tr>
+			    <tr>
+			     	<td>时段2</td>
+					<td>
+					  <select name="two_startTime" id="two_startTime"  style="width:120px;" disabled="disabled">
+					     <c:forEach var="i" begin="0" end="23" varStatus="status"
+					     >
+						<c:if test="${status.index<10}">
+						   <c:if test="${ghSetting[0].period_two_start == status.index}"><option selected>0${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_two_start != status.index}"><option >0${status.index}</option></c:if> 
+						</c:if>
+						 <c:if test="${status.index >= 10}">
+						  <c:if test="${ghSetting[0].period_two_start == status.index}"><option selected>${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_two_start != status.index}"><option >${status.index}</option></c:if> 
+						</c:if>
+					       
+					     
+					     </c:forEach>
+					     </select> 
+					</td>
+					<td>
+					  <select name="two_endTime" id="two_endTime"  style="width:120px"  onchange="fill_three_startTime()">
+					     <c:forEach var="i" begin="0" end="23" varStatus="status"
+					     >
+						<c:if test="${status.index<10}">
+						   <c:if test="${ghSetting[0].period_two_end == status.index}"><option selected>0${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_two_end != status.index}"><option >0${status.index}</option></c:if> 
+						</c:if>
+						 <c:if test="${status.index >= 10}">
+						  <c:if test="${ghSetting[0].period_two_end == status.index}"><option selected>${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_two_end != status.index}"><option >${status.index}</option></c:if> 
+						</c:if>
+					       
+					     
+					     </c:forEach>
+					     </select> 
+					</td>
+					<td>
+						<input id="two_period_wd" value="${ghSetting[0].period_two_wd }"/>
+					</td>
+					<td>
+						<input id="two_period_sd" value="${ghSetting[0].period_two_sd }"/>
+					</td>
+					<td>
+						<input id="two_period_gzd" value="${ghSetting[0].period_two_gzd }"/>
+					</td>
+					<td>
+						<input id="two_period_nd" value="${ghSetting[0].period_two_nd }"/>
+					</td>
+			    </tr>
+			    <tr>
+			     	<td>时段3</td>
+					<td>
+					 <select name="three_startTime" id="three_startTime"  style="width:120px"  disabled="disabled">
+				     <c:forEach var="i" begin="0" end="23" varStatus="status"
+				     >
+					<c:if test="${status.index<10}">
+					   <c:if test="${ghSetting[0].period_three_start == status.index}"><option selected>0${status.index}</option></c:if> 
+					   <c:if test="${ghSetting[0].period_three_start != status.index}"><option >0${status.index}</option></c:if> 
+					</c:if>
+					 <c:if test="${status.index >= 10}">
+					  <c:if test="${ghSetting[0].period_three_start == status.index}"><option selected>${status.index}</option></c:if> 
+					   <c:if test="${ghSetting[0].period_three_start != status.index}"><option >${status.index}</option></c:if> 
+					</c:if>
+				       
+				     
+				     </c:forEach>
+				     </select> 
+					</td>
+					<td>
+					  <select name="three_endTime" id="three_endTime"  style="width:120px"  onchange="fill_four_startTime()">
+					     <c:forEach var="i" begin="0" end="23" varStatus="status"
+					     >
+						<c:if test="${status.index<10}">
+						   <c:if test="${ghSetting[0].period_three_end == status.index}"><option selected>0${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_three_end != status.index}"><option >0${status.index}</option></c:if> 
+						</c:if>
+						 <c:if test="${status.index >= 10}">
+						  <c:if test="${ghSetting[0].period_three_end == status.index}"><option selected>${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_three_end != status.index}"><option >${status.index}</option></c:if> 
+						</c:if>
+					       
+					     
+					     </c:forEach>
+					     </select> 
+					</td>
+					<td>
+						<input  id="three_period_wd" value="${ghSetting[0].period_three_wd }"/>
+					</td>
+					<td>
+						<input id="three_period_sd" value="${ghSetting[0].period_three_sd }"/>
+					</td>
+					<td>
+						<input id="three_period_gzd" value="${ghSetting[0].period_three_gzd }"/>
+					</td>
+					<td>
+						<input id="three_period_nd" value="${ghSetting[0].period_three_nd }"/>
+					</td>
+			    </tr>
+			    <tr>
+			     	<td>时段4</td>
+					<td>
+					 <select name="four_startTime" id="four_startTime"  style="width:120px"  disabled="disabled">
+					     <c:forEach var="i" begin="0" end="23" varStatus="status"
+					     >
+						<c:if test="${status.index<10}">
+						   <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>0${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_four_end != status.index}"><option >0${status.index}</option></c:if> 
+						</c:if>
+						 <c:if test="${status.index >= 10}">
+						  <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_four_end != status.index}"><option >${status.index}</option></c:if> 
+						</c:if>
+					     </c:forEach>
+					     </select> 
+					</td>
+					<td>
+					  <select name="four_endTime" id="four_endTime"  style="width:120px">
+					     <c:forEach var="i" begin="0" end="23" varStatus="status"
+					     >
+						<c:if test="${status.index<10}">
+						   <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>0${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_four_end != status.index}"><option >0${status.index}</option></c:if> 
+						</c:if>
+						 <c:if test="${status.index >= 10}">
+						  <c:if test="${ghSetting[0].period_four_end == status.index}"><option selected>${status.index}</option></c:if> 
+						   <c:if test="${ghSetting[0].period_four_end != status.index}"><option >${status.index}</option></c:if> 
+						</c:if>
+					       
+					     
+					     </c:forEach>
+					     </select> 
+					</td>
+					<td>
+						<input  id="four_period_wd" value="${ghSetting[0].period_four_wd }"/>
+					</td>
+					<td>
+						<input id="four_period_sd" value="${ghSetting[0].period_four_sd }"/>
+					</td>
+					<td>
+						<input id="four_period_gzd" value="${ghSetting[0].period_four_gzd }"/>
+					</td>
+					<td>
+						<input id="four_period_nd" value="${ghSetting[0].period_four_nd }"/>
+					</td>
+			    </tr>
+			    <tr>
+			    	<td colspan="7"><input type="button" value="更改设置" class="btn bg-success" style="width:100px;"
+					onclick="chageModesetting()"></td>
+			    </tr>
+			  </table>
 		  </div><!--end panel-body-->
 		</div><!--end panel-->
 	  </div><!--end row-->
 	</div><!-- container-fluid-->
+ 
+ <!-- 模态框组件，用户输入密码  申仕杰-->
+ <!-- 设定值控制模式 -->
+ <!-- Modal -->
+<div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="myModalLabel">请输入<span class="text-danger">设定值控制</span>密码</h3>
+      </div>
+      <div class="modal-body">
+        <div class="input-group" style="width:100%">
+        	<form action="">
+        	 	<input type="password" class="form-control" placeholder="设定值控制密码" aria-describedby="sizing-addon2">
+        	</form>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn bg-sussess">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+  <!-- 手动控制模式 -->
+ <!-- Modal -->
+<div class="modal fade" id="handModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="myModalLabel">请输入<span class="text-danger">手动控制</span>密码</h3>
+      </div>
+      <div class="modal-body">
+        <div class="input-group" style="width:100%">
+        	<form action="">
+        	 	<input type="password" class="form-control" placeholder="手动控制密码" aria-describedby="sizing-addon2">
+        	</form>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn bg-sussess">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
  
 	<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/laydate/laydate.js"></script>
@@ -349,7 +395,7 @@ function changeMode_intellgence(){
 		.done(function(data){
 			if(data){
 				document.getElementById("table_setting").style.display='none';
-				document.getElementById("table_device").style.display='none';z
+				document.getElementById("table_device").style.display='none';
 			}
 			else{
 				alert('密码错误');

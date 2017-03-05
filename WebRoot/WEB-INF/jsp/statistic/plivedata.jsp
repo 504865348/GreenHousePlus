@@ -19,11 +19,8 @@
 <div><!-- 取消row -->
   	<div class="panel panel-success my-panel">
 	  <!-- Default panel contents -->
-	  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;温室控制</div>
+	  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;温室概览</div>
 	  <div class="panel-body">
-	    <p>温室概览</p>
-	  </div>
-
 	  <!-- Table -->
 	  <table class="table table-bordered table-striped table-condensed" style="font-size:14px">
 	    <tr>
@@ -120,65 +117,64 @@
 			<c:if test="${irr.gh_six_irrigation_status == 1 }">开</c:if></td>
 			<td>智能控制</td>
 	    </tr>
-	  </table>
+	  </table>	    
+	  </div><!-- end panel-body -->
 	</div>
 	<!-- 温度和气象控制 -->
 	<div><!-- 取消row -->
 		<div class="col-md-6">
 			<div class="panel panel-success my-panel my-panel-height-360">
 			  <!-- Default panel contents -->
-			  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;气象信息</div>
+			  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;气象概览</div>
 			  <div class="panel-body">
-			    <p>气象概览</p>
-			  </div>
-			
 			  <!-- Table -->
-			  <table class="table table-bordered table-striped table-condensed" style="font-size:14px">
-			    <tr>
-				<th>参数</th>
-				<th>数值</th>
-				<th>单位</th>
-			    </tr>
-			     <tr>
-				<td>空气温度</td>
-				<td>${mete.air_temperature}</td>
-				<td>℃</td>
-			    </tr>
-			    <tr>
-				<td>空气湿度</td>
-				<td>${mete.air_humidity}</td>
-				<td>%</td>
-			    </tr>
-			    <tr>
-				<td>CO2浓度</td>
-				<td>${mete.cd_thickness}</td>
-				<td>Ppm</td>
-			    </tr>
-			    <tr>
-				<td>光照度</td>
-				<td>${mete.illuminance}</td>
-				<td>Lux</td>
-			    </tr>
-			    <tr>
-				<td>风速</td>
-				<td>${mete.wind_speed}</td>
-				<td>米/秒</td>
-			    </tr>
-			    <tr>
-				<td>风向</td>
-				<td>${mete.wind_direction}</td>
-				<td>度</td>
-			    </tr>
-			    <tr>
-				<td>雨量</td>
-				<td>
-				<c:if test="${mete.rainfall==1}">有</c:if>
-				<c:if test="${mete.rainfall==0}">无</c:if></td>
-				<td></td>
-			    </tr>
-			  </table>
-			</div>
-		</div>	 
+				  <table class="table table-bordered table-striped table-condensed" style="font-size:14px">
+				    <tr>
+					<th>参数</th>
+					<th>数值</th>
+					<th>单位</th>
+				    </tr>
+				     <tr>
+					<td>空气温度</td>
+					<td>${mete.air_temperature}</td>
+					<td>℃</td>
+				    </tr>
+				    <tr>
+					<td>空气湿度</td>
+					<td>${mete.air_humidity}</td>
+					<td>%</td>
+				    </tr>
+				    <tr>
+					<td>CO2浓度</td>
+					<td>${mete.cd_thickness}</td>
+					<td>Ppm</td>
+				    </tr>
+				    <tr>
+					<td>光照度</td>
+					<td>${mete.illuminance}</td>
+					<td>Lux</td>
+				    </tr>
+				    <tr>
+					<td>风速</td>
+					<td>${mete.wind_speed}</td>
+					<td>米/秒</td>
+				    </tr>
+				    <tr>
+					<td>风向</td>
+					<td>${mete.wind_direction}</td>
+					<td>度</td>
+				    </tr>
+				    <tr>
+					<td>雨量</td>
+					<td>
+					<c:if test="${mete.rainfall==1}">有</c:if>
+					<c:if test="${mete.rainfall==0}">无</c:if></td>
+					<td></td>
+				    </tr>
+				  </table>
+			  </div><!-- end panel-body -->
+			</div><!-- end panel -->
+		</div>	<!-- end col-md-6 --> 
 	</div>
 </div><!-- end row -->
 	<script type="text/javascript">
