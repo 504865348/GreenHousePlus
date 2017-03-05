@@ -358,9 +358,9 @@ session.setAttribute("ghId", ghId);
 			@RequestParam String update_value
 		 ){
 		String[] all_updateValue_list = update_value.split("&&&");
-		for(int i=0;i<all_updateValue_list.length;i++){
+		/*for(int i=0;i<all_updateValue_list.length;i++){
 			System.out.println("对应的值为"+all_updateValue_list[i]);
-		}
+		}*/
 		System.out.println("记录为："+gh_Setting_ControlDao.findSettingByGhId(Integer.parseInt(gh_id)).size()); 
 	    if(gh_Setting_ControlDao.findSettingByGhId(Integer.parseInt(gh_id)).size() == 0){
 	    	Gh_Setting_Control gh_Setting_Control = new Gh_Setting_Control();
@@ -378,9 +378,11 @@ session.setAttribute("ghId", ghId);
 	    	gh_Setting_Control.setPeriod_four_end(all_updateValue_list[3].split(";")[1]);
 	    	
 	    	return gh_Setting_ControlDao.insert(gh_Setting_Control);
+	    }else{
+	    	return greenhouseDao.getUtil().update_setting(gh_id, update_value);
 	    }
 		//System.out.println("更新的设备为:"+update_device);
-		return greenhouseDao.getUtil().update_setting(gh_id, update_value);
+		
 	}
 	
 	 
@@ -413,6 +415,45 @@ session.setAttribute("ghId", ghId);
 		return false;
 	}
 	
+	/** 
+	 * @param modeType
+	 * @param passord
+	 * @return
+	 */
+	@RequestMapping(value="/ghadmin/crop/modifyCrop", method = RequestMethod.POST)
+	@ResponseBody
+	public Object modifyCrop(
+			@RequestParam String password,
+			@RequestParam String ghid){
+		System.out.println("用户的password为"+password);
+		User u = userDao.getCurrentUser(request);
+		System.out.println("用户的id为"+u.getUser_id());
+		String secPassword = userDao.getSecondPassword(u.getUser_id());
+		if(password.equals(secPassword)){
+			//更改控制模式
+			 return  true;
+		}
+		//二级密码错误
+		return false;
+	}
+	
+	/** 
+	 * @param modeType
+	 * @param passord
+	 * @return
+	 */
+	@RequestMapping(value="/ghadmin/crop/modify_crop_info", method = RequestMethod.POST)
+	@ResponseBody
+	public Object modifyCropInfo(
+			@RequestParam String crop_id,
+			@RequestParam String name,
+			@RequestParam String code,
+			@RequestParam String type,
+			@RequestParam String date,
+			@RequestParam String ghid){
+		 
+		return greenhouseDao.getUtil().update_crop_info(ghid,crop_id, name,code,type,date);
+	}
 	@RequestMapping(value="/ghadmin/ctrl/change_mode_intellgece", method = RequestMethod.POST)
 	@ResponseBody
 	public Object changeModeIntellgence(
@@ -791,4 +832,5 @@ session.setAttribute("ghId", ghId);
 		model.addAttribute("ghid", ghid);
 		return "ghmgr/ghadmin/cropmgr/list";
 	}
+
 }
