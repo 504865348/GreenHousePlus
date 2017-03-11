@@ -129,6 +129,22 @@ public class GreenhouseDao extends BasicDao<Greenhouse> {
 		return greenhouse;
 	}
 	
+	/**给温室注入机构和检测元素，并注入最新的检测数据
+	 * @param greenhouse
+	 * @return
+	 */
+	public Greenhouse injectElementsAndCurrentValue_current(Greenhouse greenhouse){
+		List<Element_type> types = element_typeDao.list(Cnd.where("GH_id", "=", greenhouse.getGH_id()));
+		
+		List<TypeAndElements> elements = new ArrayList<TypeAndElements>();
+		for(Element_type type:types){
+			elements.add(elementDao.findElementsBy_current(greenhouse.getGH_id(), 1, 100,type.getId(),true)); //modify
+		}
+		
+		greenhouse.setTypeAndElements(elements);
+		return greenhouse;
+	}
+	
 	/**给温室对象注入设备
 	 * @param greenhouse
 	 * @return

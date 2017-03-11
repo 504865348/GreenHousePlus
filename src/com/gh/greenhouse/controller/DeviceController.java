@@ -155,7 +155,9 @@ public class DeviceController {
 				//在con+ghId+type表中插入新的字段
 				Integer eid=element_type.getId();
 				String tbName="mon_"+ghId+"_"+eid;
+				String tbName_current = "mon_"+ghId+"_"+eid+"_current";
 				String elementId ="eleid_"+elementDao.getUtil().loadObjectBySql("select max(Element_id) from element", Integer.class);
+				elementDao.addColumn(tbName_current, elementId);
 				elementDao.addColumn(tbName, elementId);
 			}
 			//跳转

@@ -87,6 +87,28 @@ public class ElementDao extends BasicDao<Element> {
 		elements.setElements(list);
 		return elements;
 	}
+	
+	/**查找当前每个温室的实时元素
+	 * @param ghId
+	 * @param ps
+	 * @param pn
+	 * @param elementType
+	 * @param needData 是否需要显示最新数据
+	 * @return
+	 */
+	public TypeAndElements findElementsBy_current(Integer ghId,int ps ,int pn,int elementType,boolean needData){
+		TypeAndElements elements = new TypeAndElements();
+		elements.setElement_type(element_typeDao.findById(elementType));
+		
+		List<Element> list = super.list(Cnd.where("Shed_id", "=", ghId).and("Element_type", "=", elementType));
+		if(needData){
+			for(Element item:list){
+				item.setCurrent_value((monitorDao.findLatestData_current(item.getElement_type(), item.getElement_id(), ghId)));
+			}
+		}
+		elements.setElements(list);
+		return elements;
+	}
 	/**
 	 * 根据温室id显示element
 	 * @param ghId
