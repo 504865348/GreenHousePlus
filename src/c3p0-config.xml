@@ -7,4 +7,5 @@
 		<property name="jdbcUrl">jdbc:mysql://localhost:3306/greenhouse?useUnicode=true&amp;characterEncoding=UTF-8</property>
 
 	</default-config> <!-- This app is massive! -->
-</c3p0-config> 
+</c3p0-config>
+ 

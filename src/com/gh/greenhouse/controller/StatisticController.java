@@ -222,7 +222,7 @@ public class StatisticController {
 		gh = greenhouseDao.findByghid(Integer.parseInt(ghid)); //新加的
 		
 		gh.setCrop(shedCroplDao.findCropByGhId(gh.getGH_id()));
-		greenhouseDao.injectElementsAndCurrentValue(gh);
+		greenhouseDao.injectElementsAndCurrentValue_current(gh); //modify
 	 
 		//List<Element_type> types = element_typeDao.findByGhId(ghId);
 		List<Element_type> types = element_typeDao.findByGhId(Integer.parseInt(ghid));//修改
