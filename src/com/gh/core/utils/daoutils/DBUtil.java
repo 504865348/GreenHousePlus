@@ -438,6 +438,38 @@ public class DBUtil<T> {
 	 * @param cnd
 	 * @return
 	 */
+	private List<T> _list_mon(int ghId,int elementType,int pageSize,int pageNumber) {
+		List<T> result = new ArrayList<T>();
+		Connection con = getConnection();
+		 
+		
+		String  preSql = "select * from   mon_"+ghId+"_"+elementType +" Order by control_time  DESC  limit 1,20 ";
+		 
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		System.out.println("=========[#SQL]========::"+preSql);
+		try {
+			ps = con.prepareStatement(preSql);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				result.add(getBeanFromResultSet(rs));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(result.size() + " record(s) listed.");
+		return result;
+	}
+	
+	/**闁哄被鍎撮…鍧楁晬瀹�拷娼岄柡鍫濐樆閸ら亶寮敓绲歯d濞戞捁娅ｉ埞鏍蓟閵夘煈鍤勯柟纰夋嫹濠�拷
+	 * @param selectCols
+	 * @param selectAll
+	 * @param cnd
+	 * @return
+	 */
 	private List<T> _list(String[] selectCols,Cnd cnd,boolean pager,int pageSize,int pageNumber) {
 		List<T> result = new ArrayList<T>();
 		Connection con = getConnection();
@@ -473,6 +505,44 @@ public class DBUtil<T> {
 		return result;
 	}
 	
+	
+	/**闁哄被鍎撮…鍧楁晬瀹�拷娼岄柡鍫濐樆閸ら亶寮敓绲歯d濞戞捁娅ｉ埞鏍蓟閵夘煈鍤勯柟纰夋嫹濠�拷
+	 * @param selectCols
+	 * @param selectAll
+	 * @param cnd
+	 * @return
+	 */
+	private List<T> _list_nolimit(String[] selectCols,Cnd cnd,boolean pager) {
+		List<T> result = new ArrayList<T>();
+		Connection con = getConnection();
+		
+		String colsStr = selectCols == null?"*":Utils.joinString(selectCols, ",");
+		String preSql = "";
+		
+		preSql += "select "+colsStr+" from " + tbName + (null == cnd ?"":cnd.toPreparedSql());
+		 
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		System.out.println("=========[#SQL]========::"+preSql);
+		try {
+			ps = con.prepareStatement(preSql);
+			if(null!=cnd) cnd.setAllStatementsVal(ps, 1);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				result.add(getBeanFromResultSet(rs));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		closeConnection(con,ps,rs);
+		System.out.println(result.size() + " record(s) listed.");
+		return result;
+	}
 	/**返回list&lt;map>结果集
 	 * @param selectCols
 	 * @param cnd
@@ -493,6 +563,47 @@ public class DBUtil<T> {
 		if(pager){
 			preSql += " limit "+(pageNumber-1)*pageSize+","+pageSize+" ";
 		}
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		System.out.println("=========[#SQL]========::"+preSql);
+		try {
+			ps = con.prepareStatement(preSql);
+			if(null!=cnd) cnd.setAllStatementsVal(ps, 1);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				
+				result.add(getMapperFromResultSet(rs));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		closeConnection(con,ps,rs);
+		System.out.println(result.size() + " record(s) listed.");
+		return result;
+	}
+	
+	
+	/**返回list&lt;map>结果集
+	 * @param selectCols
+	 * @param cnd
+	 * @param pager
+	 * @param pageSize
+	 * @param pageNumber
+	 * @return
+	 */
+	private List<Mapper> _listMap_nolimit(String[] selectCols,Cnd cnd,boolean pager){
+		List<Mapper> result = new ArrayList<Mapper>();
+		Connection con = getConnection();
+		
+		String colsStr = selectCols == null?"*":Utils.joinString(selectCols, ",");
+		String preSql = "";
+		
+		preSql += "select "+colsStr+" from " + tbName + (null == cnd ?"":cnd.toPreparedSql());
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -540,11 +651,24 @@ public class DBUtil<T> {
 		return _listMap(selectCols,cnd,false,0,0);
 	}
 	
+	public List<T> listByPage_mon(int ghId,int elementType,int pageSize,int pageNumber){
+		return _list_mon(ghId,elementType, pageSize, pageNumber);
+	}
+	
 	public List<T> listByPage(Cnd cnd,int pageSize,int pageNumber){
 		return _list(null,cnd,true,pageSize,pageNumber);
 	}
+	
+	public List<T> listByPage_nolimt(Cnd cnd){
+		return _list_nolimit(null,cnd,true);
+	}
+	
 	public List<Mapper> listMapByPage(Cnd cnd,int pageSize,int pageNumber){
 		return _listMap(null,cnd,true,pageSize,pageNumber);
+	}
+	
+	public List<Mapper> listMapByPage_nolimt(Cnd cnd){
+		return _listMap_nolimit(null,cnd,true);
 	}
 	
 	public List<T> listByPage(String[] selectCols,Cnd cnd,int pageSize,int pageNumber){
@@ -553,6 +677,11 @@ public class DBUtil<T> {
 	public List<Mapper> listMapByPage(String[] selectCols,Cnd cnd,int pageSize,int pageNumber){
 		return _listMap(selectCols,cnd,true,pageSize,pageNumber);
 	}
+	
+	public List<Mapper> listMapByPage_nolimit(String[] selectCols,Cnd cnd){
+		return _listMap_nolimit(selectCols,cnd,true);
+	}
+	
 	
 	/**鐎垫壆锟絜sultset濞戞搩鍘艰ぐ鍥礄缁拷va bean闁圭鎷峰〒鍓佹啺娴ｇ儤鐣遍悗娑欘殱椤斿矂鏁嶅畝鍐闁搞儳鍋為弻濠囨儍閸掔棏va bean
 	 * @param rs

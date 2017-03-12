@@ -38,10 +38,10 @@ public class MonitorDao extends BasicDao<Monitor> {
 		Cnd param = Cnd.where()
 				;
 		if(Strings.isNotBlank(startTime)){
-			param = param.and("control_time", ">=", startTime);
+			param = param.and("control_time", ">=", startTime+" 00:00:00");
 		}
 		if(Strings.isNotBlank(endTime)){
-			param = param.and("control_time", "<=", endTime);
+			param = param.and("control_time", "<=", endTime+" 23:59:59");
 		}
 		param = param.desc("control_time");
 		String orignTableName = super.getUtil().getTbName();
@@ -60,6 +60,48 @@ public class MonitorDao extends BasicDao<Monitor> {
 		return result;
 	}
 	
+	
+	/**根据检测元素查找检测数据，分页
+	 * @param elementType
+	 * @param elementId
+	 * @param ghId
+	 * @param pageSize
+	 * @param pageNumber
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
+	public Pager<Mapper> findPageByElementType_nolimit(
+			Integer elementType,
+			Integer elementId,
+			Integer ghId,
+			String startTime,
+			String endTime
+	){
+		Cnd param = Cnd.where()
+				;
+		if(Strings.isNotBlank(startTime)){
+			param = param.and("control_time", ">=", startTime+" 00:00:00");
+		}
+		if(Strings.isNotBlank(endTime)){
+			param = param.and("control_time", "<=", endTime+" 23:59:59");
+		}
+		param = param.desc("control_time");
+		String orignTableName = super.getUtil().getTbName();
+		
+		super.getUtil().setTbName("mon_"+ghId+"_"+elementType);
+		Pager<Mapper> result = null;
+		if(elementId != null){
+			result = super.listMapByPage_nolimit(new String[]{"eleid_"+elementId,"control_time","id"},param);
+		}
+		else{
+			result = super.listMapByPage_nolimit(param);
+		}
+		
+		
+		super.getUtil().setTbName(orignTableName);
+		return result;
+	}
 	/**查找最新的数据
 	 * @param elementType
 	 * @param elementId

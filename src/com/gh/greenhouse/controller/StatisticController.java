@@ -34,8 +34,10 @@ import com.gh.greenhouse.dao.GreenhouseDao;
 import com.gh.greenhouse.dao.IrrgationDao;
 import com.gh.greenhouse.dao.MonitorDao;
 import com.gh.greenhouse.dao.OuterMeteorologicalDao;
+import com.gh.greenhouse.dao.RecordDao;
 import com.gh.greenhouse.dao.SetupConDao;
 import com.gh.greenhouse.dao.ShedCroplDao;
+import com.gh.greenhouse.domain.Element;
 import com.gh.greenhouse.domain.Element_type;
 import com.gh.greenhouse.domain.Greenhouse;
 
@@ -43,6 +45,7 @@ import com.gh.greenhouse.domain.Greenhouse;
 @RequestMapping("/stat")
 public class StatisticController {
 
+ 
 	@Resource
 	private UserDao userDao;
 	@Resource
@@ -261,8 +264,8 @@ public class StatisticController {
 	 */
 	@RequestMapping(value="/historydata")
 	public String historydata(Model model,Integer elementType,Integer ghId,Integer elementId
-			,@RequestParam(value="ps",required=false,defaultValue="20") Integer pageSize,
-			@RequestParam(value="pn",required=false,defaultValue="1") Integer pageNumber,
+			,@RequestParam(value="ps",required=true,defaultValue="20") Integer pageSize,
+			@RequestParam(value="pn",required=true,defaultValue="1") Integer pageNumber,
 			String startTime,String endTime) throws JsonGenerationException, JsonMappingException, IOException{
 		User u = userDao.getCurrentUser(request);
 		if(null == ghId) ghId = greenhouseDao.findByUserId(u.getUser_id(),request).getGH_id(); //
@@ -271,14 +274,16 @@ public class StatisticController {
 		model.addAttribute("houses", house);*/
 		
 		List<Element_type> types = element_typeDao.findByGhId(ghId);
-/*		if(elementType == null){
+ 		if(elementType == null){
 			elementType = types.get(0).getId();
-		}*/
-		/*if(elementId!=null && !"".equals(elementId)){
+			System.out.println("elementType>>>>>"+elementType);
+		} 
+		 if(elementId!=null && !"".equals(elementId)){
 			Element element = elementDao.findByElementId(elementId);
+			System.out.println("element>>>>>"+element);
 			model.addAttribute("data", element); 
 			
-		}*/
+		} 
 		
 		model.addAttribute("types", types);
 		model.addAttribute("elementId", elementId);
@@ -287,15 +292,17 @@ public class StatisticController {
 		model.addAttribute("ghId", ghId);
 		model.addAttribute("elementType", elementType);
 		
-		if(null == elementType){
+		/*if(null == elementType){
 			return "statistic/historydata";
-		}
-		
+		}*/
+	 
 		Pager<Mapper> mons = monitorDao.findPageByElementType(elementType,elementId, ghId, pageSize, pageNumber, startTime, endTime);
+		Pager<Mapper> mons_nolimit =  monitorDao.findPageByElementType_nolimit(elementType,elementId, ghId,  startTime, endTime);
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("jsonData",mapper.writeValueAsString(mons.getList()));
 		model.addAttribute("eles", elementDao.findByElementType(elementType));
 		model.addAttribute("mons",mons);
+		model.addAttribute("mons_nolimit",mons_nolimit);
 		
 		return "statistic/historydata";
 	}
