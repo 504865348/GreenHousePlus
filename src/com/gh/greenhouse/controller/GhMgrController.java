@@ -1,16 +1,12 @@
 package com.gh.greenhouse.controller;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -452,7 +448,15 @@ session.setAttribute("ghId", ghId);
 			@RequestParam String date,
 			@RequestParam String ghid){
 		 
-		return greenhouseDao.getUtil().update_crop_info(ghid,crop_id, name,code,type,date);
+		Crop crop = new Crop();
+		crop.setCrop_name(name);
+		crop.setCrop_code(Integer.parseInt(code));
+		crop.setCrop_type(type);
+		crop.setCrop_date(date);
+		crop.setDeleted("N");
+		
+		return cropDao.insert(crop);
+		//return greenhouseDao.getUtil().update_crop_info(ghid,crop_id, name,code,type,date);
 	}
 	@RequestMapping(value="/ghadmin/ctrl/change_mode_intellgece", method = RequestMethod.POST)
 	@ResponseBody
@@ -804,13 +808,11 @@ session.setAttribute("ghId", ghId);
 			@RequestParam(value="ghid") String ghid,
 			Crop crop,CropGH cropGH){
 		    //温室1-4
-			System.out.println("新增id为"+ghid);
+			 
 			crop.setDeleted("N");
-			System.out.println("crop.getCrop_code()"+crop.getCrop_code());
 			cropGH.setCrop_id(crop.getCrop_code());
-			System.out.println("cropGH.getCrop_i()"+cropGH.getCrop_id());
 			cropGH.setGH_id(ghid);
-			System.out.println(CropGHDao.insert(cropGH));
+			 
 		    //return CropGHDao.insert(cropGH); 
 			//温室5-6
 		    if(ghid.equals(GreenHouseInfo.GH_FIVE_ID+"")||ghid.equals(GreenHouseInfo.GH_SIX_ID+"")){
@@ -818,7 +820,6 @@ session.setAttribute("ghId", ghId);
 		    	crop_grouth_info.setGh_id(Integer.parseInt(ghid));
 		    	crop_grouth_info.setCrop_name(crop.getCrop_name());
 		    	crop_grouth_info.setCrop_date(crop.getCrop_date());
-		    	System.out.println("crop_grouth_info"+crop.getCrop_name());
 		    	cropGrouthDao.insert(crop_grouth_info);
 		    }
 		    return cropDao.insert(crop);
@@ -826,7 +827,7 @@ session.setAttribute("ghId", ghId);
 	@RequestMapping("/ghadmin/crop/list")
 	public String ghadmin_crop_list(Model model,
 			@RequestParam(value="ghid") String ghid,
-			@RequestParam(value = "ps", required = false, defaultValue = "20") Integer pageSize,
+			@RequestParam(value = "ps", required = false, defaultValue = "1") Integer pageSize,
 			@RequestParam(value = "pn", required = false, defaultValue = "1") Integer pageNumber){
 		model.addAttribute("pager", cropDao.listByPage(Cnd.where("deleted", "=", "N").and("ghid", "=", ghid), pageSize, pageNumber));
 		model.addAttribute("ghid", ghid);

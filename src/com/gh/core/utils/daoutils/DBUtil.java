@@ -1073,7 +1073,7 @@ private List<T> _Plist(String[] selectCols,Cnd cnd,boolean pager,int pageSize,in
 		System.out.println(cnd.toString());
 		System.out.println("value等于"+value);
 		/*preSql += "select "+colsStr+" from " + tbName + (null == cnd ?"":cnd.toPreparedSql()) ;*/
-		preSql += "select "+colsStr+" from " + tbName + " WHERE deleted = ? AND Crop_code = any(select Crop_id from cropgh where GH_id =? )" ;
+		preSql += "select "+colsStr+" from " + tbName + " WHERE deleted = ? AND Crop_code = any(select Crop_id from cropgh where GH_id =? )  Order by  Crop_id  DESC " ;
 		//" Crop_code = (select Crop_id from Cropgh where GH_id =21 )"
 		if(pager){
 			preSql += " limit "+(pageNumber-1)*pageSize+","+pageSize+" ";

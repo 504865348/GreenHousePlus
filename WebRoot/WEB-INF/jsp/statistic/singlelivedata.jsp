@@ -124,7 +124,24 @@
 									<td>${crop.crop_kalium}</td>
 									</tr>
 									</c:if>
-								</table>				   
+								</table>	
+									<c:if test="${isGHmore!=1}"> <input type="button" value="查看历史数据" class="btn bg-success text-muted" style="width:303px;"
+					                    onclick="history_show()"></c:if>
+					            <table class="table table-bordered table-condensed" id="historyTab" style="display:none;">
+									<tr>
+									<th>作物名称</th>
+									<th class="text-center">定植日期</th>
+																	
+									</tr>
+									<c:forEach items="${pager_his.list}" var="i">
+									   <tr>
+										<td class="text-center">${i.crop_name }</td>
+										<td class="text-center">${i.crop_date }</td>
+									  </tr>
+									</c:forEach>
+								</table>  
+								<input type="button" value="收起" class="btn bg-success text-muted" style="width:303px;display:none;"  id="btn_hide"
+					                    onclick="history_hide()">      	   
 							  </div><!-- end panel-body -->
 							</div><!-- end panel -->
 						</div><!-- end col-md-4 -->
@@ -153,6 +170,14 @@ $(function(){
 })
 function switchStatus(devId){
 	
+}
+function history_show(){
+	document.getElementById("historyTab").style.display='';  
+	document.getElementById("btn_hide").style.display='';
+}
+function history_hide(){
+	document.getElementById("historyTab").style.display='none';  
+	document.getElementById("btn_hide").style.display='none';
 }
 function loadElements(){
 	var type=$('select[name=elementType]').val();

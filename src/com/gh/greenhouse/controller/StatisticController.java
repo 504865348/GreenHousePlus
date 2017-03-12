@@ -241,7 +241,8 @@ public class StatisticController {
 		model.addAttribute("setupCons", setupConDao.findByGhId(Integer.parseInt(ghid)));//修改
 		model.addAttribute("gh", gh); 
 		model.addAttribute("ghjson", new ObjectMapper().writeValueAsString(gh)); 
-		model.addAttribute("pager", cropDao.listByPage(Cnd.where("deleted", "=", "N").and("ghid", "=", ghid), pageSize, pageNumber));//新增
+		model.addAttribute("pager", cropDao.listByPage(Cnd.where("deleted", "=", "N").and("ghid", "=", ghid), 1, pageNumber));//新增
+		model.addAttribute("pager_his", cropDao.listByPage(Cnd.where("deleted", "=", "N").and("ghid", "=", ghid), 100, pageNumber));//新增
 		//判断是否是温室5-6
 		model.addAttribute("isGHmore", ghid.equals(GreenHouseInfo.GH_FIVE_ID+"")||ghid.equals(GreenHouseInfo.GH_SIX_ID+"")?1:0);
 		//添加
