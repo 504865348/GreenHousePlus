@@ -65,6 +65,10 @@
 						href="<%=request.getContextPath()%>/stat/historydata?ghId=${greenhouse.GH_id}"
 						target="main"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;历史数据&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 					<!-- 袁健炜 2017-02-28  night modify start-->
+					<li><a
+							href="<%=request.getContextPath()%>/ghmgr/ghadmin/ctrl/change-model?ghId=${greenhouse.GH_id}"
+							target="main"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;控制模式&nbsp;&nbsp;&nbsp;&nbsp;</a>
+						</li>
 
 				</ul>
 			</c:if>

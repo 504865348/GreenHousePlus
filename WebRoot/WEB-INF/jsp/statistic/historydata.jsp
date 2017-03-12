@@ -234,6 +234,7 @@ $(function(){
 	    jump: function(e, first){ 
 	        if(!first){ 
 	        	  document.getElementById("startTime").value=""; 
+	        	  document.getElementById("endTime").value=""; 
 	        	  location.href = '?ps=${mons.pageSize}&pn='+e.curr+'&elementId='+elementId+'&startTime='+startTime+'&endTime='+endTime; 
 	        }
 	    }
