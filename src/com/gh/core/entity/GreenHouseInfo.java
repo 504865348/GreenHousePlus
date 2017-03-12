@@ -8,4 +8,5 @@ public class GreenHouseInfo {
 	public static final int GH_FOUR_ID=24;
 	public static final int GH_FIVE_ID=25;
 	public static final int GH_SIX_ID=26;
+	public static final int GH_EIGHT_ID=28;
 }

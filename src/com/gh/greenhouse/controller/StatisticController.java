@@ -139,26 +139,31 @@ public class StatisticController {
 		//如果是访客则访问其pid指定的用户
 		
 		Greenhouse gh = null;
-		if(null == ghId){
-			if(u.isVisitor()){
-				User parentUsr = userDao.findByUserid(u.getPid());
-				gh = greenhouseDao.findByUserId(parentUsr.getUser_id()); 
-			}
-			else{
-				gh = greenhouseDao.findByUserId(u.getUser_id(),request); //
-			}
-			ghId = gh.getGH_id();
-		}
-		//if(u.getUser_type())用户类型判断，若不是则跳转至登录
 		
-		//查找温室的设备setup_con，查找设备的检测元素element和检测值monitor
-		
-		//如果是基地管理员，则查找属于这个基地的所有温室
-		//给温室注入作物信息，室内检测数据等
-			
-		else{
-			gh = greenhouseDao.findByghid(ghId);
-		}
+//		if(null == ghId){
+//			if(u.isVisitor()){
+//				User parentUsr = userDao.findByUserid(u.getPid());
+//				gh = greenhouseDao.findByUserId(parentUsr.getUser_id()); 
+//			}
+//			else{
+//				gh = greenhouseDao.findByUserId(u.getUser_id(),request); //
+//			}
+////			ghId = gh.getGH_id();
+//			//将ghid设为温室8（室外气象数据）
+//			ghId = GreenHouseInfo.GH_EIGHT_ID;
+//		}
+//		//if(u.getUser_type())用户类型判断，若不是则跳转至登录
+//		
+//		//查找温室的设备setup_con，查找设备的检测元素element和检测值monitor
+//		
+//		//如果是基地管理员，则查找属于这个基地的所有温室
+//		//给温室注入作物信息，室内检测数据等
+//			
+//		else{
+//			gh = greenhouseDao.findByghid(ghId);
+//		}
+		ghId = GreenHouseInfo.GH_EIGHT_ID;
+		gh = greenhouseDao.findByghid(ghId);
 		gh.setCrop(shedCroplDao.findCropByGhId(gh.getGH_id()));
 		greenhouseDao.injectElementsAndCurrentValue(gh);
 		

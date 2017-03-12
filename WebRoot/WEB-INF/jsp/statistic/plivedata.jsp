@@ -183,7 +183,7 @@
 					<div class="panel-heading">
 						<span class="glyphicon glyphicon-pushpin" style="font-size: 10px"></span>&nbsp;&nbsp;气象概览
 					</div>
-					<div class="panel-body">
+				<%-- 	<div class="panel-body">
 						<!-- Table -->
 						<table class="table table-bordered table-striped table-condensed"
 							style="font-size: 14px">
@@ -229,7 +229,23 @@
 								<td></td>
 							</tr>
 						</table>
-					</div>
+					</div> --%>
+					<%--温室28为室外气象数据 --%>
+					<c:forEach items="${gh.typeAndElements }" var="t">
+						<div class="col-md-4">
+							<div class="panel panel-success my-panel" style="height: 400px;">
+								  <!-- Default panel contents -->
+								  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;<span>${t.element_type.type }</span></div>
+								  <div class="panel-body">
+								  	<table class="table table-bordered table-condensed">
+									  	<c:forEach items="${t.elements }" var="e">
+											<tr><td>${e.element_nam }:</td><td>${e.current_value } ${e.element_unit }</td> </tr> 
+										</c:forEach>
+								  	</table>
+								  </div>
+							</div>
+						</div><!-- end class="col-md-4" -->
+					</c:forEach>
 					<!-- end panel-body -->
 				</div>
 				<!-- end panel -->
