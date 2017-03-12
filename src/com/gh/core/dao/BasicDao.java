@@ -81,6 +81,22 @@ public class BasicDao<T> {
 		return pager;
 	}
 	
+	/**��ҳ��ѯ
+	 * @param cnd
+	 * @param pageSize
+	 * @param pageNumber
+	 * @return
+	 */
+	public Pager<T> listPage(int ghId,int elementType,int pageSize,int pageNumber){
+		
+		Pager<T> pager = new Pager<T>();
+		pager.setPageNumber(pageNumber);
+		pager.setPageSize(pageSize);
+		pager.setList(util.listByPage_mon(ghId,elementType, pageSize, pageNumber));
+		
+		return pager;
+	}
+	
 	public Pager<Mapper> listMapByPage(Cnd cnd,int pageSize,int pageNumber){
 		
 		Pager<Mapper> pager = new Pager<Mapper>();
@@ -88,6 +104,15 @@ public class BasicDao<T> {
 		pager.setPageSize(pageSize);
 		pager.setRecordCount(util.count(cnd));
 		pager.setList(util.listMapByPage(cnd, pageSize, pageNumber));
+		
+		return pager;
+	}
+
+public Pager<Mapper> listMapByPage_nolimit(Cnd cnd){
+		
+		Pager<Mapper> pager = new Pager<Mapper>();
+		pager.setRecordCount(util.count(cnd));
+		pager.setList(util.listMapByPage_nolimt(cnd));
 		
 		return pager;
 	}
@@ -112,6 +137,17 @@ public class BasicDao<T> {
 		
 		return pager;
 	}
+	
+	public Pager<Mapper> listMapByPage_nolimit(String[] selectCols,Cnd cnd){
+		
+		Pager<Mapper> pager = new Pager<Mapper>();
+		pager.setRecordCount(util.count(cnd));
+		pager.setList(util.listMapByPage_nolimit(selectCols,cnd));
+		
+		return pager;
+	}
+	
+	
 	public List<T> list(){
 		return util.list(null);
 	}

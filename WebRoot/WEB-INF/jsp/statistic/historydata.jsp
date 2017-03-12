@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/bootstrap.css" />
@@ -30,7 +31,7 @@
 						  <div class="panel-body">
 						    <table class="table table-bordered table-condensed">
 								<tr>
-									<td>选择类型 <select name="elementType" style="width:100px"
+									<td>选择类型 <select name="elementType" style="width:100px" id="_elementType"
 										onchange="$('#queryform').submit();">
 											<option value=""></option>
 											<c:forEach items="${types }" var="i">
@@ -40,7 +41,7 @@
 											</c:forEach>
 									</select>
 									</td>
-									<td>选择元素： <select name="elementId" style="width:100px"
+									<td>选择元素： <select name="elementId" style="width:100px" id="_elementId"
 										onchange="$('#queryform').submit();">
 											<option value=""></option>
 											<c:forEach items="${eles }" var="i">
@@ -50,10 +51,11 @@
 											</c:forEach>
 									</select>
 									</td>
-									<td>开始时间： <input type="text" name="startTime"
+									
+									<td>开始时间： <input type="text" name="startTime" id="startTime"
 										onclick="laydate()" class="laydate-icon" value="${startTime }" />
 									</td>
-									<td>结束时间： <input type="text" name="endTime"
+									<td>结束时间： <input type="text" name="endTime" id="endTime"
 										onclick="laydate()" class="laydate-icon" value="${endTime }" />
 									</td>
 									<td>
@@ -61,7 +63,7 @@
 									</td>
 								</tr>
 							</table>
-							
+							<div id="export"><a data-type="xls" href="javascript:;">导出excel</a></div>
 							<!-- 筛选结果 -->
 							<table class="table table-bordered table-condensed">
 								<caption></caption>
@@ -85,12 +87,37 @@
 										</c:forEach>
 									</tr>
 								</c:forEach>
+								
 							</table>
-							
 								<!-- js 数据显示 -->
-								<hr style="background:#121A2C;color:#121A2C;height:1px;"/>
 								<div id="page"></div>
-								<div id="charts" style="width: 100%; margin-left: 5%;"></div>
+								
+							<table class="table table-bordered table-condensed" id="tableChange" style="display:none">
+								<caption></caption>
+								<tr>
+									<td class="text-center">序号</td>
+									<td class="text-center">检测时间</td>
+									<c:forEach items="${eles }" var="ele">
+										<td class="text-center">${ele.element_nam }</td>
+									</c:forEach>
+								</tr>
+								<c:forEach items="${mons_nolimit.list }" var="i">
+									<c:set var="mon_nolimit" value="${i.map }"></c:set>
+									<tr>
+										<td class="text-center">${mon_nolimit.id }</td>
+										<td class="text-center"><fmt:formatDate
+												value="${mon_nolimit.control_time }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+										<c:forEach items="${eles }" var="ele">
+											<c:set var="prop" value="${'eleid'}_${ele.element_id }"></c:set>
+											<td>${mon_nolimit[prop] }</td>
+					
+										</c:forEach>
+									</tr>
+								</c:forEach>
+								
+							</table>
+								<hr style="background:#121A2C;color:#121A2C;height:1px;"/>  
+								<div id="charts" style="width: 100%; margin-left: 5%;"></div> 
 						  </div><!-- end panel-body -->
 					</div><!-- end panel -->
 				</div><!-- end row -->
@@ -102,6 +129,16 @@
 	<option>图表模式</option>
 </select>
 <button>导出Excel</button> -->
+         <script type="text/javascript"
+			src="<%=request.getContextPath()%>/assets/js/Blob.js"></script>
+          
+         <script type="text/javascript"
+			src="<%=request.getContextPath()%>/assets/js/FileSaver.js"></script>
+			
+		<script type="text/javascript"
+			src="<%=request.getContextPath()%>/assets/js/tableExport.js"></script>
+ 
+	
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/js/jquery.min.js"></script>
 		<script type="text/javascript"
@@ -183,23 +220,42 @@ function processRawdata(rawdata){
 	
 	return [categories,data];
 }
+
 $(function(){
-		laypage({
+	//var element = $("#_elementId").find("option:selected").text();
+	//alert(element);
+	var startTime = eval(document.getElementById('startTime')).value;  
+	var endTime = eval(document.getElementById('endTime')).value;  
+	var elementId = $("#_elementId").find("option:selected").val();
+	laypage({
 	    cont: 'page',
-	    pages: '${data.datas.pageCount}', 
-	    curr: '${data.datas.pageNumber}', 
+	    pages: '${mons.pageCount}', 
+	    curr: '${mons.pageNumber}', 
 	    jump: function(e, first){ 
 	        if(!first){ 
-	            location.href = '?ps=${data.datas.pageSize}&pn='+e.curr;
+	        	  document.getElementById("startTime").value=""; 
+	        	  location.href = '?ps=${mons.pageSize}&pn='+e.curr+'&elementId='+elementId+'&startTime='+startTime+'&endTime='+endTime; 
 	        }
 	    }
 	});
-	
 	var rawdata = ${jsonData};
 	var processed = processRawdata(rawdata);
 	console.log(processed)
 	renderHighCharts('charts',processed[0],processed[1],'检测数据柱状图');
-})
+});
+var elementType = $("#_elementType").find("option:selected").text();
+var $exportLink = document.getElementById('export');
+$exportLink.addEventListener('click', function(e){
+    e.preventDefault();
+    if(e.target.nodeName === "A"){
+        tableExport('tableChange', '历史数据_'+elementType, e.target.getAttribute('data-type'));
+    }
+
+	
+
+}, false);
+
+
 </script>
 	</div>
 </body>
