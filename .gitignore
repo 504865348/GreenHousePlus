@@ -7,3 +7,4 @@ src/c3p0-config.xml
 .idea/
 GreenHousePlus.iml
 target/
+web/
