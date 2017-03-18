@@ -15,6 +15,12 @@
 	<script src="<%=request.getContextPath() %>/assets/js/jquery-2.1.1.min.js"></script>
 	<script src="<%=request.getContextPath() %>/assets/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/assets/js/bootstrap-switch.min.js"></script>
+		<style type="text/css">
+			.myspan{
+				border:1px solid #dff0d8;
+				text-align: center;
+			}
+		</style>
 	<title>温室智慧管控系统</title>
 </head>
 <body>
@@ -41,10 +47,10 @@
 				<c:forEach items="${pager.list}" var="i">
 					<tr>
 						<td class="text-center" id="crop_id">${i.crop_id }</td>
-						<td class="text-center"><input type="text" id="name" readOnly value="${i.crop_name }"></td>
+						<td class="text-center"><input type="text" id="name" readOnly value="${i.crop_name }" class="myspan"></td>
 						<td class="text-center" id="code">${i.crop_code }</td>
-						<td class="text-center"><input type="text" id="type"readOnly value="${i.crop_type }"></td>
-						<td class="text-center"><input type="text" id="date"readOnly value="${i.crop_date }"></td>
+						<td class="text-center"><input type="text" id="type"readOnly value="${i.crop_type }" class="myspan"></td>
+						<td class="text-center"><input type="text" id="date"readOnly value="${i.crop_date }" class="myspan"></td>
 						<td>
 						 <button type="button" id="modify_one" class="btn bg-success btn-xs btn-block text-muted" data-toggle="modal" data-target="#modify"> 修改 </button>
 						 <button type="button" id="modify_two"  style="display:none" class="btn bg-success btn-xs btn-block text-muted" data-toggle="modal" onClick="modify_crop_info()"> 确定 </button>

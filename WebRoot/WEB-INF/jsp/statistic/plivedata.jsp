@@ -175,14 +175,7 @@
 			<!-- end panel-body -->
 		</div>
 		<!-- 温度和气象控制 -->
-		<div>
-			<!-- 取消row -->
-			<div class="col-md-6">
-				<div class="panel panel-success my-panel my-panel-height-360">
-					<!-- Default panel contents -->
-					<div class="panel-heading">
-						<span class="glyphicon glyphicon-pushpin" style="font-size: 10px"></span>&nbsp;&nbsp;气象概览
-					</div>
+		<div class="row">
 				<%-- 	<div class="panel-body">
 						<!-- Table -->
 						<table class="table table-bordered table-striped table-condensed"
@@ -231,26 +224,23 @@
 						</table>
 					</div> --%>
 					<%--温室28为室外气象数据 --%>
-					<c:forEach items="${gh.typeAndElements }" var="t">
-						<div class="col-md-4">
-							<div class="panel panel-success my-panel" style="height: 400px;">
-								  <!-- Default panel contents -->
-								  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;<span>${t.element_type.type }</span></div>
-								  <div class="panel-body">
-								  	<table class="table table-bordered table-condensed">
-									  	<c:forEach items="${t.elements }" var="e">
-											<tr><td>${e.element_nam }:</td><td>${e.current_value } ${e.element_unit }</td> </tr> 
-										</c:forEach>
-								  	</table>
-								  </div>
-							</div>
-						</div><!-- end class="col-md-4" -->
-					</c:forEach>
-					<!-- end panel-body -->
-				</div>
-				<!-- end panel -->
-			</div>
-			<!-- end col-md-6 -->
+			<c:forEach items="${gh.typeAndElements }" var="t">
+					<!-- 取消row -->
+					<div class="col-md-4">
+						<div class="panel panel-success my-panel" style="height: 400px;">
+						  <!-- Default panel contents -->
+						  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin" style="font-size:10px"></span>&nbsp;&nbsp;<span>${t.element_type.type }</span></div>
+						  <div class="panel-body">
+							<table class="table table-bordered table-condensed">
+								<c:forEach items="${t.elements }" var="e">
+									<tr><td>${e.element_nam }:</td><td>${e.current_value } ${e.element_unit }</td> </tr>
+								</c:forEach>
+							</table>
+						  </div>
+						</div>
+					</div>
+			</c:forEach>
+			<!-- end panel-body -->
 		</div>
 	</div>
 	<!-- end row -->

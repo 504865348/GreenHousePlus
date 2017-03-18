@@ -63,7 +63,8 @@
 									</td>
 								</tr>
 							</table>
-							<div id="export"><a data-type="xls" href="javascript:;">导出excel</a></div>
+
+							<div id="export"><a data-type="xls" href="javascript:;" class="btn btn-primary pull-right">导出excel</a></div>
 							<!-- 筛选结果 -->
 							<table class="table table-bordered table-condensed">
 								<caption></caption>
