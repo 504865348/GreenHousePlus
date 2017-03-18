@@ -3,3 +3,7 @@ WebRoot/WEB-INF/classes
 build
 src/c3p0-config.xml
 .externalToolBuilders
+/target
+.idea/
+GreenHousePlus.iml
+target/
