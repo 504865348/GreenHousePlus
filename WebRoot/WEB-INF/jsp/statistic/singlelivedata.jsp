@@ -98,7 +98,7 @@
 										<td class="text-center">${i.crop_date }</td>
 									  </tr>
 									</c:forEach>
-									<c:if test="${isGHmore==1}">
+									<%-- <c:if test="${isGHmore==1}">
 									<tr>
 									<td>冠幅(面积)</td>
 									<td>株高</td>
@@ -123,7 +123,7 @@
 									<td>${crop.crop_phosphorus}</td>
 									<td>${crop.crop_kalium}</td>
 									</tr>
-									</c:if>
+									</c:if> --%>
 								</table>	
 									<c:if test="${isGHmore!=1}"> <input type="button" value="查看历史数据" class="btn bg-success text-muted" style="width:303px;"
 					                    onclick="history_show()"></c:if>

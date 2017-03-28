@@ -813,16 +813,16 @@ session.setAttribute("ghId", ghId);
 			cropGH.setCrop_id(crop.getCrop_code());
 			cropGH.setGH_id(ghid);
 			 
-		    //return CropGHDao.insert(cropGH); 
-			//温室5-6
-		    if(ghid.equals(GreenHouseInfo.GH_FIVE_ID+"")||ghid.equals(GreenHouseInfo.GH_SIX_ID+"")){
-		    	Crop_Grouth_Info crop_grouth_info=new Crop_Grouth_Info();
-		    	crop_grouth_info.setGh_id(Integer.parseInt(ghid));
-		    	crop_grouth_info.setCrop_name(crop.getCrop_name());
-		    	crop_grouth_info.setCrop_date(crop.getCrop_date());
-		    	cropGrouthDao.insert(crop_grouth_info);
-		    }
-		    return cropDao.insert(crop);
+		    return CropGHDao.insert(cropGH); 
+//			//温室5-6
+//		    if(ghid.equals(GreenHouseInfo.GH_FIVE_ID+"")||ghid.equals(GreenHouseInfo.GH_SIX_ID+"")){
+//		    	Crop_Grouth_Info crop_grouth_info=new Crop_Grouth_Info();
+//		    	crop_grouth_info.setGh_id(Integer.parseInt(ghid));
+//		    	crop_grouth_info.setCrop_name(crop.getCrop_name());
+//		    	crop_grouth_info.setCrop_date(crop.getCrop_date());
+//		    	cropGrouthDao.insert(crop_grouth_info);
+//		    }
+//		    return cropDao.insert(crop);
 	}
 	@RequestMapping("/ghadmin/crop/list")
 	public String ghadmin_crop_list(Model model,
